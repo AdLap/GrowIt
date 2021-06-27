@@ -1,0 +1,18 @@
+{
+  "flowers": [
+    {
+      "id": 1,
+      "name": "Skrzydłokwiat",
+      "date": "20.05.2021",
+      "care": "Skrzydłokwiat jest rośliną niewymagającą i łatwą w uprawie. Uwielbia dużą wilgotność powietrza, dlatego konieczne jest jego częste zraszanie. Roślina preferuje stanowiska jasne, jednak nie bezpośrednio nasłonecznione. Latem temperatura powinna utrzymywać się w granicach 18-22 st C, zimą 16-18 st C.",
+      "diary": ["25.05.2021 podlany 250ml"]
+    },
+    {
+      "name": "Kawa",
+      "date": "22.05.2021",
+      "care": "Dla kawowca najlepiej przeznaczyć stanowisko widne, ale osłonięte przed bezpośrednimi promieniami słońca. Najodpowiedniejsza dla rośliny temperatura wynosi 20–22 st. C, czyli pokojowa. Kawowiec nie oczekuje również szczególnych warunków zimą, gdyż nie wymaga okresu spoczynku.",
+      "diary": ["25.05.2021 podlany 250ml"],
+      "id": 2
+    }
+  ]
+}
