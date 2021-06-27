@@ -1,2 +1,2 @@
-# PlantIt
+# GrowIt
 plant growing journal
