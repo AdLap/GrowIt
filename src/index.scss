@@ -1,3 +1,7 @@
-body {
-background-color: gray;
-}
+@import "scss/variables";
+@import "scss/settings";
+@import "./App";
+@import "home/home";
+@import "home/plantsList";
+@import "home/addPlant";
+

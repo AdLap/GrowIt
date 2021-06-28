@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {AddPlant} from "./addPlant";
+import {PlantsList} from "./plantsList";
 const API = 'http://localhost:3000';
 
 
@@ -25,6 +26,8 @@ export const Home = () => {
 
     const handleOpenAdd = e => {
         e.preventDefault();
+
+
     }
 
     const addPlant = (plant) => {
@@ -53,10 +56,7 @@ export const Home = () => {
     return (
         <>
             <h1>Twoje rośliny:</h1>
-            <ul>
-                {plants.map(plant => <li key={plant.id}>{plant.name}, {plant.date}</li>)}
-            </ul>
-            <button onClick={handleOpenAdd}>Dodaj</button>
+            <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>
             <AddPlant onAdd={addPlant} />
         </>
     );

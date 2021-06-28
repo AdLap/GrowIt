@@ -1,0 +1,16 @@
+.plant__box {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.plant__item {
+  width: 100px;
+  height: 100px;
+  background-color: $color-background-profile-list;
+  text-align: center;
+  cursor: pointer;
+
+}
