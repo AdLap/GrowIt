@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {AddPlant} from "./addPlant";
 import {PlantsList} from "./plantsList";
-const API = 'http://localhost:3000';
+export const API = 'http://localhost:3000';
 
 
 export const Home = () => {
@@ -28,7 +28,6 @@ export const Home = () => {
     const handleOpenAdd = e => {
         e.preventDefault();
         setOpenAdd(!openAdd);
-
     }
 
     const addPlant = (plant) => {
@@ -48,16 +47,10 @@ export const Home = () => {
             })
     }
 
-      if (!plants.length) {
-          return (
-              <h1>Wczytuję dane...</h1>
-          );
-      }
-
     return (
         <>
             <h1>Twoje rośliny:</h1>
-            <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>
+            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
             {openAdd && <AddPlant onAdd={addPlant} />}
         </>
     );
