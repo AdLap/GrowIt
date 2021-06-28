@@ -6,6 +6,7 @@ const API = 'http://localhost:3000';
 
 export const Home = () => {
     const [plants, setPlants] = useState([]);
+    const [openAdd, setOpenAdd] = useState(false);
 
     useEffect(() => {
         getPlants();
@@ -26,7 +27,7 @@ export const Home = () => {
 
     const handleOpenAdd = e => {
         e.preventDefault();
-
+        setOpenAdd(!openAdd);
 
     }
 
@@ -57,7 +58,7 @@ export const Home = () => {
         <>
             <h1>Twoje rośliny:</h1>
             <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>
-            <AddPlant onAdd={addPlant} />
+            {openAdd && <AddPlant onAdd={addPlant} />}
         </>
     );
 }
