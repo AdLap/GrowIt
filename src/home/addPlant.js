@@ -6,7 +6,7 @@ export const AddPlant = ({onAdd}) => {
         name: '',
         date: '',
         care: '',
-        diary: ''
+        diary: []
     })
 
     const handleNewPlant = e => {
@@ -29,7 +29,7 @@ export const AddPlant = ({onAdd}) => {
             name: '',
             date: '',
             care: '',
-            diary: ''
+            diary: []
         })
     }
 
