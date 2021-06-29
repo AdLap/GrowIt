@@ -25,7 +25,7 @@ export const Profile = ({match}) => {
     }
 
     const addDiary = (newDiary) => {
-        fetch(`${API}/plants/${plant.id}`, {
+        fetch(`${API}/plants/${plant}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

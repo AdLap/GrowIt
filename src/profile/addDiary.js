@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 
-
 export const AddDiary = ({onAddDiary}) => {
     const [newDiary, setNewDiary] = useState({
         do: '',
