@@ -21,8 +21,8 @@ function NotFound() {
 function App() {
     return <HashRouter>
         <Switch>
-            <Route exact path='/' component={Home}/>
-            <Route path='/profile' component={Profile}/>
+            <Route exact path='/' component={Home} />
+            <Route path='/profile/:plantId' component={Profile}/>
             <Route component={NotFound}/>
         </Switch>
     </HashRouter>

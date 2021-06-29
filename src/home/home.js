@@ -4,7 +4,7 @@ import {PlantsList} from "./plantsList";
 export const API = 'http://localhost:3000';
 
 
-export const Home = () => {
+export const Home = ({getId}) => {
     const [plants, setPlants] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
 
@@ -23,6 +23,11 @@ export const Home = () => {
                 setPlants(plants);
             })
             .catch(err => console.log('Err', err));
+    }
+
+    const getPlantId = (plantId) => {
+        console.log('showPlants ID::', plantId);
+        return plantId;
     }
 
     const handleOpenAdd = e => {
@@ -50,7 +55,7 @@ export const Home = () => {
     return (
         <>
             <h1>Twoje rośliny:</h1>
-            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
+            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} getId={getPlantId} openAdd={handleOpenAdd}/>}
             {openAdd && <AddPlant onAdd={addPlant} />}
         </>
     );
