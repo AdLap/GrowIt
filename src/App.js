@@ -6,7 +6,6 @@ import {
     Route,
     Link,
     Switch,
-    NavLink,
 } from 'react-router-dom';
 
 function NotFound() {

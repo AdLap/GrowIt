@@ -6,21 +6,24 @@ export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
 
     useEffect(() => {
-        fetch(`${API}/plants/${plantId}`, {
+        getPlant();
+    },[])
+
+    const getPlant = () => {
+        fetch(`${API}/plants/${match.params.plantId}`, {
             method: 'GET'
         })
             .then(resp => resp.json())
             .then(plant => {
-                setPlant(plant)
+                console.log('plant::', plant);
+                setPlant(plant);
             })
-            .catch(err => console.log('Err', err))
-    }, [])
+            .catch(err => console.log('Err', err));
+    }
 
     return(
         <>
             <h1>{plant.name}</h1>
-            profil
-            {match.params.plantId}
         </>
     );
 }

@@ -4,14 +4,13 @@ import {PlantsList} from "./plantsList";
 export const API = 'http://localhost:3000';
 
 
-export const Home = ({getId}) => {
+export const Home = () => {
     const [plants, setPlants] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
 
     useEffect(() => {
         getPlants();
     }, [])
-
 
     const getPlants = () => {
         fetch(`${API}/plants`, {
@@ -23,11 +22,6 @@ export const Home = ({getId}) => {
                 setPlants(plants);
             })
             .catch(err => console.log('Err', err));
-    }
-
-    const getPlantId = (plantId) => {
-        console.log('showPlants ID::', plantId);
-        return plantId;
     }
 
     const handleOpenAdd = e => {
@@ -55,7 +49,7 @@ export const Home = ({getId}) => {
     return (
         <>
             <h1>Twoje rośliny:</h1>
-            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} getId={getPlantId} openAdd={handleOpenAdd}/>}
+            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
             {openAdd && <AddPlant onAdd={addPlant} />}
         </>
     );
