@@ -6,7 +6,6 @@ import {AddDiary} from "./addDiary";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
-    /*const [diary, setDiary] = useState([]);*/
 
     useEffect(() => {
         getPlant();
@@ -25,14 +24,17 @@ export const Profile = ({match}) => {
     }
 
     console.log('profile/plant::', plant);
-    console.log('profile/plant.diary', plant.diary);
-    console.log('profile/plant.id', plant.id);
-    console.log('match.params.plantId::', match.params.plantId);
 
+ /*   const newDiary = newDiary => {
+        setPlant({
+            ...plant,
+            diary: [...plant.diary, newDiary]
+        });
+    }*/
 
     const addDiary = (newDiary) => {
         fetch(`${API}/plants/${plant.id}`, {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -40,17 +42,10 @@ export const Profile = ({match}) => {
         })
             .then(resp => resp.json())
             .then(diary => {
-                console.log('diary::', diary);
-                console.log('plant.id::', match.params.plantId);
-                console.log('newDiary::', newDiary);
-                setPlant({
-                    ...plant,
-                    diary: [...plant.diary, newDiary]
-                });
+                setPlant(diary);
             })
+        console.log('plant po add diary::', plant);
     }
-
-    console.log('plant z diary bez fetch::', plant);
 
     return (
         <>
@@ -59,7 +54,7 @@ export const Profile = ({match}) => {
             <span>Pielęgnacja:<br/>{plant.care}</span>
             <AddDiary onAddDiary={addDiary}/>
             <ul>Dziennik podlewań:
-                {/* {plant.diary.map((el, idx) => <li key={idx}>{el}</li>)}*/}
+                {/* {plant.diary.map((el, idx) => <li key={idx}>{el.do}</li>)}*/}
             </ul>
             <Link to='/'>Home</Link>
         </>
