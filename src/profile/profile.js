@@ -6,7 +6,7 @@ import {AddDiary} from "./addDiary";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
-    const [diary, setDiary] = useState([]);
+    /*const [diary, setDiary] = useState([]);*/
 
     useEffect(() => {
         getPlant();
@@ -17,15 +17,21 @@ export const Profile = ({match}) => {
             method: 'GET'
         })
             .then(resp => resp.json())
-            .then(plant => {
-                console.log('plant::', plant);
-                setPlant(plant);
+            .then(plt => {
+                console.log('fetch.plt::', plt);
+                setPlant(plt);
             })
             .catch(err => console.log('Err', err));
     }
 
+    console.log('profile/plant::', plant);
+    console.log('profile/plant.diary', plant.diary);
+    console.log('profile/plant.id', plant.id);
+    console.log('match.params.plantId::', match.params.plantId);
+
+
     const addDiary = (newDiary) => {
-        fetch(`${API}/plants/${plant}`, {
+        fetch(`${API}/plants/${plant.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -34,7 +40,13 @@ export const Profile = ({match}) => {
         })
             .then(resp => resp.json())
             .then(diary => {
-                setDiary(diary);
+                console.log('diary::', diary);
+                console.log('plant.id::', match.params.plantId);
+                console.log('newDiary::', newDiary);
+                setPlant({
+                    ...plant,
+                    diary
+                });
             })
     }
 
@@ -43,9 +55,9 @@ export const Profile = ({match}) => {
             <h1>{plant.name}</h1>
             <span>Data posadzenia: {plant.date}</span>
             <span>Pielęgnacja:<br/>{plant.care}</span>
-            <AddDiary onAddDiary={addDiary} />
+            <AddDiary onAddDiary={addDiary}/>
             <ul>Dziennik podlewań:
-              {/*  {plant.diary.map((el) => <li key={plant.diary.id}>{el}</li>)}*/}
+                {/*{plant.diary.map((el, idx) => <li key={idx}>{el}</li>)}*/}
             </ul>
             <Link to='/'>Home</Link>
         </>
