@@ -48,15 +48,15 @@ export const Profile = ({match}) => {
     }
 
     return (
-        <>
+        <section className='profile'>
             <h1>{plant.name}</h1>
-            <span>Data posadzenia: {plant.date}</span>
-            <span>Pielęgnacja:<br/>{plant.care}</span>
+            <span className='profile__date'>Data posadzenia: {plant.date}</span>
+            <span className='profile__care'>Pielęgnacja:<br/>{plant.care}</span>
             <AddDiary onAddDiary={addDiary}/>
-            <ul>Dziennik podlewań:
+            <ul className='profile__diary'>Dziennik podlewań:
                 {/* {plant.diary.map((el, idx) => <li key={idx}>{el.do}</li>)}*/}
             </ul>
             <Link to='/'>Home</Link>
-        </>
+        </section>
     );
 }

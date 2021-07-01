@@ -48,7 +48,7 @@ export const Home = () => {
 
     return (
         <>
-            <h1>Twoje rośliny:</h1>
+            <h1 className='home__title'>Moje rośliny:</h1>
             {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
             {openAdd && <AddPlant onAdd={addPlant} openAdd={handleOpenAdd} hideAdd={handleOpenAdd}/>}
         </>

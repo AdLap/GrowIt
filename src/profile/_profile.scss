@@ -1,0 +1,19 @@
+@import "../scss/variables";
+@import "../scss/settings";
+
+.profile {
+
+  &__date,
+  &__care {
+    display: block;
+    font-size: 1rem;
+    color: $color-txt-main;
+    margin: 20px;
+  }
+
+  a {
+    color: $color-home-title;
+    text-transform: uppercase;
+  }
+}
+

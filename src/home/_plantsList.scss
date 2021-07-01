@@ -1,3 +1,6 @@
+@import "../scss/variables";
+@import "../scss/settings";
+
 .plant__box {
   display: flex;
   justify-content: center;
@@ -9,8 +12,20 @@
 .plant__item {
   width: 100px;
   height: 100px;
-  background-color: $color-background-profile-list;
+  border-radius: 50%;
+  box-shadow: 0 0 50px $color-list-shadow inset;
+  font-size: 1rem;
+  line-height: 100px;
   text-align: center;
+  color: $color-list-name;
   cursor: pointer;
+  transition: .5s;
 
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+button {
+  border: none;
 }
