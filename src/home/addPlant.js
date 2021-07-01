@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-export const AddPlant = ({onAdd}) => {
+export const AddPlant = ({onAdd, hideAdd}) => {
     const [newPlant, setNewPlant] = useState({
         name: '',
         date: '',
@@ -43,7 +43,10 @@ export const AddPlant = ({onAdd}) => {
                 note: ''
             }*/]
         })
+        hideAdd(false);
     }
+
+
 
 
     return (

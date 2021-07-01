@@ -25,7 +25,7 @@ export const Home = () => {
     }
 
     const handleOpenAdd = e => {
-        e.preventDefault();
+      //  e.preventDefault();
         setOpenAdd(!openAdd);
     }
 
@@ -50,7 +50,7 @@ export const Home = () => {
         <>
             <h1>Twoje rośliny:</h1>
             {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
-            {openAdd && <AddPlant onAdd={addPlant} openAdd={handleOpenAdd}/>}
+            {openAdd && <AddPlant onAdd={addPlant} openAdd={handleOpenAdd} hideAdd={handleOpenAdd}/>}
         </>
     );
 }
