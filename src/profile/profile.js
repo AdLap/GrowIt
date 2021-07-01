@@ -45,10 +45,12 @@ export const Profile = ({match}) => {
                 console.log('newDiary::', newDiary);
                 setPlant({
                     ...plant,
-                    diary
+                    diary: [...plant.diary, newDiary]
                 });
             })
     }
+
+    console.log('plant z diary bez fetch::', plant);
 
     return (
         <>
@@ -57,7 +59,7 @@ export const Profile = ({match}) => {
             <span>Pielęgnacja:<br/>{plant.care}</span>
             <AddDiary onAddDiary={addDiary}/>
             <ul>Dziennik podlewań:
-                {/*{plant.diary.map((el, idx) => <li key={idx}>{el}</li>)}*/}
+                {/* {plant.diary.map((el, idx) => <li key={idx}>{el}</li>)}*/}
             </ul>
             <Link to='/'>Home</Link>
         </>
