@@ -2,14 +2,10 @@ import React, {useState} from "react";
 
 export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
     const [updatedPlant, setUpdatedPlant] = useState({
-        name: '',
-        species: '',
-        date: '',
-        care: ''
-      /*  name: plant.name,
+        name: plant.name,
         species: plant.species,
         date: plant.date,
-        care: plant.care*/
+        care: plant.care
     })
 
     const handleUpdatedPlant = e => {
@@ -18,7 +14,7 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
             [e.target.name]: e.target.value
         })
     }
-
+console.log('edit, plant z profile::', plant);
     const handleSubmit = e => {
         e.preventDefault();
         onUpdatePlant({

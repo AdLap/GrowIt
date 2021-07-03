@@ -36,12 +36,12 @@ export const Profile = ({match}) => {
       }*/
 
     const addDiary = (newDiary) => {
-        fetch(`${API}/plants/${match.params.plantId}/diary`, {
-            method: 'POST',
+        fetch(`${API}/plants/${plant.id}`, {
+            method: 'PATCH',
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(newDiary)
+            body: JSON.stringify({...plant, diary: [...plant.diary, newDiary]})
         })
             .then(resp => resp.json())
             .then(diary => {
@@ -61,7 +61,7 @@ export const Profile = ({match}) => {
             .then(resp => resp.json())
             .then(updatedPlant => {
                 console.log('updatedPlant', updatedPlant);
-                setPlant(Object.assign(plant, updatedPlant));
+                setPlant(updatedPlant);
             })
     }
 
@@ -81,8 +81,8 @@ export const Profile = ({match}) => {
 
             <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
 
-            {openEdit && <EditPlant plant={plant.id} onUpdatePlant={updatePlant} hideAdd={showEdit} />}
-            {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd}/>}
+            {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit} />}
+            {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
             <div className='profile__diary'>
                 <button className='profile__diary__add' onClick={() => showAdd(true)}>Dodaj wpis</button>

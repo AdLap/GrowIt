@@ -2,10 +2,9 @@ import React, {useState} from "react";
 
 export const AddDiary = ({onAddDiary, hideAdd}) => {
     const [newDiary, setNewDiary] = useState({
-        date: '',
-        do: '',
-        note: ''
-
+                date: new Date().toLocaleDateString(),
+                do: '',
+                note: ''
     })
 
     const handleNewDiary = e => {
@@ -19,15 +18,14 @@ export const AddDiary = ({onAddDiary, hideAdd}) => {
         e.preventDefault();
         console.log('addDiary/newDiary::', newDiary)
         onAddDiary({
-                date: newDiary.date,
-                do: newDiary.do,
-                note: newDiary.note
-            }
-        )
+                    date: new Date().toLocaleDateString(),
+                    do: newDiary.do,
+                    note: newDiary.note
+            })
         setNewDiary({
-            date: '',
-            do: '',
-            note: ''
+                    date: new Date().toLocaleDateString(),
+                    do: '',
+                    note: ''
         })
         hideAdd(false);
     }
