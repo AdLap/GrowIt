@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 
-export const AddDiary = ({onAddDiary}) => {
+export const AddDiary = ({onAddDiary, hideAdd}) => {
     const [newDiary, setNewDiary] = useState({
-            do: '',
-            date: '',
-            note: ''
+        do: '',
+        date: '',
+        note: ''
 
     })
 
@@ -12,7 +12,7 @@ export const AddDiary = ({onAddDiary}) => {
         setNewDiary({
             ...newDiary,
             [e.target.name]: e.target.value
-    })
+        })
     }
 
     const handleSubmit = e => {
@@ -25,14 +25,19 @@ export const AddDiary = ({onAddDiary}) => {
             }
         )
         setNewDiary({
-                do: '',
-                date: '',
-                note: ''
+            do: '',
+            date: '',
+            note: ''
         })
+        hideAdd(false);
     }
 
     return (
         <div className='add__form'>
+            <div className='add__close__btn' onClick={() => hideAdd(false)}>
+                <span>{null}</span>
+                <span>{null}</span>
+            </div>
             <form onSubmit={handleSubmit}>
                 <label>Czynność:
                     <input name='do' value={newDiary.do} onChange={handleNewDiary}/>

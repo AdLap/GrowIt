@@ -8,7 +8,7 @@ export const PlantsList = ({showPlants, openAdd}) => {
             {showPlants.map(plant => <Link to={`/profile/${plant.id}`} key={plant.id}
                 className='plant__item'>{plant.name}
             </Link>)}
-            <button onClick={openAdd} className='plant__item'>Dodaj</button>
+            <button onClick={() => openAdd(true)} className='plant__item'>Dodaj</button>
         </nav>
     );
 }

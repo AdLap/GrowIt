@@ -24,9 +24,9 @@ export const Home = () => {
             .catch(err => console.log('Err', err));
     }
 
-    const handleOpenAdd = e => {
+    const handleOpenAdd = todo => {
       //  e.preventDefault();
-        setOpenAdd(!openAdd);
+        setOpenAdd(todo);
     }
 
     const addPlant = (plant) => {
@@ -50,7 +50,7 @@ export const Home = () => {
         <>
             <h1 className='home__title'>Moje rośliny:</h1>
             {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
-            {openAdd && <AddPlant onAdd={addPlant} openAdd={handleOpenAdd} hideAdd={handleOpenAdd}/>}
+            {openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd}/>}
         </>
     );
 }

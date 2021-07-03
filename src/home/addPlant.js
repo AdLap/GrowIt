@@ -51,6 +51,10 @@ export const AddPlant = ({onAdd, hideAdd}) => {
 
     return (
         <div className='add__form'>
+            <div className='add__close__btn' onClick={() => hideAdd(false)}>
+                <span>{null}</span>
+                <span>{null}</span>
+            </div>
             <form onSubmit={handleSubmit}>
                 <label>Nazwa:
                     <input name='name' value={newPlant.name} onChange={handleNewPlant}/>

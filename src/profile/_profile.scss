@@ -2,18 +2,54 @@
 @import "../scss/settings";
 
 .profile {
+  font-size: 1rem;
+  color: $color-txt-main;
 
   &__date,
   &__care {
     display: block;
-    font-size: 1rem;
-    color: $color-txt-main;
     margin: 20px;
+  }
+
+  &__care {
+    width: 80vw;
+    border-radius: 20px;
+    box-shadow: 0 0 10px $color-list-shadow;
+    margin: 0 auto;
+    padding: 1.5rem;
+  }
+
+  &__diary {
+    width: 80vw;
+    padding: 1.5rem;
+
+    &__add {
+      margin-top: 20px;
+      padding: 10px 20px;
+      border-radius: 30px;
+      border: none;
+      box-shadow: 0 0 10px green;
+      cursor: pointer;
+      color: green;
+    }
+
+    &__list {
+      padding-top: 20px;
+
+      li {
+        padding: 1rem;
+        list-style: none;
+        box-shadow: 0 5px 10px -3px $color-list-shadow;
+      }
+    }
   }
 
   a {
     color: $color-home-title;
     text-transform: uppercase;
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
   }
 }
 
