@@ -6,7 +6,8 @@
   color: $color-txt-main;
 
   &__date,
-  &__care {
+  &__care,
+  &__name {
     display: block;
     margin: 20px;
   }
@@ -19,22 +20,23 @@
     padding: 1.5rem;
   }
 
+  &__edit__btn {
+    position: absolute;
+    bottom: 30px;
+    left: 30px;
+  }
+
   &__diary {
     width: 80vw;
     padding: 1.5rem;
 
     &__add {
       margin-top: 20px;
-      padding: 10px 20px;
-      border-radius: 30px;
-      border: none;
-      box-shadow: 0 0 10px green;
-      cursor: pointer;
-      color: green;
     }
 
     &__list {
-      padding-top: 20px;
+      padding: 40px;
+      margin: 0 auto;
 
       li {
         padding: 1rem;
@@ -50,6 +52,15 @@
     position: absolute;
     bottom: 30px;
     right: 30px;
+  }
+
+  button {
+    padding: 10px 20px;
+    border-radius: 30px;
+    border: none;
+    box-shadow: 0 0 10px green;
+    cursor: pointer;
+    color: green;
   }
 }
 

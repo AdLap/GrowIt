@@ -2,8 +2,8 @@ import React, {useState} from "react";
 
 export const AddDiary = ({onAddDiary, hideAdd}) => {
     const [newDiary, setNewDiary] = useState({
-        do: '',
         date: '',
+        do: '',
         note: ''
 
     })
@@ -19,14 +19,14 @@ export const AddDiary = ({onAddDiary, hideAdd}) => {
         e.preventDefault();
         console.log('addDiary/newDiary::', newDiary)
         onAddDiary({
-                do: newDiary.do,
                 date: newDiary.date,
+                do: newDiary.do,
                 note: newDiary.note
             }
         )
         setNewDiary({
-            do: '',
             date: '',
+            do: '',
             note: ''
         })
         hideAdd(false);
@@ -39,11 +39,11 @@ export const AddDiary = ({onAddDiary, hideAdd}) => {
                 <span>{null}</span>
             </div>
             <form onSubmit={handleSubmit}>
-                <label>Czynność:
-                    <input name='do' value={newDiary.do} onChange={handleNewDiary}/>
-                </label>
                 <label>Data:
                     <input name='date' value={newDiary.date} onChange={handleNewDiary}/>
+                </label>
+                <label>Czynność:
+                    <input name='do' value={newDiary.do} onChange={handleNewDiary}/>
                 </label>
                 <label>Notatki:
                     <input name='note' value={newDiary.note} onChange={handleNewDiary} type='textarea'/>

@@ -4,6 +4,7 @@ import React, {useState} from "react";
 export const AddPlant = ({onAdd, hideAdd}) => {
     const [newPlant, setNewPlant] = useState({
         name: '',
+        species: '',
         date: '',
         care: '',
         diary: [/*{
@@ -25,6 +26,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         console.log('newPlant::', newPlant)
         onAdd({
             name: newPlant.name,
+            species: newPlant.species,
             date: newPlant.date,
             care: newPlant.care,
             diary: [/*{
@@ -35,6 +37,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         })
         setNewPlant({
             name: '',
+            species: '',
             date: '',
             care: '',
             diary: [/*{
@@ -56,8 +59,11 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                 <span>{null}</span>
             </div>
             <form onSubmit={handleSubmit}>
-                <label>Nazwa:
+                <label>Imię:
                     <input name='name' value={newPlant.name} onChange={handleNewPlant}/>
+                </label>
+                <label>Nazwa (gatunek):
+                    <input name='species' value={newPlant.species} onChange={handleNewPlant}/>
                 </label>
                 <label>Data sadzenia:
                     <input name='date' value={newPlant.date} onChange={handleNewPlant}/>
