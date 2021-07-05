@@ -7,6 +7,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         species: '',
         date: '',
         care: '',
+        image: '',
         diary: [/*{
             do: '',
             date: '',
@@ -29,6 +30,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             species: newPlant.species,
             date: newPlant.date,
             care: newPlant.care,
+            image: newPlant.image,
             diary: [/*{
                 do: '',
                 date: '',
@@ -40,6 +42,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             species: '',
             date: '',
             care: '',
+            image: '',
             diary: [/*{
                 do: '',
                 date: '',
@@ -48,9 +51,6 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         })
         hideAdd(false);
     }
-
-
-
 
     return (
         <div className='add__form'>
@@ -71,6 +71,11 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                 <label>Pielęgnacja:
                     <input name='care' value={newPlant.care} onChange={handleNewPlant} type='textarea'/>
                 </label>
+
+                {/*<label>Dodaj zdjęcie:
+                    <input name='image' value={newPlant.image} onChange={handleNewPlant} type='file'/>
+                </label>*/}
+
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={newPlant.diary} onChange={handleNewPlant} />
                 </label>*/}

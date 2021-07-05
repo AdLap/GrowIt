@@ -16,7 +16,7 @@
   left: 50vw;
   transform: translate(-50%, -50%);
   border-radius: 20px;
-  box-shadow: 0 0 10px $color-list-shadow;
+  box-shadow: 0 0 10px $color-main-shadow;
 
   .add__close__btn {
     width: 15px;
@@ -33,7 +33,7 @@
         position: absolute;
         top: 7.5px;
         left: 0;
-        background-color: $color-list-shadow;
+        background-color: $color-main-shadow;
 
         &:first-of-type {
           transform: rotate(45deg);

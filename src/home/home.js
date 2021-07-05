@@ -24,11 +24,6 @@ export const Home = () => {
             .catch(err => console.log('Err', err));
     }
 
-    const handleOpenAdd = todo => {
-      //  e.preventDefault();
-        setOpenAdd(todo);
-    }
-
     const addPlant = (plant) => {
         fetch(`${API}/plants`, {
             method: 'POST',
@@ -46,10 +41,24 @@ export const Home = () => {
             })
     }
 
+    const deletePlant = (plantId) => {
+        fetch(`${API}/plants/${plantId}`, {
+            method: "DELETE"
+        })
+            .then(resp => {
+                setPlants(plants.filter(plant => plant.id !== plantId))
+            })
+    }
+
+    const handleOpenAdd = todo => {
+        //  e.preventDefault();
+        setOpenAdd(todo);
+    }
+
     return (
         <>
             <h1 className='home__title'>Moje rośliny:</h1>
-            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd}/>}
+            {!plants.length ? <h2>Wczytuję dane..</h2> : <PlantsList showPlants={plants} openAdd={handleOpenAdd} onDelete={deletePlant}/>}
             {openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd}/>}
         </>
     );

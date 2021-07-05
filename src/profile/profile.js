@@ -28,13 +28,6 @@ export const Profile = ({match}) => {
 
     console.log('profile/plant::', plant);
 
-    /*  const newDiary = newDiary => {
-          setPlant({
-              ...plant,
-              diary: [...plant.diary, newDiary]
-          });
-      }*/
-
     const addDiary = (newDiary) => {
         fetch(`${API}/plants/${plant.id}`, {
             method: 'PATCH',
@@ -64,6 +57,7 @@ export const Profile = ({match}) => {
                 setPlant(updatedPlant);
             })
     }
+
 
     const showAdd = todo => {
         setOpenAdd(todo);

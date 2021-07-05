@@ -47,22 +47,7 @@
       "id": 4
     },
     {
-      "name": "kjhg",
-      "species": "coś tam",
-      "date": "13245",
-      "care": "asdf",
-      "id": 5
-    },
-    {
-      "name": "7",
-      "species": "",
-      "date": "",
-      "care": "",
-      "diary": [],
-      "id": 6
-    },
-    {
-      "name": "Magdalena 11",
+      "name": "Magdalena",
       "species": "jabsco",
       "date": "",
       "care": "",
@@ -79,20 +64,6 @@
         }
       ],
       "id": 7
-    },
-    {
-      "name": "Mati",
-      "species": "Smakosz",
-      "date": "22.06.190",
-      "care": "Wódka co tydzień",
-      "diary": [
-        {
-          "date": "3.07.2021",
-          "do": "wódka",
-          "note": "0,7 L"
-        }
-      ],
-      "id": 8
     }
   ]
 }

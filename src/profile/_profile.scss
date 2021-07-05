@@ -15,7 +15,7 @@
   &__care {
     width: 80vw;
     border-radius: 20px;
-    box-shadow: 0 0 10px $color-list-shadow;
+    box-shadow: 0 0 10px $color-main-shadow;
     margin: 0 auto;
     padding: 1.5rem;
   }
@@ -41,7 +41,7 @@
       li {
         padding: 1rem;
         list-style: none;
-        box-shadow: 0 5px 10px -3px $color-list-shadow;
+        box-shadow: 0 5px 10px -3px $color-main-shadow;
       }
     }
   }

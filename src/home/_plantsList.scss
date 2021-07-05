@@ -1,31 +1,80 @@
 @import "../scss/variables";
 @import "../scss/settings";
 
-.plant__box {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
-  gap: 20px;
-}
+.plant {
 
-.plant__item {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-  box-shadow: 0 0 50px $color-list-shadow inset;
-  font-size: 1rem;
-  line-height: 100px;
-  text-align: center;
-  color: $color-list-name;
-  cursor: pointer;
-  transition: .5s;
+  &__box {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
 
-  &:hover {
-    transform: scale(1.1);
+  &__item {
+    width: 100px;
+    height: 150px;
+  //  border: 1px solid red;
+    // border-radius: 4px;
+    // box-shadow: 0 0 50px $color-main-shadow inset;
+  //  font-size: 1rem;
+    // line-height: 100px;
+    // text-align: center;
+    //  color: $color-list-name;
+    cursor: pointer;
+    position: relative;
+  }
+
+  &__img {
+    width: 80px;
+    height: 100px;
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 5px 5px $color-main-shadow;
+   // background-color: gray;
+    color: $color-txt-main;
+    position: absolute;
+    top: 15px;
+    left: 10px;
+    transition: .5s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+
+    &__img {
+    }
+  }
+
+  &__name {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1rem;
+    color: $color-txt-main;
+  }
+
+  &__delete {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+
+    &:hover {
+      background-color: red;
+    }
+  }
+
+  &__add {
+    //border: none;
+    width: 100px;
+    height: 100px;
+    transition: .5s;
+
+    &:hover {
+      transform: scale(1.1);
+    }
   }
 }
 
-button {
-  border: none;
-}
