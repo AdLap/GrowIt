@@ -4,7 +4,7 @@ import {Link} from "react-router-dom";
 import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
 import firebase from "firebase";
-import {db} from "../firebase";
+import {db, storage} from "../firebase";
 
 
 export const Profile = ({match}) => {

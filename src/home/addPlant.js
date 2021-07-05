@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 
 
-export const AddPlant = ({onAdd, hideAdd}) => {
+export const AddPlant = ({onAdd, onAddImage, hideAdd}) => {
     const [newPlant, setNewPlant] = useState({
         name: '',
         species: '',
@@ -20,6 +20,19 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             ...newPlant,
             [e.target.name]: e.target.value
         })
+    }
+
+    const handleAddImage = e => {
+        setNewPlant({
+            ...newPlant,
+            image: e.target.files[0]
+        })
+    }
+    console.log('img::', newPlant.image)
+
+    const handleSubmitImage = e => {
+        e.preventDefault();
+        onAddImage();
     }
 
     const handleSubmit = e => {
@@ -72,9 +85,10 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                     <input name='care' value={newPlant.care} onChange={handleNewPlant} type='textarea'/>
                 </label>
 
-                {/*<label>Dodaj zdjęcie:
-                    <input name='image' value={newPlant.image} onChange={handleNewPlant} type='file'/>
-                </label>*/}
+                <label>Dodaj zdjęcie:
+                    <input onChange={handleAddImage} type='file'/>
+                    <button onClick={handleSubmitImage}>upload</button>
+                </label>
 
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={newPlant.diary} onChange={handleNewPlant} />

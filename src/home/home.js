@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 // import firebase from "firebase";
-import {db} from "../firebase";
+import {db, storage} from "../firebase";
 import {AddPlant} from "./addPlant";
 import {PlantsList} from "./plantsList";
 
@@ -33,13 +33,38 @@ export const Home = () => {
         db.collection('plants')
             .add(plant)
             .then(() => {
-               // alert('Roślina dodana')
+                // alert('Roślina dodana')
                 setPlants([
                     ...plants,
                     plant
                 ])
             })
-            .catch(error => console.error('error', error))
+            .catch(error => console.error('error', error));
+    }
+
+    const addImage = (plant) => {
+        const uploadImg = storage.ref(`img/plant.image.name`).put(plant.image);
+        uploadImg.on(
+            'state-changed',
+            snapshot => {
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref('img')
+                    .child(plant.image.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                        setPlants({
+                            ...plants,
+                            image: plant.image.url
+                        })
+                    });
+            }
+        )
     }
 
     const deletePlant = (plantId) => {
@@ -89,17 +114,17 @@ export const Home = () => {
              })
      }*/
 
-   /* const deletePlant = (plantId) => {
-        fetch(`${API}/plants/${plantId}`, {
-            method: "DELETE"
-        })
-            .then(resp => {
-                if (resp.ok) {
-                    setPlants(plants.filter(plant => plant.id !== plantId))
-                }
-                throw new Error();
-            })
-    }*/
+    /* const deletePlant = (plantId) => {
+         fetch(`${API}/plants/${plantId}`, {
+             method: "DELETE"
+         })
+             .then(resp => {
+                 if (resp.ok) {
+                     setPlants(plants.filter(plant => plant.id !== plantId))
+                 }
+                 throw new Error();
+             })
+     }*/
 
     const handleOpenAdd = todo => {
         //  e.preventDefault();
@@ -110,9 +135,9 @@ export const Home = () => {
         <>
             <h1 className='home__title'>Moje rośliny:</h1>
             {!plants.length ? <div><h2>Wczytuję dane..</h2>
-                <button onClick={() => setOpenAdd(true)} className='plant__add'>Dodaj</button>
+                <button onClick={() => setOpenAdd(true)} className='plant__add'>{null}</button>
             </div> : <PlantsList showPlants={plants} openAdd={handleOpenAdd} onDelete={deletePlant}/>}
-            {openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd}/>}
+            {openAdd && <AddPlant onAdd={addPlant} onAddImage={addImage} hideAdd={handleOpenAdd}/>}
 
         </>
     );

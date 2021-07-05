@@ -13,7 +13,7 @@ export const PlantsList = ({showPlants, openAdd, onDelete}) => {
                         </div>
                         <h2 className='plant__name'>{plant.name}</h2>
                     </Link>
-                    <div onClick={() => onDelete(plant.id)} className='plant__delete'>{null}</div>
+                    <button onClick={() => onDelete(plant.id)} className='plant__delete'>{null}</button>
                 </div>)}
                 <button onClick={() => openAdd(true)} className='plant__add'>{null}</button>
             </nav>
