@@ -12,6 +12,7 @@ export const Home = () => {
 
     const getPlants = () => {
         db.collection('plants')
+            .orderBy('date', 'desc')
             .get()
             .then((querySnapshot) => {
                 querySnapshot.forEach(plt => {
@@ -28,7 +29,7 @@ export const Home = () => {
         db.collection('plants')
             .add(plant)
             .then(() => {
-                // alert('Roślina dodana')
+                //alert('Roślina dodana')
                 setPlants([
                     ...plants,
                     plant

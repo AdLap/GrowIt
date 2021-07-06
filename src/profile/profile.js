@@ -18,8 +18,8 @@ export const Profile = ({match}) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .get()
-            .then(plt => {
-                setPlant(plt.data());
+            .then(doc => {
+                setPlant(doc.data());
             })
             .catch(error => console.error('Err', error))
     }
