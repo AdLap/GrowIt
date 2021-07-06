@@ -1,17 +1,16 @@
 import React, {useEffect, useState} from "react";
-//import {API} from '../home/home';
 import {Link} from "react-router-dom";
 import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
 import firebase from "firebase";
 import {db, storage} from "../firebase";
 
-
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
 
+    console.log('plant:::', plant)
     useEffect(() => {
         getPlant();
     }, [])
@@ -21,12 +20,9 @@ export const Profile = ({match}) => {
             .doc(`${match.params.plantId}`)
             .get()
             .then(plt => {
-                console.log('plt from firebase::', plt.data());
                 setPlant(plt.data());
             })
             .catch(error => console.error('Err', error))
-        console.log('plant id do firebase', plant.id);
-        console.log('plant po add diary::', plant);
     }
 
     const addDiary = (newDiary) => {
@@ -57,51 +53,7 @@ export const Profile = ({match}) => {
             .catch(error => console.error('Err', error))
     }
 
-
-    /*const getPlant = () => {
-        fetch(`${API}/plants/${match.params.plantId}`, {
-            method: 'GET'
-        })
-            .then(resp => resp.json())
-            .then(plt => {
-                console.log('fetch.plt::', plt);
-                setPlant(plt);
-            })
-            .catch(err => console.log('Err', err));
-    }*/
-
     console.log('profile/plant::', plant);
-
-    /*const addDiary = (newDiary) => {
-        fetch(`${API}/plants/${plant.id}`, {
-            method: 'PATCH',
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({...plant, diary: [...plant.diary, newDiary]})
-        })
-            .then(resp => resp.json())
-            .then(diary => {
-                setPlant(diary);
-            })
-        console.log('plant po add diary::', plant);
-    }*/
-
-    /* const updatePlant = (plantData) => {
-         fetch(`${API}/plants/${plant.id}`, {
-             method: 'PATCH',
-             headers: {
-                 "Content-TYpe": "application/json"
-             },
-             body: JSON.stringify(plantData)
-         })
-             .then(resp => resp.json())
-             .then(updatedPlant => {
-                 console.log('updatedPlant', updatedPlant);
-                 setPlant(updatedPlant);
-             })
-     }*/
-
 
     const showAdd = todo => {
         setOpenAdd(todo);
@@ -109,7 +61,7 @@ export const Profile = ({match}) => {
     const showEdit = todo => {
         setOpenEdit(todo);
     }
-    console.log('plant.diary', plant.diary);
+
     return (
         <section className='profile'>
             <h1>{plant.name}</h1>
@@ -118,6 +70,12 @@ export const Profile = ({match}) => {
             <span className='profile__care'>Pielęgnacja:<br/>{plant.care}</span>
 
             <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
+            {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
+
+            {/*{openAddImage && <label>Dodaj zdjęcie:
+                <input onChange={handleAddImage} type='file'/>
+                <button onClick={handleSubmitImage}>upload</button>
+            </label>}*/}
 
             {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
             {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}

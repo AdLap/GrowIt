@@ -1,38 +1,57 @@
 import React, {useState} from "react";
+import {storage} from "../firebase";
 
 
-export const AddPlant = ({onAdd, onAddImage, hideAdd}) => {
+export const AddPlant = ({onAdd, hideAdd}) => {
+    const [img, setImg] = useState(null);
+    const [url, setUrl] = useState('');
     const [newPlant, setNewPlant] = useState({
         name: '',
         species: '',
         date: '',
         care: '',
         image: '',
-        diary: [/*{
-            do: '',
-            date: '',
-            note: ''
-        }*/]
+        diary: []
     })
+
+    const addImage = (img) => {
+        const uploadImg = storage.ref(`img/${img.name}`).put(img);
+        uploadImg.on(
+            'state-changed',
+            snapshot => {
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref('img')
+                    .child(img.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                        setUrl(url);
+                    });
+            }
+        )
+    }
 
     const handleNewPlant = e => {
         setNewPlant({
             ...newPlant,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.value,
         })
     }
 
     const handleAddImage = e => {
-        setNewPlant({
-            ...newPlant,
-            image: e.target.files[0]
-        })
+        setImg(e.target.files[0]);
     }
-    console.log('img::', newPlant.image)
+    console.log('img::', img)
 
     const handleSubmitImage = e => {
         e.preventDefault();
-        onAddImage();
+        e.stopPropagation();
+        addImage(img);
     }
 
     const handleSubmit = e => {
@@ -43,12 +62,8 @@ export const AddPlant = ({onAdd, onAddImage, hideAdd}) => {
             species: newPlant.species,
             date: newPlant.date,
             care: newPlant.care,
-            image: newPlant.image,
-            diary: [/*{
-                do: '',
-                date: '',
-                note: ''
-            }*/]
+            image: url,
+            diary: []
         })
         setNewPlant({
             name: '',
@@ -56,11 +71,7 @@ export const AddPlant = ({onAdd, onAddImage, hideAdd}) => {
             date: '',
             care: '',
             image: '',
-            diary: [/*{
-                do: '',
-                date: '',
-                note: ''
-            }*/]
+            diary: []
         })
         hideAdd(false);
     }
@@ -87,13 +98,13 @@ export const AddPlant = ({onAdd, onAddImage, hideAdd}) => {
 
                 <label>Dodaj zdjęcie:
                     <input onChange={handleAddImage} type='file'/>
-                    <button onClick={handleSubmitImage}>upload</button>
+                    <button onClick={handleSubmitImage}>Dodaj zdjęcie</button>
                 </label>
 
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={newPlant.diary} onChange={handleNewPlant} />
                 </label>*/}
-                <button onSubmit={handleSubmit}>Dodaj</button>
+                <button onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
             </form>
         </div>
     );
