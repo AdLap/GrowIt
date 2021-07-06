@@ -12,17 +12,26 @@ export const Profile = ({match}) => {
 
     useEffect(() => {
         getPlant();
+        return () => getPlant();
     }, [])
 
     const getPlant = () => {
         db.collection('plants')
+            .doc(`${match.params.plantId}`)
+            .onSnapshot((doc) => {
+                setPlant(doc.data())
+             //   console.log('plant z profile::', doc.data());
+               // setPlant(snapshot.doc.map(doc => doc.data()))
+            });
+    }
+    /*    db.collection('plants')
             .doc(`${match.params.plantId}`)
             .get()
             .then(doc => {
                 setPlant(doc.data());
             })
             .catch(error => console.error('Err', error))
-    }
+    }*/
 
     const addDiary = (newDiary) => {
         db.collection('plants')
@@ -47,9 +56,9 @@ export const Profile = ({match}) => {
                 care: plantData.care,
                 image: plantData.image
             })
-            .then(() => {
+         /*   .then(() => {
                 setPlant(plantData)
-            })
+            })*/
             .catch(error => console.error('Err', error))
     }
 

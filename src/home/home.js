@@ -8,33 +8,29 @@ export const Home = () => {
     const [openAdd, setOpenAdd] = useState(false);
     useEffect(() => {
         getPlants();
-    }, [])
+        return () => getPlants();
+    }, []);
+    console.log('plants::', plants);
 
     const getPlants = () => {
         db.collection('plants')
             .orderBy('date', 'desc')
-            .get()
-            .then((querySnapshot) => {
-                querySnapshot.forEach(plt => {
-                    const data = (doc) => {
-                        return {id: doc.id, ...doc.data()}
-                    };
-                    setPlants(plants => [...plants, data(plt)])
-                })
-            })
-            .catch(error => console.error('Err', error))
+            .onSnapshot((snapshot) => {
+                setPlants(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+            });
     }
 
     const addPlant = (plant) => {
         db.collection('plants')
             .add(plant)
-            .then(() => {
-                //alert('Roślina dodana')
-                setPlants([
-                    ...plants,
-                    plant
-                ])
-            })
+            //   .then(() => {
+
+            //alert('Roślina dodana')
+            /* setPlants([
+                 ...plants,
+                 plant
+             ])*/
+            //  })
             .catch(error => console.error('error', error));
     }
 
