@@ -1,12 +1,38 @@
 import React, {useState} from "react";
+import {storage} from "../firebase";
 
 export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
+    const [newImg, setNewImg] = useState(null);
+    const [updatedUrl, setUpdatedUrl] = useState(plant.image);
     const [updatedPlant, setUpdatedPlant] = useState({
         name: plant.name,
         species: plant.species,
         date: plant.date,
-        care: plant.care
+        care: plant.care,
+        image: plant.image
     })
+
+    const updateImage = (newImg) => {
+        const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg);
+        uploadImg.on(
+            'state-changed',
+            snapshot => {
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref('img')
+                    .child(newImg.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                        setUpdatedUrl(url);
+                    });
+            }
+        )
+    }
 
     const handleUpdatedPlant = e => {
         setUpdatedPlant({
@@ -14,26 +40,37 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
             [e.target.name]: e.target.value
         })
     }
-console.log('edit, plant z profile::', plant);
+
+    const handleUpdateImage = e => {
+        setNewImg(e.target.files[0]);
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
         onUpdatePlant({
-            name: updatedPlant.name,
-            species: updatedPlant.species,
-            date: updatedPlant.date,
-            care: updatedPlant.care
+                name: updatedPlant.name,
+                species: updatedPlant.species,
+                date: updatedPlant.date,
+                care: updatedPlant.care,
+                image: updatedUrl
             }
         )
         setUpdatedPlant({
             name: plant.name,
             species: plant.species,
             date: plant.date,
-            care: plant.care
+            care: plant.care,
+            image: plant.image
         })
         hideAdd(false);
     }
 
-    return(
+    const handleSubmitImage = e => {
+        e.preventDefault();
+        updateImage(newImg);
+    }
+
+    return (
         <div className='add__form'>
             <div className='add__close__btn' onClick={() => hideAdd(false)}>
                 <span>{null}</span>
@@ -52,6 +89,12 @@ console.log('edit, plant z profile::', plant);
                 <label>Pielęgnacja:
                     <input name='care' value={updatedPlant.care} onChange={handleUpdatedPlant} type='textarea'/>
                 </label>
+
+                <label>Zmień zdjęcie:
+                    <input onChange={handleUpdateImage} type='file'/>
+                    <button onClick={handleSubmitImage}>Dodaj zdjęcie</button>
+                </label>
+
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={updatedPlant.diary} onChange={handleUpdatedPlant} />
                 </label>*/}

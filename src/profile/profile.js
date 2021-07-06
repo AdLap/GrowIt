@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
 import firebase from "firebase";
-import {db, storage} from "../firebase";
+import {db} from "../firebase";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
@@ -45,15 +45,14 @@ export const Profile = ({match}) => {
                 name: plantData.name,
                 species: plantData.species,
                 date: plantData.date,
-                care: plantData.care
+                care: plantData.care,
+                image: plantData.image
             })
             .then(() => {
                 setPlant(plantData)
             })
             .catch(error => console.error('Err', error))
     }
-
-    console.log('profile/plant::', plant);
 
     const showAdd = todo => {
         setOpenAdd(todo);
