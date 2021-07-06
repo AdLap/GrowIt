@@ -1,6 +1,5 @@
 import React, {useEffect, useState} from "react";
-import firebase from "firebase";
-import {db, storage} from "../firebase";
+import {db} from "../firebase";
 import {AddPlant} from "./addPlant";
 import {PlantsList} from "./plantsList";
 

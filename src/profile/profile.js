@@ -10,7 +10,6 @@ export const Profile = ({match}) => {
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
 
-    console.log('plant:::', plant)
     useEffect(() => {
         getPlant();
     }, [])

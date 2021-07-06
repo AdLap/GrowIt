@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import {storage} from "../firebase";
 
-
 export const AddPlant = ({onAdd, hideAdd}) => {
     const [img, setImg] = useState(null);
     const [url, setUrl] = useState('');
@@ -46,7 +45,6 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     const handleAddImage = e => {
         setImg(e.target.files[0]);
     }
-    console.log('img::', img)
 
     const handleSubmitImage = e => {
         e.preventDefault();
