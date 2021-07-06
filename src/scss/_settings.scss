@@ -14,3 +14,73 @@ h1 {
   text-align: center;
 }
 
+button {
+  padding: 10px 20px;
+  border-radius: 30px;
+  border: none;
+  box-shadow: 0 0 10px $color-btn;
+  cursor: pointer;
+  color: green;
+}
+
+.add__form {
+  //background-color: $color-add-plant-background;
+  background-color: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(10px);
+  padding: 20px 0;
+  width: 80vw;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 50vh;
+  left: 50vw;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 0 0 10px $color-main-shadow;
+  z-index: 3;
+
+  form {
+
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+
+    input {
+      display: block;
+      border: none;
+      outline: none;
+      border-bottom: 1px solid green;
+      background-color: transparent;
+    }
+  }
+}
+
+.add__close__btn {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  cursor: pointer;
+
+  span {
+    display: inline-block;
+    height: 1px;
+    width: 15px;
+    position: absolute;
+    top: 7.5px;
+    left: 0;
+    background-color: $color-main-shadow;
+
+    &:first-of-type {
+      transform: rotate(45deg);
+    }
+
+    &:last-of-type {
+      transform: rotate(-45deg);
+    }
+  }
+}

@@ -11,38 +11,34 @@ export const Profile = ({match}) => {
     const [openEdit, setOpenEdit] = useState(false);
 
     useEffect(() => {
-        getPlant();
-        return () => getPlant();
+        const unsubscribe = db.collection('plants')
+            .doc(`${match.params.plantId}`)
+            .onSnapshot((doc) => {
+                setPlant(doc.data())
+            })
+
+        return unsubscribe;
+
     }, [])
 
-    const getPlant = () => {
+  /*  const getPlant = () => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .onSnapshot((doc) => {
                 setPlant(doc.data())
-             //   console.log('plant z profile::', doc.data());
-               // setPlant(snapshot.doc.map(doc => doc.data()))
             });
-    }
-    /*    db.collection('plants')
-            .doc(`${match.params.plantId}`)
-            .get()
-            .then(doc => {
-                setPlant(doc.data());
-            })
-            .catch(error => console.error('Err', error))
     }*/
 
     const addDiary = (newDiary) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .update({diary: firebase.firestore.FieldValue.arrayUnion(newDiary)})
-            .then(() => {
+         /*   .then(() => {
                 setPlant({
                     ...plant,
                     diary: [...plant.diary, newDiary]
                 })
-            })
+            })*/
             .catch(error => console.error('Err', error))
     }
 
@@ -71,9 +67,12 @@ export const Profile = ({match}) => {
 
     return (
         <section className='profile'>
-            <h1>{plant.name}</h1>
-            <span className='profile__name'>Nazwa: {plant.species}</span>
-            <span className='profile__date'>Data posadzenia: {plant.date}</span>
+            <h1 className='profile__title'>{plant.name}</h1>
+            <div className='profile__img'>
+                <img className='profile__img__img' src={plant.image} alt={plant.species} />
+            </div>
+            <span className='profile__species'><strong>Gatunek:</strong> {plant.species}</span>
+            <span className='profile__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
             <span className='profile__care'>Pielęgnacja:<br/>{plant.care}</span>
 
             <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
@@ -95,7 +94,7 @@ export const Profile = ({match}) => {
                     </li>)}
                 </ul>
             </div>
-            <Link to='/'>Home</Link>
+            <Link to='/' className='profile__home'>Home</Link>
         </section>
     );
 }

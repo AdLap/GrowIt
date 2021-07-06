@@ -6,19 +6,26 @@ import {PlantsList} from "./plantsList";
 export const Home = () => {
     const [plants, setPlants] = useState([]);
     const [openAdd, setOpenAdd] = useState(false);
-    useEffect(() => {
-        getPlants();
-        return () => getPlants();
-    }, []);
-    console.log('plants::', plants);
 
-    const getPlants = () => {
-        db.collection('plants')
+    useEffect(() => {
+        const unsubscribe = db.collection('plants')
             .orderBy('date', 'desc')
             .onSnapshot((snapshot) => {
                 setPlants(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
             });
-    }
+
+        return unsubscribe;
+
+    }, []);
+    console.log('plants::', plants);
+
+    /*  const getPlants = () => {
+          db.collection('plants')
+              .orderBy('date', 'desc')
+              .onSnapshot((snapshot) => {
+                  setPlants(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
+              });
+      }*/
 
     const addPlant = (plant) => {
         db.collection('plants')
@@ -38,7 +45,7 @@ export const Home = () => {
         db.collection('plants')
             .doc(plantId)
             .delete()
-            .then(() => setPlants(plants.filter(plant => plant.id !== plantId)))
+           // .then(() => setPlants(plants.filter(plant => plant.id !== plantId)))
             .catch(error => console.error('error', error));
     }
 
@@ -47,12 +54,12 @@ export const Home = () => {
     }
 
     return (
-        <>
-            <h1 className='home__title'>Moje rośliny:</h1>
+        <section className='home'>
+            <h1 className='home__title'>Moje rośliny</h1>
             {!plants.length ? <div><h2>Wczytuję dane..</h2>
                 <button onClick={() => setOpenAdd(true)} className='plant__add'>{null}</button>
             </div> : <PlantsList showPlants={plants} openAdd={handleOpenAdd} onDelete={deletePlant}/>}
             {openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd}/>}
-        </>
+        </section>
     );
 }

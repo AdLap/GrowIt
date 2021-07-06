@@ -1,7 +1,13 @@
-@import "../scss/variables";
-@import "../scss/settings";
+//@import "../scss/variables";
+//@import "../scss/settings";
 
-.home__title {
-  padding: 2rem;
+.home {
+  min-height: 100vh;;
+  background: url("../assets/bg-5.jpg") no-repeat bottom/cover;
+//nr 2, 3,5!, 7!
+  &__title {
+    padding: 2rem;
+  }
 }
+
 

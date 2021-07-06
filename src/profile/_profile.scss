@@ -1,37 +1,66 @@
-@import "../scss/variables";
-@import "../scss/settings";
+//@import "../scss/variables";
+//@import "../scss/settings";
+@use 'sass:color';
 
 .profile {
   font-size: 1rem;
   color: $color-txt-main;
+  position: relative;
+
+  &__title {
+    padding: 2rem;
+  }
+
+  &__img {
+    border: 1px solid red;
+    width: 200px;
+    height: 250px;
+    position: absolute;
+    right: 2rem;
+    top: 2rem;
+
+    &__img {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+      outline: none;
+    }
+  }
 
   &__date,
   &__care,
-  &__name {
+  &__species {
     display: block;
-    margin: 20px;
+    padding: 1.5rem;
   }
 
   &__care {
     width: 80vw;
     border-radius: 20px;
     box-shadow: 0 0 10px $color-main-shadow;
-    margin: 0 auto;
+    margin: 4.5rem auto 0 auto;
     padding: 1.5rem;
   }
 
   &__edit__btn {
-    position: absolute;
-    bottom: 30px;
-    left: 30px;
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
   }
 
   &__diary {
     width: 80vw;
     padding: 1.5rem;
+    position: relative;
 
     &__add {
-      margin-top: 20px;
+      position: absolute;
+      bottom: 1rem;
+      right: 1rem;
+
+      &:hover {
+        color: lighten($color-btn, 20%);
+      }
     }
 
     &__list {
@@ -46,21 +75,17 @@
     }
   }
 
-  a {
+  &__home {
     color: $color-home-title;
     text-transform: uppercase;
-    position: absolute;
-    bottom: 30px;
-    right: 30px;
-  }
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    transition: .5s;
 
-  button {
-    padding: 10px 20px;
-    border-radius: 30px;
-    border: none;
-    box-shadow: 0 0 10px green;
-    cursor: pointer;
-    color: green;
+    &:hover {
+      color: lighten($color-home-title, 20%);
+    }
   }
 }
 
