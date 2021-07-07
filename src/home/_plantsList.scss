@@ -63,7 +63,8 @@
     width: 20px;
     height: 20px;
     cursor: pointer;
-    background: url("../assets/trash-2.svg") no-repeat center/contain;
+    background-color: transparent;
+   // background: url("../assets/trash-2.svg") no-repeat center/contain;
     border: none;
     outline: none;
     padding: 0;
@@ -74,18 +75,15 @@
     &:hover {
       transform: scale(1.5) translate(5px, -5px);
       box-shadow: none;
-      background-color: transparent;
+
     }
   }
 
   &__add {
-    width: 100px;
-    height: 150px;
-    transition: .5s;
-    background: url("../assets/plus-circle.svg") no-repeat center/50%;
-    border: none;
-    outline: none;
-    cursor: pointer;
+    margin: auto 25px;
+    line-height: 150px;
+    background-color: transparent;
+    font-size: 50px;
     padding: 0;
     border-radius: 0;
     box-shadow: none;

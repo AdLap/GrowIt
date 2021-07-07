@@ -1,5 +1,8 @@
 import React from "react";
 import {Link} from "react-router-dom";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faTrashAlt} from "@fortawesome/free-regular-svg-icons";
 
 export const PlantsList = ({showPlants, openAdd, onDelete}) => {
 
@@ -13,9 +16,13 @@ export const PlantsList = ({showPlants, openAdd, onDelete}) => {
                         </div>
                         <h2 className='plant__name'>{plant.name}</h2>
                     </Link>
-                    <button onClick={() => onDelete(plant.id)} className='plant__delete'>{null}</button>
+                    <button onClick={() => onDelete(plant.id)} className='plant__delete'>
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                    </button>
                 </div>)}
-                <button onClick={() => openAdd(true)} className='plant__add'>{null}</button>
+                <button onClick={() => openAdd(true)} className='plant__add'>
+                    <FontAwesomeIcon icon={faPlusCircle} />
+                </button>
             </nav>
         </section>
     );
