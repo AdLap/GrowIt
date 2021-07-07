@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {storage} from "../firebase";
 
 export const AddPlant = ({onAdd, hideAdd}) => {
-    const [img, setImg] = useState(null);
+    const [img, setImg] = useState('');
     const [url, setUrl] = useState('');
     const [newPlant, setNewPlant] = useState({
         name: '',
@@ -99,9 +99,6 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                     <button className='add__form__btn' onClick={handleSubmitImage}>Dodaj zdjęcie</button>
                 </label>
 
-                {/*<label>Dziennik pielęgnacji:
-                    <input name='diary' value={newPlant.diary} onChange={handleNewPlant} />
-                </label>*/}
                 <button className='add__form__btn' onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
             </form>
         </div>

@@ -30,12 +30,6 @@ export const Profile = ({match}) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .update({diary: firebase.firestore.FieldValue.arrayUnion(newDiary)})
-            /*   .then(() => {
-                   setPlant({
-                       ...plant,
-                       diary: [...plant.diary, newDiary]
-                   })
-               })*/
             .catch(error => console.error('Err', error))
     }
 
