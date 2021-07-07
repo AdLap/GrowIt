@@ -21,24 +21,24 @@ export const Profile = ({match}) => {
 
     }, [])
 
-  /*  const getPlant = () => {
-        db.collection('plants')
-            .doc(`${match.params.plantId}`)
-            .onSnapshot((doc) => {
-                setPlant(doc.data())
-            });
-    }*/
+    /*  const getPlant = () => {
+          db.collection('plants')
+              .doc(`${match.params.plantId}`)
+              .onSnapshot((doc) => {
+                  setPlant(doc.data())
+              });
+      }*/
 
     const addDiary = (newDiary) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .update({diary: firebase.firestore.FieldValue.arrayUnion(newDiary)})
-         /*   .then(() => {
-                setPlant({
-                    ...plant,
-                    diary: [...plant.diary, newDiary]
-                })
-            })*/
+            /*   .then(() => {
+                   setPlant({
+                       ...plant,
+                       diary: [...plant.diary, newDiary]
+                   })
+               })*/
             .catch(error => console.error('Err', error))
     }
 
@@ -52,9 +52,9 @@ export const Profile = ({match}) => {
                 care: plantData.care,
                 image: plantData.image
             })
-         /*   .then(() => {
-                setPlant(plantData)
-            })*/
+            /*   .then(() => {
+                   setPlant(plantData)
+               })*/
             .catch(error => console.error('Err', error))
     }
 
@@ -69,11 +69,11 @@ export const Profile = ({match}) => {
         <section className='profile'>
             <h1 className='profile__title'>{plant.name}</h1>
             <div className='profile__img'>
-                <img className='profile__img__img' src={plant.image} alt={plant.species} />
+                <img className='profile__img__img' src={plant.image} alt={plant.species}/>
             </div>
             <span className='profile__species'><strong>Gatunek:</strong> {plant.species}</span>
             <span className='profile__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
-            <span className='profile__care'>Pielęgnacja:<br/>{plant.care}</span>
+            <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
 
             <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
             {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
@@ -87,9 +87,10 @@ export const Profile = ({match}) => {
             {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
             <div className='profile__diary'>
-                <button className='profile__diary__add' onClick={() => showAdd(true)}>Dodaj wpis</button>
+                <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>+</button>
                 <ul className='profile__diary__list'>Dziennik podlewań:
-                    {plant.diary && plant.diary.map((plt, idx) => <li key={idx}>
+                    {plant.diary && plant.diary.map((plt, idx) => <li key={idx}
+                                                                      className='profile__diary__list__item'>
                         <strong>kiedy:</strong> {plt.date}<br/><strong>co zrobione:</strong> {plt.do} / {plt.note}
                     </li>)}
                 </ul>

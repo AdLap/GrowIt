@@ -9,10 +9,20 @@ a {
 }
 
 h1 {
-  font-size: 2rem;
+  font-size: 3rem;
   color: $color-home-title;
   text-align: center;
 }
+
+//.container {
+// // position: relative;
+// // margin: 0 auto;
+////  width: 100vw;
+//
+//  @media (min-width: $laptop) {
+//    width: $laptop;
+//  }
+//}
 
 button {
   padding: 10px 20px;
@@ -21,6 +31,15 @@ button {
   box-shadow: 0 0 10px $color-btn;
   cursor: pointer;
   color: green;
+
+  &:hover {
+    color: lighten($color-btn, 20%);
+    box-shadow: 0 0 10px lighten($color-btn, 20%);
+  }
+
+  &:active {
+    box-shadow: 0 0 10px darken($color-btn, 20%) inset;
+  }
 }
 
 .add__form {
