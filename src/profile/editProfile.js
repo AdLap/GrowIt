@@ -12,7 +12,7 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
         image: plant.image
     })
 
-    const updateImage = (newImg) => {
+ /*   const updateImage = (newImg) => {
         const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg);
         uploadImg.on(
             'state-changed',
@@ -32,7 +32,7 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
                     });
             }
         )
-    }
+    }*/
 
     const handleUpdatedPlant = e => {
         setUpdatedPlant({
@@ -41,9 +41,9 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
         })
     }
 
-    const handleUpdateImage = e => {
+   /* const handleUpdateImage = e => {
         setNewImg(e.target.files[0]);
-    }
+    }*/
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -65,10 +65,10 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
         hideAdd(false);
     }
 
-    const handleSubmitImage = e => {
+    /*const handleSubmitImage = e => {
         e.preventDefault();
         updateImage(newImg);
-    }
+    }*/
 
     return (
         <div className='add__form'>
@@ -90,10 +90,10 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
                     <input name='care' value={updatedPlant.care} onChange={handleUpdatedPlant} type='textarea'/>
                 </label>
 
-                <label>Zmień zdjęcie:
+                {/*<label>Zmień zdjęcie:
                     <input onChange={handleUpdateImage} type='file'/>
                     <button className='add__form__btn' onClick={handleSubmitImage}>Dodaj zdjęcie</button>
-                </label>
+                </label>*/}
 
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={updatedPlant.diary} onChange={handleUpdatedPlant} />

@@ -2,16 +2,18 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
+import {EditImg} from "./editImg";
 import firebase from "firebase";
-import {db} from "../firebase";
+import {db, storage} from "../firebase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faHome, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExchangeAlt, faHome, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
+    const [openEditImg, setOpenEditImg] = useState(false)
 
     useEffect(() => {
         const unsubscribe = db.collection('plants')
@@ -61,11 +63,47 @@ export const Profile = ({match}) => {
             .catch(error => console.error('Err', error))
     }
 
+    const updateImage = (newImg) => {
+        const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg);
+        uploadImg.on(
+            'state-changed',
+            snapshot => {
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                    .ref('img')
+                    .child(newImg.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                       // setUpdatedUrl(url);
+                        addNewImg(url)
+                    });
+            }
+        )
+    }
+
+    const addNewImg = url => {
+        db.collection('plants')
+            .doc(`${match.params.plantId}`)
+            .update({
+                image: url
+            })
+            .catch(err => console.log('ERR', err));
+    }
+
     const showAdd = todo => {
         setOpenAdd(todo);
     }
     const showEdit = todo => {
         setOpenEdit(todo);
+    }
+
+    const showEditImg = todo => {
+        setOpenEditImg(todo)
     }
 
     return (
@@ -74,6 +112,9 @@ export const Profile = ({match}) => {
                 <h1 className='profile__title'>{plant.name}</h1>
                 <div className='profile__img'>
                     <img className='profile__img__img' src={plant.image} alt={plant.species}/>
+                    <button className='profile__img__btn' onClick={() => showEditImg(true)}>
+                        <FontAwesomeIcon icon={faExchangeAlt} />
+                    </button>
                 </div>
                 <div className='profile__data'>
                     <span className='profile__data__species'><strong>Gatunek:</strong> {plant.species}</span>
@@ -84,13 +125,12 @@ export const Profile = ({match}) => {
                 <button className='profile__edit__btn' onClick={() => showEdit(true)}>
                     <FontAwesomeIcon icon={faEdit}/>
                 </button>
-                {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
 
                 {/*{openAddImage && <label>Dodaj zdjęcie:
                 <input onChange={handleAddImage} type='file'/>
                 <button onClick={handleSubmitImage}>upload</button>
             </label>}*/}
-
+                {openEditImg && <EditImg plantImg={plant.image} onUpdateImg={updateImage} hideAdd={showEditImg}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 

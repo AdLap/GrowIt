@@ -23,7 +23,8 @@ button {
   }
 
   &:active {
-    box-shadow: 0 0 10px darken($color-btn, 20%) inset;
+      transition: .1s;
+      transform: scale(.2);
   }
 }
 
@@ -78,6 +79,11 @@ button {
 
   &:hover {
     transform: rotate(360deg);
+  }
+
+  &:active {
+    transition: .1s;
+    transform: scale(.2);
   }
 
   span {
