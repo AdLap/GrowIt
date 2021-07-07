@@ -64,6 +64,19 @@ button {
   }
   &__btn {
     margin-top: 2rem;
+    position: relative;
+
+    &__progress {
+      border-radius: 30px;
+      background-color: $color-btn;
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      color: $color-txt-main;
+      font-size: 1rem;
+      line-height: 35px;
+    }
   }
 }
 

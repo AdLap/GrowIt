@@ -2,8 +2,10 @@ import React, {useState} from "react";
 import {storage} from "../firebase";
 
 export const AddPlant = ({onAdd, hideAdd}) => {
-    const [img, setImg] = useState('');
-    const [url, setUrl] = useState('');
+    const [img, setImg] = useState(null);
+    const [url, setUrl] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [error, setError] = useState(null)
     const [newPlant, setNewPlant] = useState({
         name: '',
         species: '',
@@ -13,14 +15,20 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         diary: []
     })
 
+    console.log('img::', img);
+    console.log('progress', progress);
+
     const addImage = (img) => {
         const uploadImg = storage.ref(`img/${img.name}`).put(img);
         uploadImg.on(
             'state-changed',
             snapshot => {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(percentage);
             },
             error => {
                 console.log(error);
+                setError(error);
             },
             () => {
                 storage
@@ -54,6 +62,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
 
     const handleSubmit = e => {
         e.preventDefault();
+        e.stopPropagation();
         console.log('newPlant::', newPlant)
         onAdd({
             name: newPlant.name,
@@ -72,6 +81,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             diary: []
         })
         hideAdd(false);
+        setProgress(0);
     }
 
     return (
@@ -96,7 +106,11 @@ export const AddPlant = ({onAdd, hideAdd}) => {
 
                 <label>Dodaj zdjęcie:
                     <input onChange={handleAddImage} type='file'/>
-                    <button className='add__form__btn' onClick={handleSubmitImage}>Dodaj zdjęcie</button>
+                    <button className='add__form__btn' onClick={handleSubmitImage}
+                            disabled={progress === 100 && true}>Dodaj zdjęcie
+                        <div className='add__form__btn__progress'
+                             style={{width: `${progress}%`}}>{progress === 100 && 'Zdjęcie dodano'}</div>
+                    </button>
                 </label>
 
                 <button className='add__form__btn' onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>

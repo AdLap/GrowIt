@@ -13,13 +13,14 @@ export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
     const [openEdit, setOpenEdit] = useState(false);
-    const [openEditImg, setOpenEditImg] = useState(false)
+    const [openEditImg, setOpenEditImg] = useState(false);
+    const [progress, setProgress] = useState(0);
 
     useEffect(() => {
         const unsubscribe = db.collection('plants')
             .doc(`${match.params.plantId}`)
             .onSnapshot((doc) => {
-                setPlant(doc.data())
+                setPlant(doc.data());
             })
 
         return () => unsubscribe();
@@ -51,6 +52,8 @@ export const Profile = ({match}) => {
         uploadImg.on(
             'state-changed',
             snapshot => {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(percentage);
             },
             error => {
                 console.log(error);
@@ -62,7 +65,7 @@ export const Profile = ({match}) => {
                     .getDownloadURL()
                     .then(url => {
                         console.log(url);
-                        uploadNewImg(url)
+                        uploadNewImg(url);
                     });
             }
         )
@@ -80,12 +83,17 @@ export const Profile = ({match}) => {
     const showAdd = todo => {
         setOpenAdd(todo);
     }
+
     const showEdit = todo => {
         setOpenEdit(todo);
     }
 
     const showEditImg = todo => {
         setOpenEditImg(todo)
+    }
+
+    const resetProgress = todo => {
+        setProgress(todo);
     }
 
     return (
@@ -108,7 +116,7 @@ export const Profile = ({match}) => {
                     <FontAwesomeIcon icon={faEdit}/>
                 </button>
 
-                {openEditImg && <EditImg plantImg={plant.image} onUpdateImg={updateImage} hideAdd={showEditImg}/>}
+                {openEditImg && <EditImg onUpdateImg={updateImage} hideAdd={showEditImg} onProgress={progress} onResetProgress={resetProgress}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
