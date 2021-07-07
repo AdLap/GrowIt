@@ -73,6 +73,8 @@
 
     &:hover {
       transform: scale(1.5) translate(5px, -5px);
+      box-shadow: none;
+      background-color: transparent;
     }
   }
 

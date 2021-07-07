@@ -17,7 +17,7 @@ export const Profile = ({match}) => {
                 setPlant(doc.data())
             })
 
-        return unsubscribe;
+        return () => unsubscribe();
 
     }, [])
 
@@ -67,35 +67,37 @@ export const Profile = ({match}) => {
 
     return (
         <section className='profile'>
-            <h1 className='profile__title'>{plant.name}</h1>
-            <div className='profile__img'>
-                <img className='profile__img__img' src={plant.image} alt={plant.species}/>
-            </div>
-            <span className='profile__species'><strong>Gatunek:</strong> {plant.species}</span>
-            <span className='profile__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
-            <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
+            <div className='container'>
+                <h1 className='profile__title'>{plant.name}</h1>
+                <div className='profile__img'>
+                    <img className='profile__img__img' src={plant.image} alt={plant.species}/>
+                </div>
+                <span className='profile__species'><strong>Gatunek:</strong> {plant.species}</span>
+                <span className='profile__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
+                <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
 
-            <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
-            {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
+                <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
+                {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
 
-            {/*{openAddImage && <label>Dodaj zdjęcie:
+                {/*{openAddImage && <label>Dodaj zdjęcie:
                 <input onChange={handleAddImage} type='file'/>
                 <button onClick={handleSubmitImage}>upload</button>
             </label>}*/}
 
-            {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
-            {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
+                {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
+                {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
-            <div className='profile__diary'>
-                <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>+</button>
-                <ul className='profile__diary__list'>Dziennik podlewań:
-                    {plant.diary && plant.diary.map((plt, idx) => <li key={idx}
-                                                                      className='profile__diary__list__item'>
-                        <strong>kiedy:</strong> {plt.date}<br/><strong>co zrobione:</strong> {plt.do} / {plt.note}
-                    </li>)}
-                </ul>
+                <div className='profile__diary'>
+                    <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>+</button>
+                    <ul className='profile__diary__list'>Dziennik podlewań:
+                        {plant.diary && plant.diary.map((plt, idx) => <li key={idx}
+                                                                          className='profile__diary__list__item'>
+                            <strong>kiedy:</strong> {plt.date}<br/><strong>co zrobione:</strong> {plt.do} / {plt.note}
+                        </li>)}
+                    </ul>
+                </div>
+                <Link to='/' className='profile__home'>Home</Link>
             </div>
-            <Link to='/' className='profile__home'>Home</Link>
         </section>
     );
 }

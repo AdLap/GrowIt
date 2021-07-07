@@ -46,7 +46,7 @@ export const AddDiary = ({onAddDiary, hideAdd}) => {
                 <label>Notatki:
                     <input name='note' value={newDiary.note} onChange={handleNewDiary} type='textarea'/>
                 </label>
-                <button onSubmit={handleSubmit}>Dodaj</button>
+                <button className='add__form__btn' onSubmit={handleSubmit}>Dodaj</button>
             </form>
         </div>
     );

@@ -14,7 +14,7 @@ export const Home = () => {
                 setPlants(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
             });
 
-        return unsubscribe;
+        return () => unsubscribe();
 
     }, []);
     console.log('plants::', plants);
