@@ -4,6 +4,9 @@ import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
 import firebase from "firebase";
 import {db} from "../firebase";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faHome, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faEdit} from "@fortawesome/free-regular-svg-icons";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
@@ -72,11 +75,15 @@ export const Profile = ({match}) => {
                 <div className='profile__img'>
                     <img className='profile__img__img' src={plant.image} alt={plant.species}/>
                 </div>
-                <span className='profile__species'><strong>Gatunek:</strong> {plant.species}</span>
-                <span className='profile__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
+                <div className='profile__data'>
+                    <span className='profile__data__species'><strong>Gatunek:</strong> {plant.species}</span>
+                    <span className='profile__data__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
+                </div>
                 <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
 
-                <button className='profile__edit__btn' onClick={() => showEdit(true)}>Edytuj profil</button>
+                <button className='profile__edit__btn' onClick={() => showEdit(true)}>
+                    <FontAwesomeIcon icon={faEdit}/>
+                </button>
                 {/*<button className='profile__add__image' onClick={}>Dodaj zdjęcie</button>*/}
 
                 {/*{openAddImage && <label>Dodaj zdjęcie:
@@ -88,7 +95,8 @@ export const Profile = ({match}) => {
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
                 <div className='profile__diary'>
-                    <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>+</button>
+                    <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>
+                        <FontAwesomeIcon icon={faPlusCircle}/></button>
                     <ul className='profile__diary__list'>Dziennik podlewań:
                         {plant.diary && plant.diary.map((plt, idx) => <li key={idx}
                                                                           className='profile__diary__list__item'>
@@ -96,7 +104,7 @@ export const Profile = ({match}) => {
                         </li>)}
                     </ul>
                 </div>
-                <Link to='/' className='profile__home'>Home</Link>
+                <Link to='/' className='profile__home'><FontAwesomeIcon icon={faHome}/></Link>
             </div>
         </section>
     );

@@ -96,13 +96,13 @@ export const AddPlant = ({onAdd, hideAdd}) => {
 
                 <label>Dodaj zdjęcie:
                     <input onChange={handleAddImage} type='file'/>
-                    <button onClick={handleSubmitImage}>Dodaj zdjęcie</button>
+                    <button className='add__form__btn' onClick={handleSubmitImage}>Dodaj zdjęcie</button>
                 </label>
 
                 {/*<label>Dziennik pielęgnacji:
                     <input name='diary' value={newPlant.diary} onChange={handleNewPlant} />
                 </label>*/}
-                <button onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
+                <button className='add__form__btn' onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
             </form>
         </div>
     );

@@ -13,7 +13,9 @@ button {
   border: none;
   box-shadow: 0 0 10px $color-btn;
   cursor: pointer;
-  color: green;
+  color: $color-btn;
+  transition: .3s;
+  outline: none;
 
   &:hover {
     color: lighten($color-btn, 20%);
@@ -31,6 +33,7 @@ button {
   backdrop-filter: blur(10px);
   padding: 20px 0;
   width: 80vw;
+  max-width: 500px;
   margin: 0 auto;
   display: flex;
   justify-content: center;
