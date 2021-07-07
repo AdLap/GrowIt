@@ -116,7 +116,8 @@ export const Profile = ({match}) => {
                     <FontAwesomeIcon icon={faEdit}/>
                 </button>
 
-                {openEditImg && <EditImg onUpdateImg={updateImage} hideAdd={showEditImg} onProgress={progress} onResetProgress={resetProgress}/>}
+                {openEditImg && <EditImg onUpdateImg={updateImage} hideAdd={showEditImg} onProgress={progress}
+                                         onResetProgress={resetProgress}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
 
