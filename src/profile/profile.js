@@ -26,14 +26,6 @@ export const Profile = ({match}) => {
 
     }, [])
 
-    /*  const getPlant = () => {
-          db.collection('plants')
-              .doc(`${match.params.plantId}`)
-              .onSnapshot((doc) => {
-                  setPlant(doc.data())
-              });
-      }*/
-
     const addDiary = (newDiary) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
@@ -57,9 +49,6 @@ export const Profile = ({match}) => {
                 care: plantData.care,
                 image: plantData.image
             })
-            /*   .then(() => {
-                   setPlant(plantData)
-               })*/
             .catch(error => console.error('Err', error))
     }
 
@@ -79,14 +68,13 @@ export const Profile = ({match}) => {
                     .getDownloadURL()
                     .then(url => {
                         console.log(url);
-                       // setUpdatedUrl(url);
-                        addNewImg(url)
+                        uploadNewImg(url)
                     });
             }
         )
     }
 
-    const addNewImg = url => {
+    const uploadNewImg = url => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .update({
@@ -113,7 +101,7 @@ export const Profile = ({match}) => {
                 <div className='profile__img'>
                     <img className='profile__img__img' src={plant.image} alt={plant.species}/>
                     <button className='profile__img__btn' onClick={() => showEditImg(true)}>
-                        <FontAwesomeIcon icon={faExchangeAlt} />
+                        <FontAwesomeIcon icon={faExchangeAlt}/>
                     </button>
                 </div>
                 <div className='profile__data'>
@@ -126,10 +114,6 @@ export const Profile = ({match}) => {
                     <FontAwesomeIcon icon={faEdit}/>
                 </button>
 
-                {/*{openAddImage && <label>Dodaj zdjęcie:
-                <input onChange={handleAddImage} type='file'/>
-                <button onClick={handleSubmitImage}>upload</button>
-            </label>}*/}
                 {openEditImg && <EditImg plantImg={plant.image} onUpdateImg={updateImage} hideAdd={showEditImg}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
