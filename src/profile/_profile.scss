@@ -20,11 +20,14 @@
     margin: 0 auto;
     position: relative;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     @media (min-width: $tablet) {
       position: absolute;
-      right: 4rem;
-      top: 4rem;
+      right: 3rem;
+      top: 3rem;
     }
 
     @media (min-width: $laptop) {
@@ -145,7 +148,7 @@
 
       &:active {
         transition: .1s;
-        transform: scale(.2);
+        transform: scale(.9);
       }
     }
   }

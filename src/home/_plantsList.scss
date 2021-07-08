@@ -37,6 +37,9 @@
     left: 10px;
     transition: .5s;
     overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:hover {
       transform: scale(1.1);
