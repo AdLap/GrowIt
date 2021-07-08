@@ -5,7 +5,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     const [img, setImg] = useState(null);
     const [url, setUrl] = useState(null);
     const [progress, setProgress] = useState(0);
-    const [error, setError] = useState(null)
+  //  const [error, setError] = useState(null)
     const [newPlant, setNewPlant] = useState({
         name: '',
         species: '',
@@ -28,7 +28,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             },
             error => {
                 console.log(error);
-                setError(error);
+        //        setError(error);
             },
             () => {
                 storage

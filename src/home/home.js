@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {db} from "../firebase";
+import {db, storage} from "../firebase";
 import {AddPlant} from "./addPlant";
 import {PlantsList} from "./plantsList";
 
@@ -41,12 +41,15 @@ export const Home = () => {
             .catch(error => console.error('error', error));
     }
 
-    const deletePlant = (plantId) => {
+    const deletePlant = (plantId, plantImg) => {
         db.collection('plants')
             .doc(plantId)
             .delete()
            // .then(() => setPlants(plants.filter(plant => plant.id !== plantId)))
             .catch(error => console.error('error', error));
+        console.log('image do del::', plantId.image);
+        storage.refFromURL(plantImg).delete()
+            .catch(error => console.log('Err', error));
     }
 
     const handleOpenAdd = todo => {

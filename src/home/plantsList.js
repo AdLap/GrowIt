@@ -16,7 +16,7 @@ export const PlantsList = ({showPlants, openAdd, onDelete}) => {
                         </div>
                         <h2 className='plant__name'>{plant.name}</h2>
                     </Link>
-                    <button onClick={() => onDelete(plant.id)} className='plant__delete'>
+                    <button onClick={() => onDelete(plant.id, plant.image)} className='plant__delete'>
                         <FontAwesomeIcon icon={faTrashAlt} />
                     </button>
                 </div>)}

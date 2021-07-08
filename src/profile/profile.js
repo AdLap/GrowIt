@@ -25,7 +25,7 @@ export const Profile = ({match}) => {
 
         return () => unsubscribe();
 
-    }, [])
+    }, [match.params.plantId])
 
     const addDiary = (newDiary) => {
         db.collection('plants')

@@ -1,9 +1,9 @@
 import React, {useState} from "react";
-import {storage} from "../firebase";
+/*import {storage} from "../firebase";*/
 
 export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
-    const [newImg, setNewImg] = useState(null);
-    const [updatedUrl, setUpdatedUrl] = useState(plant.image);
+  //  const [newImg, setNewImg] = useState(null);
+  //  const [updatedUrl, setUpdatedUrl] = useState(plant.image);
     const [updatedPlant, setUpdatedPlant] = useState({
         name: plant.name,
         species: plant.species,
@@ -52,7 +52,7 @@ export const EditPlant = ({plant, onUpdatePlant, hideAdd}) => {
                 species: updatedPlant.species,
                 date: updatedPlant.date,
                 care: updatedPlant.care,
-                image: updatedUrl
+                image: plant.image
             }
         )
         setUpdatedPlant({
