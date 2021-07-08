@@ -112,9 +112,13 @@ export const Profile = ({match}) => {
                 </div>
                 <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
 
-                <button className='profile__edit__btn' onClick={() => showEdit(true)}>
-                    <FontAwesomeIcon icon={faEdit}/>
-                </button>
+                <div className='profile__buttons'>
+                    <Link to='/' className='profile__buttons__home'><FontAwesomeIcon icon={faHome}/></Link>
+                    <button className='profile__buttons__edit' onClick={() => showEdit(true)}>
+                        <FontAwesomeIcon icon={faEdit}/>
+                    </button>
+                </div>
+
 
                 {openEditImg && <EditImg onUpdateImg={updateImage} hideAdd={showEditImg} onProgress={progress}
                                          onResetProgress={resetProgress}/>}
@@ -131,7 +135,6 @@ export const Profile = ({match}) => {
                         </li>)}
                     </ul>
                 </div>
-                <Link to='/' className='profile__home'><FontAwesomeIcon icon={faHome}/></Link>
             </div>
         </section>
     );

@@ -102,29 +102,54 @@
     }
   }
 
-  &__edit__btn {
+  &__buttons {
     position: fixed;
-    z-index: 3;
+    left: 50vw;
+    transform: translateX(-50%);
     top: 1rem;
-    right: 1rem;
-    font-size: 2rem;
-    padding: 0;
-    box-shadow: none;
-    background-color: transparent;
-
-    &:hover {
-      box-shadow: none;
-    }
+    height: 2rem;
+    width: calc(100vw - 2rem);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
 
     @media (min-width: $tablet) {
-      left: 5rem;
+      justify-content: flex-start;
+      gap: 2rem;
     }
 
     @media (min-width: $laptop) {
-      left: 50%;
-      transform: translateX(-400px);
+      width: calc(1024px - 8rem);
+    }
+
+    &__edit {
+      z-index: 3;
+      font-size: 2rem;
+      padding: 0;
+      box-shadow: none;
+      background-color: transparent;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    &__home {
+      transition: .5s;
+      font-size: 2rem;
+      color: $color-btn;
+
+      &:hover {
+        color: lighten($color-home-title, 20%);
+      }
+
+      &:active {
+        transition: .1s;
+        transform: scale(.2);
+      }
     }
   }
+
 
   &__diary {
     width: 75%;
@@ -171,25 +196,6 @@
         list-style: none;
         box-shadow: 0 5px 10px -3px grey;
       }
-    }
-  }
-
-  &__home {
-    text-transform: uppercase;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    transition: .5s;
-    font-size: 2rem;
-    color: $color-btn;
-
-    @media (min-width: $laptop) {
-      left: 50%;
-      transform: translate(-480px);
-    }
-
-    &:hover {
-      color: lighten($color-home-title, 20%);
     }
   }
 }
