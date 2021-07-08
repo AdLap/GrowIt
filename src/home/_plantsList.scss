@@ -36,6 +36,7 @@
     top: 15px;
     left: 10px;
     transition: .5s;
+    overflow: hidden;
 
     &:hover {
       transform: scale(1.1);

@@ -19,6 +19,7 @@
     height: 250px;
     margin: 0 auto;
     position: relative;
+    overflow: hidden;
 
     @media (min-width: $tablet) {
       position: absolute;
@@ -34,7 +35,6 @@
     &__img {
       width: 100%;
       height: auto;
-      overflow: hidden;
       outline: none;
 
     }
