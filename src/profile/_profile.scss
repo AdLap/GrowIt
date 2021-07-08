@@ -23,6 +23,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    z-index: 1;
 
     @media (min-width: $tablet) {
       position: absolute;
@@ -149,55 +150,6 @@
       &:active {
         transition: .1s;
         transform: scale(.9);
-      }
-    }
-  }
-
-
-  &__diary {
-    width: 75%;
-    //padding: 1.5rem 0 1.5rem 0;
-    margin-top: 3rem;
-    position: relative;
-
-    @media (min-width: $tablet) {
-      margin: 4rem auto auto 2rem;
-      width: 500px;
-    }
-
-    @media (min-width: $laptop) {
-      margin-top: 5rem;
-    }
-
-    &__add {
-      position: absolute;
-      bottom: 0;
-      right: 0;
-      padding: 0;
-      box-shadow: none;
-      background-color: transparent;
-      font-size: 1.5rem;
-
-      &:hover {
-        box-shadow: none;
-      }
-    }
-
-    &__list {
-      padding: 0;
-      margin: 0 auto;
-      font-size: 1.5rem;
-      font-weight: bold;
-
-      &__item {
-        background-color: white;
-        border-radius: 5px;
-        padding: 1rem;
-        margin-top: 1rem;
-        font-size: 1rem;
-        font-weight: normal;
-        list-style: none;
-        box-shadow: 0 5px 10px -3px grey;
       }
     }
   }

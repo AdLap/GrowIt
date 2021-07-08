@@ -6,12 +6,16 @@ import {EditImg} from "./editImg";
 import firebase from "firebase";
 import {db, storage} from "../firebase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExchangeAlt, faHome, faPlusCircle} from "@fortawesome/free-solid-svg-icons";
+import {faExchangeAlt, faHome} from "@fortawesome/free-solid-svg-icons";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
+import {Diary} from "./diary";
+import {EditDiary} from "./diary/editDiary";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
+   // const [openEditDiary, setOpenEditDiary] = useState(false);
+  //  const [plt, setPlt] = useState({});
     const [openEdit, setOpenEdit] = useState(false);
     const [openEditImg, setOpenEditImg] = useState(false);
     const [progress, setProgress] = useState(0);
@@ -33,6 +37,27 @@ export const Profile = ({match}) => {
             .update({diary: firebase.firestore.FieldValue.arrayUnion(newDiary)})
             .catch(error => console.error('Err', error))
     }
+
+    const deleteDiary = (delDiary) => {
+        db.collection('plants')
+            .doc(`${match.params.plantId}`)
+            .update({diary: firebase.firestore.FieldValue.arrayRemove(delDiary)
+            })
+            .catch(error => console.error('error', error));
+    }
+
+    /*const updateDiary = (updatedDiary) => {
+        db.collection('plants')
+            .doc(`${match.params.plantId}`)
+            .update({diary: firebase.firestore.FieldValue.arrayUnion(updatedDiary)
+                  /!*  {
+                        date: updatedDiary.date,
+                        do: updatedDiary.do,
+                        note: updatedDiary.note
+                    }*!/
+            })
+            .catch(error => console.error('Err', error))
+    }*/
 
     const updatePlant = (plantData) => {
         db.collection('plants')
@@ -84,6 +109,11 @@ export const Profile = ({match}) => {
         setOpenAdd(todo);
     }
 
+    /*const showEditDiary = (todo, plt) => {
+        setOpenEditDiary(todo);
+        setPlt(plt);
+    }*/
+
     const showEdit = todo => {
         setOpenEdit(todo);
     }
@@ -124,17 +154,10 @@ export const Profile = ({match}) => {
                                          onResetProgress={resetProgress}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
+              {/*  {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
 
-                <div className='profile__diary'>
-                    <button className='profile__diary__add' title='Dodaj wpis' onClick={() => showAdd(true)}>
-                        <FontAwesomeIcon icon={faPlusCircle}/></button>
-                    <ul className='profile__diary__list'>Dziennik podlewań:
-                        {plant.diary && plant.diary.map((plt, idx) => <li key={idx}
-                                                                          className='profile__diary__list__item'>
-                            <strong>kiedy:</strong> {plt.date}<br/><strong>co zrobione:</strong> {plt.do} / {plt.note}
-                        </li>)}
-                    </ul>
-                </div>
+                <Diary diary={plant.diary} onShowAdd={showAdd} onDeleteDiary={deleteDiary} />
+
             </div>
         </section>
     );

@@ -19,14 +19,6 @@ export const Home = () => {
     }, []);
     console.log('plants::', plants);
 
-    /*  const getPlants = () => {
-          db.collection('plants')
-              .orderBy('date', 'desc')
-              .onSnapshot((snapshot) => {
-                  setPlants(snapshot.docs.map(doc => ({id: doc.id, ...doc.data()})))
-              });
-      }*/
-
     const addPlant = (plant) => {
         db.collection('plants')
             .add(plant)

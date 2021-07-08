@@ -1,0 +1,66 @@
+.profile {
+
+  &__diary {
+    width: 75%;
+    //padding: 1.5rem 0 1.5rem 0;
+    margin-top: 3rem;
+    position: relative;
+
+    @media (min-width: $tablet) {
+      margin: 4rem auto auto 2rem;
+      width: 500px;
+    }
+
+    @media (min-width: $laptop) {
+      margin-top: 5rem;
+    }
+
+    &__add {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      padding: 0;
+      box-shadow: none;
+      background-color: transparent;
+      font-size: 1rem;
+      z-index: 1;
+
+      &:hover {
+        box-shadow: none;
+      }
+    }
+
+    &__list {
+      padding: 0;
+      margin: 0 auto;
+      font-size: 1.5rem;
+      font-weight: bold;
+
+      &__item {
+        background-color: white;
+        border-radius: 5px;
+        padding: 1rem;
+        margin-top: 1rem;
+        font-size: 1rem;
+        font-weight: normal;
+        list-style: none;
+        box-shadow: 0 5px 10px -3px grey;
+        position: relative;
+      }
+
+      &__delete {
+        position: absolute;
+        top: 0;
+        right: 0;
+        box-shadow: none;
+        padding: 0;
+        font-size: 1rem;
+
+        &:hover {
+          box-shadow: none;
+        }
+
+      }
+    }
+  }
+}
