@@ -24,7 +24,6 @@ export const Home = () => {
             .add(plant)
             //   .then(() => {
 
-            //alert('Roślina dodana')
             /* setPlants([
                  ...plants,
                  plant

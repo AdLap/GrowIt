@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {AddDiary} from "./addDiary";
 import {EditPlant} from "./editProfile";
-import {EditImg} from "./editImg";
+import {HandleImg} from "./handleImg";
 import firebase from "firebase";
 import {db, storage} from "../firebase";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
@@ -72,7 +72,7 @@ export const Profile = ({match}) => {
             .catch(error => console.error('Err', error))
     }
 
-    const updateImage = (newImg) => {
+    const uploadImage = (newImg) => {
         const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg);
         uploadImg.on(
             'state-changed',
@@ -90,13 +90,13 @@ export const Profile = ({match}) => {
                     .getDownloadURL()
                     .then(url => {
                         console.log(url);
-                        uploadNewImg(url);
+                        updateImg(url);
                     });
             }
         )
     }
 
-    const uploadNewImg = url => {
+    const updateImg = url => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
             .update({
@@ -150,7 +150,7 @@ export const Profile = ({match}) => {
                 </div>
 
 
-                {openEditImg && <EditImg onUpdateImg={updateImage} hideAdd={showEditImg} onProgress={progress}
+                {openEditImg && <HandleImg onUpdateImg={uploadImage} hideAdd={showEditImg} onProgress={progress}
                                          onResetProgress={resetProgress}/>}
                 {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
                 {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}

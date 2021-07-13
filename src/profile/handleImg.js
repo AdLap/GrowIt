@@ -1,10 +1,19 @@
 import React, {useState} from "react";
 
-export const EditImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress}) => {
+export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, onAddImage}) => {
     const [newImg, setNewImg] = useState('');
+    const [err, setErr] = useState('');
 
     const handleUpdateImage = e => {
-        setNewImg(e.target.files[0]);
+        let selectedImage = e.target.files[0];
+        setNewImg(selectedImage);
+        if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
+            setNewImg(selectedImage);
+            setErr('');
+        } else {
+            setNewImg(null);
+            setErr('Wybierz plik z obrazem (jpg lub png)')
+        }
     }
 
     const handleSubmitImage = e => {
@@ -30,6 +39,8 @@ export const EditImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress}) => 
             <form onSubmit={handleSubmitImage}>
                 <label>Zmień zdjęcie:
                     <input onChange={handleUpdateImage} type='file'/>
+                    {newImg && <div className='add__form__selected'>{newImg.name}</div> }
+                    {err && <div className='add__form__err'>{err}</div> }
                     <button className='add__form__btn' onClick={handleSubmitImage}
                             disabled={onProgress === 100 && true}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'

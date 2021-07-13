@@ -1,6 +1,7 @@
 import './App.scss';
 import {Home} from "./home/home";
 import {Profile} from "./profile/profile"
+import {Gallery} from "./gallery/gallery";
 import {
     HashRouter,
     Route,
@@ -22,6 +23,7 @@ function App() {
         <Switch>
             <Route exact path='/' component={Home} />
             <Route path='/profile/:plantId' component={Profile}/>
+            <Route path='/gallery' component={Gallery} />
             <Route component={NotFound}/>
         </Switch>
     </HashRouter>

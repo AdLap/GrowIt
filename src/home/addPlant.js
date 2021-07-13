@@ -106,10 +106,12 @@ export const AddPlant = ({onAdd, hideAdd}) => {
 
                 <label>Dodaj zdjęcie:
                     <input onChange={handleAddImage} type='file'/>
+                    {img && <div className='add__form__selected'>{img.name}</div> }
                     <button className='add__form__btn' onClick={handleSubmitImage}
                             disabled={progress === 100 && true}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'
-                             style={{width: `${progress}%`}}>{progress === 100 && 'Zdjęcie dodano'}</div>
+                             style={{width: `${progress}%`}}>{progress === 100 && 'Zdjęcie dodano'}
+                        </div>
                     </button>
                 </label>
 
