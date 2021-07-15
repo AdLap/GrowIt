@@ -6,7 +6,7 @@ export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, on
 
     const handleUpdateImage = e => {
         let selectedImage = e.target.files[0];
-        setNewImg(selectedImage);
+    //    setNewImg(selectedImage);
         if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
             setNewImg(selectedImage);
             setErr('');
@@ -42,7 +42,7 @@ export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, on
                     {newImg && <div className='add__form__selected'>{newImg.name}</div> }
                     {err && <div className='add__form__err'>{err}</div> }
                     <button className='add__form__btn' onClick={handleSubmitImage}
-                            disabled={onProgress === 100 && true}>Dodaj zdjęcie
+                            disabled={onProgress === 100}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'
                              style={{width: `${onProgress}%`}}>{onProgress === 100 && 'Zdjęcie dodano'}</div>
                     </button>

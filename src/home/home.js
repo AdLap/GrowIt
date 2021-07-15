@@ -22,13 +22,6 @@ export const Home = () => {
     const addPlant = (plant) => {
         db.collection('plants')
             .add(plant)
-            //   .then(() => {
-
-            /* setPlants([
-                 ...plants,
-                 plant
-             ])*/
-            //  })
             .catch(error => console.error('error', error));
     }
 
@@ -36,7 +29,6 @@ export const Home = () => {
         db.collection('plants')
             .doc(plantId)
             .delete()
-           // .then(() => setPlants(plants.filter(plant => plant.id !== plantId)))
             .catch(error => console.error('error', error));
         console.log('image do del::', plantId.image);
         storage.refFromURL(plantImg).delete()
@@ -49,8 +41,8 @@ export const Home = () => {
 
     return (
         <section className='home'>
-            <h1 className='home__title'>Moje rośliny</h1>
-            {!plants.length ? <div><h2>Wczytuję dane..</h2>
+            <h1 className='home__title'>Mój ogródek</h1>
+            {!plants.length ? <div><h2>Wczytuję dane...</h2>
                 <button onClick={() => setOpenAdd(true)} className='plant__add'>{null}</button>
             </div> : <PlantsList showPlants={plants} openAdd={handleOpenAdd} onDelete={deletePlant}/>}
             {openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd}/>}

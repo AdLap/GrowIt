@@ -5,7 +5,8 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     const [img, setImg] = useState(null);
     const [url, setUrl] = useState(null);
     const [progress, setProgress] = useState(0);
-  //  const [error, setError] = useState(null)
+    const [error, setError] = useState(null);
+    const [validErrMsg, setValidErrMsg] = useState('');
     const [newPlant, setNewPlant] = useState({
         name: '',
         species: '',
@@ -13,7 +14,8 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         care: '',
         image: '',
         diary: []
-    })
+    });
+
 
     console.log('img::', img);
     console.log('progress', progress);
@@ -51,7 +53,16 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     }
 
     const handleAddImage = e => {
-        setImg(e.target.files[0]);
+      //  setImg(e.target.files[0]);
+        let selectedImage = e.target.files[0];
+        //    setNewImg(selectedImage);
+        if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
+            setImg(selectedImage);
+            setError('');
+        } else {
+            setImg(null);
+            setError('Wybierz plik z obrazem (jpg lub png)')
+        }
     }
 
     const handleSubmitImage = e => {
@@ -64,24 +75,43 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         e.preventDefault();
         e.stopPropagation();
         console.log('newPlant::', newPlant)
-        onAdd({
-            name: newPlant.name,
-            species: newPlant.species,
-            date: newPlant.date,
-            care: newPlant.care,
-            image: url,
-            diary: []
-        })
-        setNewPlant({
-            name: '',
-            species: '',
-            date: '',
-            care: '',
-            image: '',
-            diary: []
-        })
-        hideAdd(false);
-        setProgress(0);
+
+        const err = validate(newPlant);
+        if (err) {
+            setValidErrMsg(err)
+        } else {
+            onAdd({
+                name: newPlant.name,
+                species: newPlant.species,
+                date: newPlant.date,
+                care: newPlant.care,
+                image: url,
+                diary: []
+            })
+            setNewPlant({
+                name: '',
+                species: '',
+                date: '',
+                care: '',
+                image: '',
+                diary: []
+            })
+            hideAdd(false);
+            setProgress(0);
+        }
+    }
+
+    const validate = newPlant => {
+        if (newPlant.name.length < 1) {
+            return 'Nazwij mnie... :)';
+        }
+        if (newPlant.species.length < 3) {
+            return 'Nazwa mojego gatunku nie mie może być krótsza niz 3 znaki... :P';
+        }
+        if (!newPlant.date) {
+            return 'Napisz od kiedy z Tobą jestem :)';
+        }
+        return null;
     }
 
     return (
@@ -107,6 +137,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                 <label>Dodaj zdjęcie:
                     <input onChange={handleAddImage} type='file'/>
                     {img && <div className='add__form__selected'>{img.name}</div> }
+                    {error && <div className='add__form__err'>{error}</div> }
                     <button className='add__form__btn' onClick={handleSubmitImage}
                             disabled={progress === 100 && true}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'
@@ -116,6 +147,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                 </label>
 
                 <button className='add__form__btn' onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
+                {validErrMsg && <div>{validErrMsg}</div>}
             </form>
         </div>
     );
