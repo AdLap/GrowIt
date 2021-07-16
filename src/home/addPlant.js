@@ -147,7 +147,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
                 </label>
 
                 <button className='add__form__btn' onSubmit={handleSubmit}>Utwórz profil dla {newPlant.name}</button>
-                {validErrMsg && <div>{validErrMsg}</div>}
+                {validErrMsg && <div className='add__form__err'>{validErrMsg}</div>}
             </form>
         </div>
     );

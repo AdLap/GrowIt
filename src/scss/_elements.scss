@@ -73,10 +73,15 @@ button {
       top: 0;
       left: 0;
       height: 100%;
-      color: $color-txt-main;
-      font-size: 1rem;
+      color: #1aff00;
+      font-size: 100%;
       line-height: 35px;
     }
+  }
+
+  &__err {
+    color: $color-err;
+    margin-top: 1rem;
   }
 }
 

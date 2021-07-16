@@ -1,12 +1,11 @@
 import React, {useState} from "react";
 
 export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, onAddImage}) => {
-    const [newImg, setNewImg] = useState('');
+    const [newImg, setNewImg] = useState(null);
     const [err, setErr] = useState('');
 
     const handleUpdateImage = e => {
         let selectedImage = e.target.files[0];
-    //    setNewImg(selectedImage);
         if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
             setNewImg(selectedImage);
             setErr('');
@@ -42,12 +41,11 @@ export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, on
                     {newImg && <div className='add__form__selected'>{newImg.name}</div> }
                     {err && <div className='add__form__err'>{err}</div> }
                     <button className='add__form__btn' onClick={handleSubmitImage}
-                            disabled={onProgress === 100}>Dodaj zdjęcie
+                            disabled={onProgress && true}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'
-                             style={{width: `${onProgress}%`}}>{onProgress === 100 && 'Zdjęcie dodano'}</div>
+                             style={{width: `${onProgress}%`}}>{onProgress === 100 && 'Mam nową fotę :)'}</div>
                     </button>
-                    {onProgress === 100 &&
-                    <button className='add__form__btn__ok' onClick={handleConfirmButton}>Potwierdź</button>}
+                    {onProgress === 100 && <button className='add__form__btn__ok' onClick={handleConfirmButton}>Podoba się?</button>}
                 </label>
             </form>
         </div>
