@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faExchangeAlt, faHome} from "@fortawesome/free-solid-svg-icons";
 import {faEdit} from "@fortawesome/free-regular-svg-icons";
 import {Diary} from "./diary";
-import {EditDiary} from "./diary/editDiary";
+//import {EditDiary} from "./diary/editDiary";
 
 export const Profile = ({match}) => {
     const [plant, setPlant] = useState({});
