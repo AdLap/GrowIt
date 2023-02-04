@@ -1,6 +1,6 @@
-import React, {useEffect, useState} from "react";
-import {storage} from "../firebase";
-import {HandleImg} from "../profile/handleImg";
+import React, { useState } from "react";
+import { storage } from "../firebase/firebase";
+import { HandleImg } from "../profile/handleImg";
 
 export const Gallery = () => {
     const [images, setImages] = useState([]);
@@ -10,16 +10,16 @@ export const Gallery = () => {
 
     console.log(images)
 
- /*   useEffect(() => {
-        const unsubscribe = storage.ref('img')
-            .child()
-            .getDownloadURL()
-            .then(url => {
-                setImages([...images, url])
-            })
-
-        return () => unsubscribe();
-    }, [])*/
+    /*   useEffect(() => {
+           const unsubscribe = storage.ref('img')
+               .child()
+               .getDownloadURL()
+               .then(url => {
+                   setImages([...images, url])
+               })
+   
+           return () => unsubscribe();
+       }, [])*/
 
     const addImage = (newImage) => {
         const uploadImg = storage.ref(`img/${newImage.name}`).put(newImage);
@@ -48,7 +48,7 @@ export const Gallery = () => {
 
     return (
         <section className='gallery'>
-            <HandleImg onAddImage={addImage}  />
+            <HandleImg onAddImage={addImage} />
         </section>
     );
 }

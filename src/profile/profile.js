@@ -1,49 +1,58 @@
-import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import {AddDiary} from "./addDiary";
-import {EditPlant} from "./editProfile";
-import {HandleImg} from "./handleImg";
-import firebase from "firebase";
-import {db, storage} from "../firebase";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faExchangeAlt, faHome} from "@fortawesome/free-solid-svg-icons";
-import {faEdit} from "@fortawesome/free-regular-svg-icons";
-import {Diary} from "./diary";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { AddDiary } from "./addDiary";
+import { EditPlant } from "./editProfile";
+import { HandleImg } from "./handleImg";
+import firebase from "firebase/compat/app"; // compat ??
+import { db, storage } from "../firebase/firebase";
+import { doc, getDoc, updateDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExchangeAlt, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faEdit } from "@fortawesome/free-regular-svg-icons";
+import { Diary } from "./diary";
 //import {EditDiary} from "./diary/editDiary";
 
-export const Profile = ({match}) => {
+export const Profile = ({ match }) => {
     const [plant, setPlant] = useState({});
     const [openAdd, setOpenAdd] = useState(false);
-   // const [openEditDiary, setOpenEditDiary] = useState(false);
-  //  const [plt, setPlt] = useState({});
+    // const [openEditDiary, setOpenEditDiary] = useState(false);
+    //  const [plt, setPlt] = useState({});
     const [openEdit, setOpenEdit] = useState(false);
     const [openEditImg, setOpenEditImg] = useState(false);
     const [progress, setProgress] = useState(0);
 
     useEffect(() => {
-        const unsubscribe = db.collection('plants')
-            .doc(`${match.params.plantId}`)
-            .onSnapshot((doc) => {
-                setPlant(doc.data());
-            })
+        // const unsubscribe = db.collection('plants')
+        //     .doc(`${match.params.plantId}`)
+        //     .onSnapshot((doc) => {
+        //         setPlant(doc.data());
+        //     })
+
+        const plantRef = doc(db, 'plants', match.params.plantId)
+        
+        const unsubscribe = async () => { // async ?????????
+            const dataPlant = await getDoc(plantRef);
+            setPlant(dataPlant.data());
+        }
 
         return () => unsubscribe();
 
     }, [match.params.plantId])
 
     const addDiary = (newDiary) => {
-        db.collection('plants')
-            .doc(`${match.params.plantId}`)
-            .update({diary: firebase.firestore.FieldValue.arrayUnion(newDiary)})
-            .catch(error => console.error('Err', error))
+        const diaryRef = doc(db, 'plants', match.params.plantId);
+        updateDoc(diaryRef, {
+            diary: arrayUnion(newDiary)
+        });
     }
 
     const deleteDiary = (delDiary) => {
         db.collection('plants')
             .doc(`${match.params.plantId}`)
-            .update({diary: firebase.firestore.FieldValue.arrayRemove(delDiary)
+            .update({
+                diary: firebase.firestore.FieldValue.arrayRemove(delDiary)
             })
-            .catch(error => console.error('error', error));
+            .catch(error => console.error(error));
     }
 
     /*const updateDiary = (updatedDiary) => {
@@ -125,36 +134,36 @@ export const Profile = ({match}) => {
     const resetProgress = todo => {
         setProgress(todo);
     }
-
+    console.log('plant::', plant)
     return (
         <section className='profile'>
             <div className='container'>
                 <h1 className='profile__title'>{plant.name}</h1>
                 <div className='profile__img'>
-                    <img className='profile__img__img' src={plant.image} alt={plant.species}/>
+                    <img className='profile__img__img' src={plant.image} alt={plant.species} />
                     <button className='profile__img__btn' onClick={() => showEditImg(true)}>
-                        <FontAwesomeIcon icon={faExchangeAlt}/>
+                        <FontAwesomeIcon icon={faExchangeAlt} />
                     </button>
                 </div>
                 <div className='profile__data'>
                     <span className='profile__data__species'><strong>Gatunek:</strong> {plant.species}</span>
                     <span className='profile__data__date'><strong>Od kiedy go mam:</strong> {plant.date}</span>
                 </div>
-                <p className='profile__care'>Pielęgnacja:<br/>{plant.care}</p>
+                <p className='profile__care'>Pielęgnacja:<br />{plant.care}</p>
 
                 <div className='profile__buttons'>
-                    <Link to='/' className='profile__buttons__home'><FontAwesomeIcon icon={faHome}/></Link>
+                    <Link to='/' className='profile__buttons__home'><FontAwesomeIcon icon={faHome} /></Link>
                     <button className='profile__buttons__edit' onClick={() => showEdit(true)}>
-                        <FontAwesomeIcon icon={faEdit}/>
+                        <FontAwesomeIcon icon={faEdit} />
                     </button>
                 </div>
 
 
                 {openEditImg && <HandleImg onUpdateImg={uploadImage} hideAdd={showEditImg} onProgress={progress}
-                                         onResetProgress={resetProgress}/>}
-                {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit}/>}
-                {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant}/>}
-              {/*  {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
+                    onResetProgress={resetProgress} />}
+                {openEdit && <EditPlant plant={plant} onUpdatePlant={updatePlant} hideAdd={showEdit} />}
+                {openAdd && <AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant} />}
+                {/*  {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
 
                 <Diary diary={plant.diary} onShowAdd={showAdd} onDeleteDiary={deleteDiary} />
 

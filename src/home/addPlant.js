@@ -1,7 +1,8 @@
-import React, {useState} from "react";
-import {storage} from "../firebase";
+import React, { useState } from "react";
+import { storage } from "../firebase/firebase";
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
-export const AddPlant = ({onAdd, hideAdd}) => {
+export const AddPlant = ({ onAdd, hideAdd }) => {
     const [img, setImg] = useState(null);
     const [url, setUrl] = useState(null);
     const [progress, setProgress] = useState(0);
@@ -16,33 +17,28 @@ export const AddPlant = ({onAdd, hideAdd}) => {
         diary: []
     });
 
-
-    console.log('img::', img);
-    console.log('progress', progress);
-
     const addImage = (img) => {
-        const uploadImg = storage.ref(`img/${img.name}`).put(img);
-        uploadImg.on(
-            'state-changed',
-            snapshot => {
-                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                setProgress(percentage);
-            },
-            error => {
-                console.log(error);
-        //        setError(error);
-            },
-            () => {
-                storage
-                    .ref('img')
-                    .child(img.name)
-                    .getDownloadURL()
-                    .then(url => {
-                        console.log(url);
-                        setUrl(url);
-                    });
-            }
-        )
+        const storageRef = ref(storage, `img/${img.name}`);
+        try {
+            const uploadImg = uploadBytesResumable(storageRef, img);
+            uploadImg.on(
+                'state-changed',
+                snapshot => {
+                    let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    setProgress(percentage);
+                },
+                error => {
+                    console.log(error);
+                    // setError(error);
+                },
+                () => {
+                    getDownloadURL(uploadImg.snapshot.ref).then(downloadURL => setUrl(downloadURL));
+                }
+            )
+        } catch (error) {
+            console.error(error)
+
+        }
     }
 
     const handleNewPlant = e => {
@@ -53,7 +49,7 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     }
 
     const handleAddImage = e => {
-      //  setImg(e.target.files[0]);
+        //  setImg(e.target.files[0]);
         let selectedImage = e.target.files[0];
         //    setNewImg(selectedImage);
         if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
@@ -74,7 +70,6 @@ export const AddPlant = ({onAdd, hideAdd}) => {
     const handleSubmit = e => {
         e.preventDefault();
         e.stopPropagation();
-        console.log('newPlant::', newPlant)
 
         const err = validate(newPlant);
         if (err) {
@@ -122,26 +117,26 @@ export const AddPlant = ({onAdd, hideAdd}) => {
             </div>
             <form onSubmit={handleSubmit}>
                 <label>Imię:
-                    <input name='name' value={newPlant.name} onChange={handleNewPlant}/>
+                    <input name='name' value={newPlant.name} onChange={handleNewPlant} />
                 </label>
                 <label>Nazwa (gatunek):
-                    <input name='species' value={newPlant.species} onChange={handleNewPlant}/>
+                    <input name='species' value={newPlant.species} onChange={handleNewPlant} />
                 </label>
                 <label>Data sadzenia:
-                    <input name='date' value={newPlant.date} onChange={handleNewPlant}/>
+                    <input name='date' value={newPlant.date} onChange={handleNewPlant} />
                 </label>
                 <label>Pielęgnacja:
-                    <input name='care' value={newPlant.care} onChange={handleNewPlant} type='textarea'/>
+                    <input name='care' value={newPlant.care} onChange={handleNewPlant} type='textarea' />
                 </label>
 
                 <label>Dodaj zdjęcie:
-                    <input onChange={handleAddImage} type='file'/>
-                    {img && <div className='add__form__selected'>{img.name}</div> }
-                    {error && <div className='add__form__err'>{error}</div> }
+                    <input onChange={handleAddImage} type='file' />
+                    {img && <div className='add__form__selected'>{img.name}</div>}
+                    {error && <div className='add__form__err'>{error}</div>}
                     <button className='add__form__btn' onClick={handleSubmitImage}
-                            disabled={progress === 100 && true}>Dodaj zdjęcie
+                        disabled={progress === 100 && true}>Dodaj zdjęcie
                         <div className='add__form__btn__progress'
-                             style={{width: `${progress}%`}}>{progress === 100 && 'Zdjęcie dodano'}
+                            style={{ width: `${progress}%` }}>{progress === 100 && 'Zdjęcie dodano'}
                         </div>
                     </button>
                 </label>
