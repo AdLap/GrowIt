@@ -5,7 +5,7 @@ import { EditPlant } from "./editProfile";
 import { HandleImg } from "./handleImg";
 import firebase from "firebase/compat/app"; // compat ??
 import { db, storage } from "../firebase/firebase";
-import { doc, getDoc, updateDoc, arrayUnion, onSnapshot } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, arrayUnion, deleteDoc, deleteField, arrayRemove } from 'firebase/firestore';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExchangeAlt, faHome } from "@fortawesome/free-solid-svg-icons";
 import { faEdit } from "@fortawesome/free-regular-svg-icons";
@@ -21,38 +21,36 @@ export const Profile = ({ match }) => {
     const [openEditImg, setOpenEditImg] = useState(false);
     const [progress, setProgress] = useState(0);
 
-    useEffect(() => {
-        // const unsubscribe = db.collection('plants')
-        //     .doc(`${match.params.plantId}`)
-        //     .onSnapshot((doc) => {
-        //         setPlant(doc.data());
-        //     })
+    const plantRef = doc(db, 'plants', match.params.plantId);
+    const diaryRef = doc(db, 'plants', match.params.plantId);
 
-        const plantRef = doc(db, 'plants', match.params.plantId)
-        
-        const unsubscribe = async () => { // async ?????????
-            const dataPlant = await getDoc(plantRef);
-            setPlant(dataPlant.data());
+    useEffect(() => {
+        const fetchPlant = async () => {
+            const data = await getDoc(plantRef);
+            setPlant(data.data());
         }
 
-        return () => unsubscribe();
+        try {
+            fetchPlant()
+        } catch (error) {
+            console.error(error);
+        }
+
+        return () => fetchPlant();
 
     }, [match.params.plantId])
 
     const addDiary = (newDiary) => {
-        const diaryRef = doc(db, 'plants', match.params.plantId);
         updateDoc(diaryRef, {
             diary: arrayUnion(newDiary)
         });
     }
 
     const deleteDiary = (delDiary) => {
-        db.collection('plants')
-            .doc(`${match.params.plantId}`)
-            .update({
-                diary: firebase.firestore.FieldValue.arrayRemove(delDiary)
-            })
-            .catch(error => console.error(error));
+        console.log('de', delDiary)
+        updateDoc(diaryRef, {
+            diary: arrayRemove(delDiary)
+        })
     }
 
     /*const updateDiary = (updatedDiary) => {
@@ -134,7 +132,7 @@ export const Profile = ({ match }) => {
     const resetProgress = todo => {
         setProgress(todo);
     }
-    console.log('plant::', plant)
+
     return (
         <section className='profile'>
             <div className='container'>
