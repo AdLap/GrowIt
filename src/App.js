@@ -1,5 +1,5 @@
 import './App.scss'
-import { Home } from './home/home'
+import Home from './home/Home'
 import { Profile } from './profile/profile'
 import { Gallery } from './gallery/gallery'
 import { BrowserRouter, Route, Link, Routes } from 'react-router-dom'

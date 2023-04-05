@@ -16,7 +16,7 @@ import axios from 'axios'
 
 const Home = () => {
 	// const [plants, setPlants] = useState([])
-	const [openAdd, setOpenAdd] = useState(() => false)
+	const [openAdd, setOpenAdd] = useState(false)
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 
 	// useEffect(() => {
