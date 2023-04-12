@@ -20,6 +20,8 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons'
 import { Diary } from './diary'
 //import {EditDiary} from "./diary/editDiary";
 
+// TODO | GROW-9
+
 export const Profile = () => {
 	const [plant, setPlant] = useState({})
 	const [openAdd, setOpenAdd] = useState(false)

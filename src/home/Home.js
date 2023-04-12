@@ -12,7 +12,7 @@ const Home = () => {
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
-	// TODO - redux && db
+	// TODO - redux && db | GROW-4
 	const addPlant = (plant) => {
 		try {
 			axios.post(`${DB_URL}/plants.json`, plant)
@@ -21,7 +21,7 @@ const Home = () => {
 		}
 	}
 
-	// TODO -redux && db
+	// TODO -redux && db | GROW-6
 	const deletePlant = (plantId, plantImg) => {
 		const plantRef = ref(storage, plantImg)
 		try {

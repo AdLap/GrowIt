@@ -1,5 +1,7 @@
 import React, {useState} from "react";
 
+// TODO | GROW-7. GROW-8
+
 export const HandleImg = ({onUpdateImg, hideAdd, onProgress, onResetProgress, onAddImage}) => {
     const [newImg, setNewImg] = useState(null);
     const [err, setErr] = useState('');
