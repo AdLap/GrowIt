@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import actions from '../app/plants/duck/actions'
-import { storage } from '../firebase/firebase'
+import actions from '../duck/actions'
+import { storage } from '../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
 // TODO redux && hooks && db | GROW-4
@@ -21,6 +21,7 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		diary: [],
 	})
 
+	// TODO | GROW-7
 	const addImage = (img) => {
 		const storageRef = ref(storage, `img/${img.name}`)
 		try {
@@ -54,6 +55,7 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		})
 	}
 
+	// TODO | GROW-7
 	const handleAddImage = (e) => {
 		//  setImg(e.target.files[0]);
 		let selectedImage = e.target.files[0]
@@ -67,6 +69,7 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		}
 	}
 
+	//TODO | GROW-7
 	const handleSubmitImage = (e) => {
 		e.preventDefault()
 		e.stopPropagation()
@@ -78,6 +81,7 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		e.stopPropagation()
 
 		const err = validate(newPlant)
+
 		if (err) {
 			setValidErrMsg(err)
 		} else {
