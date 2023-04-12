@@ -4,17 +4,18 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { getPlants } from '../app/plants/duck/operations'
+import { getPlants } from '../duck/operations'
 
 const PlantsList = ({ openAdd, onDelete }) => {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		dispatch(getPlants())
-	}, [])
+		const getAllPlants = () => dispatch(getPlants())
 
-	const plants = useSelector(state => state.plantsList)
-	console.log('list::', plants)
+		return () => getAllPlants()
+	},[dispatch])
+	
+	const plants = useSelector(state => state.plants.plantsList)
 
 	return (
 		<section className='plant'>

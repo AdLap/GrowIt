@@ -4,6 +4,8 @@ import actions from '../app/plants/duck/actions'
 import { storage } from '../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 
+// TODO redux && hooks && db
+
 const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 	const [img, setImg] = useState(null)
 	const [url, setUrl] = useState(null)

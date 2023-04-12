@@ -1,7 +1,6 @@
 import types from './types'
 
 const INITIAL_STATE = {
-	name: 'plants',
 	plantsList: [],
 }
 
