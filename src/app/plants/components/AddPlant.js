@@ -1,14 +1,12 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import actions from '../duck/actions'
+import { useDispatch } from 'react-redux'
 import { storage } from '../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { addPlant } from '../duck/operations'
 
-// TODO redux && hooks && db | GROW-4
-
-const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
+const AddPlant = ({ onAdd, hideAdd }) => {
 	const [img, setImg] = useState(null)
-	const [url, setUrl] = useState(null)
+	// const [imgUrl, setImgUrl] = useState(null) // GROW-7
 	const [progress, setProgress] = useState(0)
 	const [error, setError] = useState(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
@@ -20,6 +18,8 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		image: '',
 		diary: [],
 	})
+
+	const dispatch = useDispatch()
 
 	// TODO | GROW-7
 	const addImage = (img) => {
@@ -38,8 +38,9 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 					// setError(error);
 				},
 				() => {
-					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) =>
-						setUrl(downloadURL)
+					getDownloadURL(uploadImg.snapshot.ref).then(
+						(downloadURL) => console.log('imgURL::', downloadURL)
+						// setImgUrl(downloadURL) // GROW-7
 					)
 				}
 			)
@@ -78,34 +79,24 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		e.stopPropagation()
-
 		const err = validate(newPlant)
 
 		if (err) {
 			setValidErrMsg(err)
-		} else {
-			console.log('add;:', newPlant)
-			addPlant(newPlant)
-			onAdd({
-				name: newPlant.name,
-				species: newPlant.species,
-				date: newPlant.date,
-				care: newPlant.care,
-				image: url,
-				diary: [],
-			})
-			setNewPlant({
-				name: '',
-				species: '',
-				date: '',
-				care: '',
-				image: '',
-				diary: [],
-			})
-			hideAdd(false)
-			setProgress(0)
+			return
 		}
+
+		dispatch(addPlant(newPlant))
+		setNewPlant({
+			name: '',
+			species: '',
+			date: '',
+			care: '',
+			image: '',
+			diary: [],
+		})
+		hideAdd(false)
+		setProgress(0)
 	}
 
 	const validate = (newPlant) => {
@@ -183,8 +174,4 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 	)
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	addPlant: (plant) => dispatch(actions.add(plant))
-})
-
-export default connect(null, mapDispatchToProps)(AddPlant)
+export default AddPlant
