@@ -4,21 +4,22 @@ import { storage } from '../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { addPlant } from '../duck/operations'
 
-const AddPlant = ({ onAdd, hideAdd }) => {
+const initialPlant = {
+	name: '',
+	species: '',
+	date: '',
+	care: '',
+	image: '',
+	diary: [],
+}
+
+const AddPlant = ({ hideAdd }) => {
 	const [img, setImg] = useState(null)
 	// const [imgUrl, setImgUrl] = useState(null) // GROW-7
 	const [progress, setProgress] = useState(0)
 	const [error, setError] = useState(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
-	const [newPlant, setNewPlant] = useState({
-		name: '',
-		species: '',
-		date: '',
-		care: '',
-		image: '',
-		diary: [],
-	})
-
+	const [newPlant, setNewPlant] = useState(initialPlant)
 	const dispatch = useDispatch()
 
 	// TODO | GROW-7
@@ -56,6 +57,10 @@ const AddPlant = ({ onAdd, hideAdd }) => {
 		})
 	}
 
+	const resetNewPlant = () => {
+		setNewPlant(Object.assign(newPlant, initialPlant))
+	}
+
 	// TODO | GROW-7
 	const handleAddImage = (e) => {
 		//  setImg(e.target.files[0]);
@@ -87,14 +92,7 @@ const AddPlant = ({ onAdd, hideAdd }) => {
 		}
 
 		dispatch(addPlant(newPlant))
-		setNewPlant({
-			name: '',
-			species: '',
-			date: '',
-			care: '',
-			image: '',
-			diary: [],
-		})
+		resetNewPlant()
 		hideAdd(false)
 		setProgress(0)
 	}

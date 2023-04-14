@@ -26,6 +26,7 @@ const fetchAllPlants = async () => {
 
 const getPlant = async (plantId) => {
 	const response = await axios.get(`${DB_URL}/plants.json?uid=${plantId}`)
+	// TODO this is hacky solution - axios gets all data
 	const plantsWithId = addId(response)
 	const plant = plantsWithId.find(plant => plant.id === plantId)
 
