@@ -1,26 +1,28 @@
 import React, { useState } from 'react'
-import { connect } from 'react-redux'
-import actions from '../app/plants/duck/actions'
-import { storage } from '../firebase/firebase'
+import { useDispatch } from 'react-redux'
+import { storage } from '../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import { addPlant } from '../duck/operations'
 
-// TODO redux && hooks && db | GROW-4
+const initialPlant = {
+	name: '',
+	species: '',
+	date: '',
+	care: '',
+	image: '',
+	diary: [],
+}
 
-const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
+const AddPlant = ({ hideAdd }) => {
 	const [img, setImg] = useState(null)
-	const [url, setUrl] = useState(null)
+	// const [imgUrl, setImgUrl] = useState(null) // GROW-7
 	const [progress, setProgress] = useState(0)
 	const [error, setError] = useState(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
-	const [newPlant, setNewPlant] = useState({
-		name: '',
-		species: '',
-		date: '',
-		care: '',
-		image: '',
-		diary: [],
-	})
+	const [newPlant, setNewPlant] = useState(initialPlant)
+	const dispatch = useDispatch()
 
+	// TODO | GROW-7
 	const addImage = (img) => {
 		const storageRef = ref(storage, `img/${img.name}`)
 		try {
@@ -37,8 +39,9 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 					// setError(error);
 				},
 				() => {
-					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) =>
-						setUrl(downloadURL)
+					getDownloadURL(uploadImg.snapshot.ref).then(
+						(downloadURL) => console.log('imgURL::', downloadURL)
+						// setImgUrl(downloadURL) // GROW-7
 					)
 				}
 			)
@@ -54,6 +57,11 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		})
 	}
 
+	const resetNewPlant = () => {
+		setNewPlant(Object.assign(newPlant, initialPlant))
+	}
+
+	// TODO | GROW-7
 	const handleAddImage = (e) => {
 		//  setImg(e.target.files[0]);
 		let selectedImage = e.target.files[0]
@@ -67,6 +75,7 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 		}
 	}
 
+	//TODO | GROW-7
 	const handleSubmitImage = (e) => {
 		e.preventDefault()
 		e.stopPropagation()
@@ -75,33 +84,17 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-		e.stopPropagation()
-
 		const err = validate(newPlant)
+
 		if (err) {
 			setValidErrMsg(err)
-		} else {
-			console.log('add;:', newPlant)
-			addPlant(newPlant)
-			onAdd({
-				name: newPlant.name,
-				species: newPlant.species,
-				date: newPlant.date,
-				care: newPlant.care,
-				image: url,
-				diary: [],
-			})
-			setNewPlant({
-				name: '',
-				species: '',
-				date: '',
-				care: '',
-				image: '',
-				diary: [],
-			})
-			hideAdd(false)
-			setProgress(0)
+			return
 		}
+
+		dispatch(addPlant(newPlant))
+		resetNewPlant()
+		hideAdd(false)
+		setProgress(0)
 	}
 
 	const validate = (newPlant) => {
@@ -179,8 +172,4 @@ const AddPlant = ({ onAdd, hideAdd, addPlant }) => {
 	)
 }
 
-const mapDispatchToProps = (dispatch) => ({
-	addPlant: (plant) => dispatch(actions.add(plant))
-})
-
-export default connect(null, mapDispatchToProps)(AddPlant)
+export default AddPlant

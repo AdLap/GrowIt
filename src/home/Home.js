@@ -1,25 +1,16 @@
 import { doc, deleteDoc } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
 import React, { useState } from 'react'
-import { DB_URL, db, storage } from '../firebase/firebase'
-import AddPlant from './AddPlant'
+import { db, storage } from '../firebase/firebase'
+import AddPlant from '../app/plants/components/AddPlant'
 import PlantsList from '../app/plants/components/PlantsList'
-import axios from 'axios'
+// import axios from 'axios'
 import { useSelector } from 'react-redux'
 
 const Home = () => {
 	const [openAdd, setOpenAdd] = useState(false)
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 	const plantsList = useSelector((state) => state.plants.plantsList)
-
-	// TODO - redux && db | GROW-4
-	const addPlant = (plant) => {
-		try {
-			axios.post(`${DB_URL}/plants.json`, plant)
-		} catch (error) {
-			console.error(error)
-		}
-	}
 
 	// TODO -redux && db | GROW-6
 	const deletePlant = (plantId, plantImg) => {
@@ -50,7 +41,11 @@ const Home = () => {
 				<PlantsList openAdd={handleOpenAdd} onDelete={deletePlant} />
 			)}
 
-			{openAdd && <AddPlant onAdd={addPlant} hideAdd={handleOpenAdd} />}
+			{openAdd && (
+				<AddPlant
+					hideAdd={handleOpenAdd}
+				/>
+			)}
 		</section>
 	)
 }

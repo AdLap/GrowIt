@@ -13,7 +13,7 @@ const PlantsList = ({ openAdd, onDelete }) => {
 		const getAllPlants = () => dispatch(getPlants())
 
 		return () => getAllPlants()
-	},[dispatch])
+	},[])
 	
 	const plants = useSelector(state => state.plants.plantsList)
 

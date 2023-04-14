@@ -1,10 +1,10 @@
 import types from './types'
 
-const INITIAL_STATE = {
+const INITIAL_PLANTS_LIST = {
 	plantsList: [],
 }
 
-const plantsReducer = (state = INITIAL_STATE, action) => {
+const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
 	switch (action.type) {
 		case types.ADD_PLANTS:
 			return {

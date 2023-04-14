@@ -3,15 +3,15 @@ import { Link, useParams } from 'react-router-dom'
 import { AddDiary } from './addDiary'
 import { EditPlant } from './editProfile'
 import { HandleImg } from './handleImg'
-import firebase from 'firebase/compat/app' // compat ??
+// import firebase from 'firebase/compat/app' // compat ??
 import { db, storage } from '../firebase/firebase'
 import {
 	doc,
 	getDoc,
 	updateDoc,
 	arrayUnion,
-	deleteDoc,
-	deleteField,
+	// deleteDoc,
+	// deleteField,
 	arrayRemove,
 } from 'firebase/firestore'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -48,7 +48,7 @@ export const Profile = () => {
 		}
 
 		return () => fetchPlant()
-	}, [plantId])
+	}, [plantId, plantRef])
 
 	const addDiary = (newDiary) => {
 		updateDoc(diaryRef, {
