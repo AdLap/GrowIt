@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { AddDiary } from './addDiary'
+// import { AddDiary } from './addDiary'
 import { EditPlant } from './editProfile'
 import { HandleImg } from './handleImg'
 // import firebase from 'firebase/compat/app' // compat ??
-import { db, storage } from '../firebase/firebase'
-import {
-	doc,
-	getDoc,
-	updateDoc,
-	arrayUnion,
-	// deleteDoc,
-	// deleteField,
-	arrayRemove,
-} from 'firebase/firestore'
+// import { db, storage } from '../firebase/firebase'
+// import {
+// 	// doc,
+// 	// getDoc,
+// 	// updateDoc,
+// 	// arrayUnion,
+// 	// deleteDoc,
+// 	// deleteField,
+// 	// arrayRemove,
+// } from 'firebase/firestore'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
 import { Diary } from './diary'
+import { useSelector } from 'react-redux'
+import actions from '../../duck/actions'
 //import {EditDiary} from "./diary/editDiary";
 
 // TODO | GROW-9
 
-export const Profile = () => {
+const Profile = () => {
 	const [plant, setPlant] = useState({})
 	const [openAdd, setOpenAdd] = useState(false)
 	// const [openEditDiary, setOpenEditDiary] = useState(false);
@@ -32,36 +34,35 @@ export const Profile = () => {
 	const [progress, setProgress] = useState(0)
 	const { plantId } = useParams()
 
-	const plantRef = doc(db, 'plants', plantId)
-	const diaryRef = doc(db, 'plants', plantId)
+	// data form redux
+	// const plantRef = doc(db, 'plants', plantId)
+	// const diaryRef = doc(db, 'plants', plantId)
+
+	const plants = useSelector((state) => state.plants.plantsList)
+
+	const currentPlant = (plantId) => {
+		const currPlant = plants.find((plant) => plant.id === plantId)
+		setPlant({ ...currPlant })
+	}
 
 	useEffect(() => {
-		const fetchPlant = async () => {
-			const data = await getDoc(plantRef)
-			setPlant(data.data())
-		}
+		const curr = () => currentPlant(plantId)
 
-		try {
-			fetchPlant()
-		} catch (error) {
-			console.error(error)
-		}
+		return () => curr()
+	}, [])
 
-		return () => fetchPlant()
-	}, [plantId, plantRef])
+	// const addDiary = (newDiary) => {
+	// 	updateDoc(diaryRef, {
+	// 		diary: arrayUnion(newDiary),
+	// 	})
+	// }
 
-	const addDiary = (newDiary) => {
-		updateDoc(diaryRef, {
-			diary: arrayUnion(newDiary),
-		})
-	}
-
-	const deleteDiary = (delDiary) => {
-		console.log('de', delDiary)
-		updateDoc(diaryRef, {
-			diary: arrayRemove(delDiary),
-		})
-	}
+	// const deleteDiary = (delDiary) => {
+	// 	console.log('de', delDiary)
+	// 	updateDoc(diaryRef, {
+	// 		diary: arrayRemove(delDiary),
+	// 	})
+	// }
 
 	/*const updateDiary = (updatedDiary) => {
         db.collection('plants')
@@ -76,51 +77,51 @@ export const Profile = () => {
             .catch(error => console.error('Err', error))
     }*/
 
-	const updatePlant = (plantData) => {
-		db.collection('plants')
-			.doc(`${plantId}`)
-			.update({
-				name: plantData.name,
-				species: plantData.species,
-				date: plantData.date,
-				care: plantData.care,
-				image: plantData.image,
-			})
-			.catch((error) => console.error('Err', error))
-	}
+	// const updatePlant = (plantData) => {
+	// 	db.collection('plants')
+	// 		.doc(`${plantId}`)
+	// 		.update({
+	// 			name: plantData.name,
+	// 			species: plantData.species,
+	// 			date: plantData.date,
+	// 			care: plantData.care,
+	// 			image: plantData.image,
+	// 		})
+	// 		.catch((error) => console.error('Err', error))
+	// }
 
-	const uploadImage = (newImg) => {
-		const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg)
-		uploadImg.on(
-			'state-changed',
-			(snapshot) => {
-				let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-				setProgress(percentage)
-			},
-			(error) => {
-				console.log(error)
-			},
-			() => {
-				storage
-					.ref('img')
-					.child(newImg.name)
-					.getDownloadURL()
-					.then((url) => {
-						console.log(url)
-						updateImg(url)
-					})
-			}
-		)
-	}
+	// const uploadImage = (newImg) => {
+	// 	const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg)
+	// 	uploadImg.on(
+	// 		'state-changed',
+	// 		(snapshot) => {
+	// 			let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+	// 			setProgress(percentage)
+	// 		},
+	// 		(error) => {
+	// 			console.log(error)
+	// 		},
+	// 		() => {
+	// 			storage
+	// 				.ref('img')
+	// 				.child(newImg.name)
+	// 				.getDownloadURL()
+	// 				.then((url) => {
+	// 					console.log(url)
+	// 					updateImg(url)
+	// 				})
+	// 		}
+	// 	)
+	// }
 
-	const updateImg = (url) => {
-		db.collection('plants')
-			.doc(`${plantId}`)
-			.update({
-				image: url,
-			})
-			.catch((err) => console.log('ERR', err))
-	}
+	// const updateImg = (url) => {
+	// 	db.collection('plants')
+	// 		.doc(`${plantId}`)
+	// 		.update({
+	// 			image: url,
+	// 		})
+	// 		.catch((err) => console.log('ERR', err))
+	// }
 
 	const showAdd = (todo) => {
 		setOpenAdd(todo)
@@ -188,7 +189,7 @@ export const Profile = () => {
 
 				{openEditImg && (
 					<HandleImg
-						onUpdateImg={uploadImage}
+						// onUpdateImg={uploadImage}
 						hideAdd={showEditImg}
 						onProgress={progress}
 						onResetProgress={resetProgress}
@@ -197,21 +198,23 @@ export const Profile = () => {
 				{openEdit && (
 					<EditPlant
 						plant={plant}
-						onUpdatePlant={updatePlant}
+						// onUpdatePlant={updatePlant}
 						hideAdd={showEdit}
 					/>
 				)}
-				{openAdd && (
+				{/* {openAdd && (
 					<AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant} />
-				)}
-				{/*  {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
+				)} */}
+				{/*  OLD {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
 
 				<Diary
 					diary={plant.diary}
 					onShowAdd={showAdd}
-					onDeleteDiary={deleteDiary}
+					// onDeleteDiary={deleteDiary}
 				/>
 			</div>
 		</section>
 	)
 }
+
+export default Profile

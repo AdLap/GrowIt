@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { storage } from '../../../firebase/firebase'
+import { storage } from '../../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-import { addPlant } from '../duck/operations'
+import { addPlant } from '../../duck/operations'
 
 const initialPlant = {
 	name: '',

@@ -1,8 +1,11 @@
-import './App.scss'
-import Home from './home/Home'
-import { Profile } from './profile/profile'
-import { Gallery } from './gallery/gallery'
+import React, { useEffect } from 'react'
 import { BrowserRouter, Route, Link, Routes } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import Home from './app/home/components/Home'
+import Profile from './app/plants/components/profile/Profile'
+import { Gallery } from './app/gallery/components/gallery'
+import { getPlants } from './app/plants/duck/operations'
+// import './App.scss'
 
 function NotFound() {
 	return (
@@ -14,6 +17,16 @@ function NotFound() {
 }
 
 function App() {
+	const dispatch = useDispatch()
+
+	useEffect(() => {
+		const getAllPlants = () => {
+			dispatch(getPlants())
+		}
+
+		return () => getAllPlants()
+	}, [])
+
 	return (
 		<BrowserRouter>
 			<Routes>
