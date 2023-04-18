@@ -11,17 +11,6 @@ const Home = () => {
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
-	// TODO | GROW-6
-	const deletePlant = (plantId, plantImg) => {
-		const plantRef = ref(storage, plantImg)
-		try {
-			deleteDoc(doc(db, 'plants', plantId))
-			deleteObject(plantRef)
-		} catch (error) {
-			console.error(error)
-		}
-	}
-
 	const handleOpenAdd = (todo) => {
 		setOpenAdd(todo)
 	}
@@ -37,7 +26,7 @@ const Home = () => {
 					</button>
 				</div>
 			) : (
-				<PlantsList openAdd={handleOpenAdd} onDelete={deletePlant} />
+				<PlantsList openAdd={handleOpenAdd} />
 			)}
 
 			{openAdd && <AddPlant hideAdd={handleOpenAdd} />}

@@ -5,6 +5,11 @@ const add = item => ({
   type: types.ADD_PLANTS, item
 })
 
+const deletePlant = item => ({
+  type: types.DELETE_PLANT, item
+})
+
 export default {
-  add
+  add,
+  deletePlant
 }

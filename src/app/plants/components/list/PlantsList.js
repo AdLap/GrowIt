@@ -1,11 +1,13 @@
 import React from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { deletePlant } from '../../duck/operations'
 
-const PlantsList = ({ openAdd, onDelete }) => {
+const PlantsList = ({ openAdd }) => {
+	const dispatch = useDispatch()
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
 	return (
@@ -25,7 +27,7 @@ const PlantsList = ({ openAdd, onDelete }) => {
 								<h2 className='plant__name'>{plant.name}</h2>
 							</Link>
 							<button
-								onClick={() => onDelete(plant.id, plant.image)}
+								onClick={() => dispatch(deletePlant(plant.id, plant.image))}
 								className='plant__delete'
 							>
 								<FontAwesomeIcon icon={faTrashAlt} />

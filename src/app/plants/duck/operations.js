@@ -47,6 +47,18 @@ export const addPlant = (plant) => async (dispatch) => {
 			dispatch(actions.add(newPlant))
 		}
 	} catch (error) {
-		console.error('error add Plant::', error)
+		console.error('error addPlant::', error)
+	}
+}
+
+export const deletePlant = (plant, img) => async (dispatch) => {
+	try {
+		const response = await axios.delete(`${DB_URL}/plants/${plant}.json`)
+		if (response.status === 200) {
+			dispatch(actions.deletePlant(plant))
+
+		}
+	} catch (error) {
+		console.error('error deletePlant::', error)
 	}
 }
