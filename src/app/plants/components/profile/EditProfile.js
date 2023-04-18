@@ -4,7 +4,7 @@ import { editPlant } from '../../duck/operations'
 
 export const EditPlant = ({ plant, hideAdd }) => {
 	const [updatedPlant, setUpdatedPlant] = useState(plant)
-    const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
 	const handleUpdatedPlant = (e) => {
 		setUpdatedPlant({
@@ -15,7 +15,7 @@ export const EditPlant = ({ plant, hideAdd }) => {
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
-        dispatch(editPlant(updatedPlant, updatedPlant.id))
+		dispatch(editPlant(updatedPlant, updatedPlant.id))
 		hideAdd(false)
 	}
 

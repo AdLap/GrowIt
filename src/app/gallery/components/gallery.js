@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { storage } from "../../../firebase/firebase";
-import { HandleImg } from "../../plants/components/profile/handleImg";
+import { HandleImg } from '../../plants/components/profile/HandleImg'
 
 export const Gallery = () => {
     const [images, setImages] = useState([]);
