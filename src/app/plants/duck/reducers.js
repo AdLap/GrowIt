@@ -12,6 +12,14 @@ const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
 				plantsList: [...state.plantsList, action.item],
 			}
 
+		case types.DELETE_PLANT:
+			return {
+				...state,
+				plantsList: [
+					...state.plantsList.filter((element) => element.id !== action.item),
+				],
+			}
+
 		default:
 			return state
 	}
