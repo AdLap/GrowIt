@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 // import { AddDiary } from './addDiary'
 import { EditPlant } from './editProfile'
@@ -19,6 +19,7 @@ import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
 import { Diary } from './diary'
 import { useSelector } from 'react-redux'
+import actions from '../../duck/actions'
 //import {EditDiary} from "./diary/editDiary";
 
 // TODO | GROW-9
@@ -41,11 +42,12 @@ const Profile = () => {
 
 	const currentPlant = (plantId) => {
 		const currPlant = plants.find((plant) => plant.id === plantId)
-		setPlant({...currPlant})
+		setPlant({ ...currPlant })
 	}
 
 	useEffect(() => {
 		const curr = () => currentPlant(plantId)
+
 		return () => curr()
 	}, [])
 

@@ -35,10 +35,6 @@ const getPlant = async (plantId) => {
 }
 
 export const getPlants = () => async (dispatch) => {
-	// const state = getState().plants.plantsList
-	// console.log('getState::', state)
-	// if (state.lenght) return
-
 	const plants = await fetchAllPlants()
 	plants.map((plant) => dispatch(actions.add(plant)))
 }
