@@ -23,10 +23,8 @@ import { getCurrentPlant } from '../../duck/operations'
 //import {EditDiary} from "./diary/editDiary";
 
 const Profile = () => {
-	const [plant, setPlant] = useState({})
 	const [openAdd, setOpenAdd] = useState(false)
 	// const [openEditDiary, setOpenEditDiary] = useState(false);
-	//  const [plt, setPlt] = useState({});
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
@@ -37,20 +35,13 @@ const Profile = () => {
 	// const plantRef = doc(db, 'plants', plantId)
 	// const diaryRef = doc(db, 'plants', plantId)
 
-	const plants = useSelector((state) => state.plants.plantsList)
 	const currentPlant = useSelector((state) => state.plants.currentPlant)
-
-	// const currentPlant = async (plantId) => {
-	// 	const currPlant = await plants.find((plant) => plant.id === plantId)
-	// 	setPlant({ ...currPlant })
-	// }
 
 	useEffect(() => {
 		const getActivePlant = () => dispatch(getCurrentPlant(plantId))
 
 		return () => getActivePlant()
-	}, [plantId, dispatch])
-	console.log('profile curr::', currentPlant)
+	}, [dispatch, plantId])
 
 	// const addDiary = (newDiary) => {
 	// 	updateDoc(diaryRef, {
@@ -183,13 +174,7 @@ const Profile = () => {
 						onResetProgress={resetProgress}
 					/>
 				)}
-				{openEdit && (
-					<EditPlant
-						plant={currentPlant}
-						// onUpdatePlant={updatePlant}
-						hideAdd={showEdit}
-					/>
-				)}
+				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
 				{/* {openAdd && (
 					<AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant} />
 				)} */}
