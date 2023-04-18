@@ -1,10 +1,9 @@
 import { doc, deleteDoc } from 'firebase/firestore'
 import { ref, deleteObject } from 'firebase/storage'
 import React, { useState } from 'react'
-import { db, storage } from '../firebase/firebase'
-import AddPlant from '../app/plants/components/AddPlant'
-import PlantsList from '../app/plants/components/PlantsList'
-// import axios from 'axios'
+import { db, storage } from '../../../firebase/firebase'
+import AddPlant from '../../plants/components/list/AddPlant'
+import PlantsList from '../../plants/components/list/PlantsList'
 import { useSelector } from 'react-redux'
 
 const Home = () => {
@@ -12,7 +11,7 @@ const Home = () => {
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
-	// TODO -redux && db | GROW-6
+	// TODO | GROW-6
 	const deletePlant = (plantId, plantImg) => {
 		const plantRef = ref(storage, plantImg)
 		try {
@@ -41,11 +40,7 @@ const Home = () => {
 				<PlantsList openAdd={handleOpenAdd} onDelete={deletePlant} />
 			)}
 
-			{openAdd && (
-				<AddPlant
-					hideAdd={handleOpenAdd}
-				/>
-			)}
+			{openAdd && <AddPlant hideAdd={handleOpenAdd} />}
 		</section>
 	)
 }
