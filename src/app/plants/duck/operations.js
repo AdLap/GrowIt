@@ -31,7 +31,6 @@ const getPlant = async (plantId) => {
 	const plant = plantsWithId.find(plant => plant.id === plantId)
 
 	return plant
-
 }
 
 export const getPlants = () => async (dispatch) => {
@@ -51,6 +50,11 @@ export const addPlant = (plant) => async (dispatch) => {
 	}
 }
 
+export const getCurrentPlant = (plantId) => async (dispatch) => {
+	console.log('oper::', plantId)
+	await dispatch(actions.addCurrentPlant(plantId))
+}
+
 export const deletePlant = (plant, img) => async (dispatch) => {
 	try {
 		const response = await axios.delete(`${DB_URL}/plants/${plant}.json`)
@@ -60,5 +64,20 @@ export const deletePlant = (plant, img) => async (dispatch) => {
 		}
 	} catch (error) {
 		console.error('error deletePlant::', error)
+	}
+}
+
+export const editPlant = (plant, plantId) => async (dispatch) => {
+  delete plant.id
+	try {
+		const response = await axios.patch(`${DB_URL}/plants/${plantId}.json`, plant)
+		if (response.status === 200) {
+			const result = response.data
+			result.id = plantId
+			dispatch(actions.editPlant(result))
+
+		}
+	} catch (error) {
+		console.error('error editPlant::', error)
 	}
 }

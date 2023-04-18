@@ -1,7 +1,4 @@
-import { doc, deleteDoc } from 'firebase/firestore'
-import { ref, deleteObject } from 'firebase/storage'
 import React, { useState } from 'react'
-import { db, storage } from '../../../firebase/firebase'
 import AddPlant from '../../plants/components/list/AddPlant'
 import PlantsList from '../../plants/components/list/PlantsList'
 import { useSelector } from 'react-redux'
