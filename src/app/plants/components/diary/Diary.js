@@ -5,7 +5,7 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
 
-export const Diary = ({ onShowAdd }) => {
+export const Diary = ({ onShowAdd, onShowEditDiary }) => {
 	const dispatch = useDispatch()
 	const currentPlant = useSelector((state) => state.plants.currentPlant)
 	const plantToEdit = { ...currentPlant }
@@ -20,7 +20,7 @@ export const Diary = ({ onShowAdd }) => {
 			<button
 				className='profile__diary__add'
 				title='Dodaj wpis'
-				onClick={() => onShowAdd(true)}
+				onClick={() => onShowAdd()}
 			>
 				<FontAwesomeIcon icon={faPlusCircle} />
 			</button>
@@ -39,9 +39,12 @@ export const Diary = ({ onShowAdd }) => {
 							>
 								<FontAwesomeIcon icon={faTrashAlt} />
 							</button>
-							{/* <button className='profile__diary__list__edit' onClick={() => onShowEditDiary(true)}>
-                        <FontAwesomeIcon icon={faExchangeAlt}/>
-                    </button>*/}
+							<button
+								className='profile__diary__list__edit'
+								onClick={() => onShowEditDiary(index)}
+							>
+								<FontAwesomeIcon icon={faExchangeAlt} />
+							</button>
 						</li>
 					))}
 			</ul>

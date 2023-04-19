@@ -8,15 +8,15 @@ import { AddDiary } from '../diary/AddDiary'
 import { EditPlant } from './EditProfile'
 import { HandleImg } from './HandleImg'
 import { Diary } from '../diary/Diary'
-// import {EditDiary} from "../diary/EditDiary";
+import { EditDiary } from '../diary/EditDiary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
-	// const [openEditDiary, setOpenEditDiary] = useState(false);
-	// const [plt, setPlt] = useState(null)
+	const [openEditDiary, setOpenEditDiary] = useState(false)
+	const [editedDiaryIndex, setEditedDiaryIndex] = useState(null)
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
@@ -29,6 +29,15 @@ const Profile = () => {
 
 		return () => getActivePlant()
 	}, [dispatch, plantId])
+
+	const showAdd = () => setOpenAdd(!openAdd)
+	const showEdit = () => setOpenEdit(!openEdit)
+	const showEditDiary = (index) => {
+		setOpenEditDiary(!openEditDiary)
+		setEditedDiaryIndex(index)
+	}
+	const showEditImg = () => setOpenEditImg(!openEditImg)
+	const resetProgress = () => setProgress(0)
 
 	const uploadImage = (newImg) => {
 		const storageRef = ref(storage, `img/${newImg.name}`)
@@ -57,22 +66,6 @@ const Profile = () => {
 		}
 	}
 
-	const showAdd = (todo) => {
-		setOpenAdd(todo)
-	}
-
-	const showEdit = (todo) => {
-		setOpenEdit(todo)
-	}
-
-	const showEditImg = (todo) => {
-		setOpenEditImg(todo)
-	}
-
-	const resetProgress = (todo) => {
-		setProgress(todo)
-	}
-
 	return (
 		<section className='profile'>
 			<div className='container'>
@@ -85,7 +78,7 @@ const Profile = () => {
 					/>
 					<button
 						className='profile__img__btn'
-						onClick={() => showEditImg(true)}
+						onClick={() => showEditImg()}
 					>
 						<FontAwesomeIcon icon={faExchangeAlt} />
 					</button>
@@ -110,25 +103,30 @@ const Profile = () => {
 					</Link>
 					<button
 						className='profile__buttons__edit'
-						onClick={() => showEdit(true)}
+						onClick={() => showEdit()}
 					>
 						<FontAwesomeIcon icon={faEdit} />
 					</button>
 				</div>
 
-				{openEditImg && (
+				{openEditImg &&
 					<HandleImg
 						onUpdateImg={uploadImage}
 						hideAdd={showEditImg}
 						onProgress={progress}
 						onResetProgress={resetProgress}
 					/>
-				)}
+				}
 				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
 				{openAdd && <AddDiary hideAdd={showAdd} plant={currentPlant} />}
-				{/*  OLD {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
-
-				<Diary onShowAdd={showAdd} />
+				{openEditDiary &&
+					<EditDiary
+						diary={currentPlant.diary[editedDiaryIndex]}
+						hideAdd={showEditDiary}
+						index={editedDiaryIndex}
+					/>
+				}
+				<Diary onShowAdd={showAdd} onShowEditDiary={showEditDiary} />
 			</div>
 		</section>
 	)

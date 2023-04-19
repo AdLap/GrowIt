@@ -37,7 +37,7 @@ export const AddDiary = ({ hideAdd }) => {
 
 	return (
 		<div className='add__form'>
-			<div className='add__close__btn' onClick={() => hideAdd(false)}>
+			<div className='add__close__btn' onClick={() => hideAdd()}>
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
