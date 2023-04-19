@@ -2,8 +2,19 @@ import React from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { useDispatch, useSelector } from 'react-redux'
+import { editPlant } from '../../duck/operations'
 
-export const Diary = ({ diary, onShowAdd, onDeleteDiary }) => {
+export const Diary = ({ onShowAdd }) => {
+	const dispatch = useDispatch()
+	const currentPlant = useSelector((state) => state.plants.currentPlant)
+	const plantToEdit = { ...currentPlant }
+
+	const deleteDiary = (index) => {
+		plantToEdit.diary.splice(index, 1)
+		dispatch(editPlant(plantToEdit, plantToEdit.id))
+	}
+
 	return (
 		<div className='profile__diary'>
 			<button
@@ -15,16 +26,16 @@ export const Diary = ({ diary, onShowAdd, onDeleteDiary }) => {
 			</button>
 
 			<ul className='profile__diary__list'>
-				Dziennik podlewań:
-				{diary &&
-					diary.map((plt, idx) => (
-						<li key={idx} className='profile__diary__list__item'>
-							<strong>kiedy:</strong> {plt.date}
+				Dziennik:
+				{currentPlant.diary &&
+					currentPlant.diary.map((element, index) => (
+						<li key={index} className='profile__diary__list__item'>
+							<strong>data:</strong> {element.date}
 							<br />
-							<strong>co zrobione:</strong> {plt.do} / {plt.note}
+							<strong>zrobione:</strong> {element.do} / {element.note}
 							<button
 								className='profile__diary__list__delete'
-								onClick={() => onDeleteDiary(plt)}
+								onClick={() => deleteDiary(index)}
 							>
 								<FontAwesomeIcon icon={faTrashAlt} />
 							</button>

@@ -30,26 +30,6 @@ const Profile = () => {
 		return () => getActivePlant()
 	}, [dispatch, plantId])
 
-	const deleteDiary = (delDiary) => {
-		console.log('delete', delDiary)
-		// updateDoc(diaryRef, {
-		// 	diary: arrayRemove(delDiary),
-		// })
-	}
-
-	/*const updateDiary = (updatedDiary) => {
-        db.collection('plants')
-            .doc(`${plantId}`)
-            .update({diary: firebase.firestore.FieldValue.arrayUnion(updatedDiary)
-                  /!*  {
-                        date: updatedDiary.date,
-                        do: updatedDiary.do,
-                        note: updatedDiary.note
-                    }*!/
-            })
-            .catch(error => console.error('Err', error))
-    }*/
-
 	const uploadImage = (newImg) => {
 		const storageRef = ref(storage, `img/${newImg.name}`)
 		try {
@@ -80,11 +60,6 @@ const Profile = () => {
 	const showAdd = (todo) => {
 		setOpenAdd(todo)
 	}
-
-	// const showEditDiary = (todo, plt) => {
-  //       setOpenEditDiary(todo);
-  //       setPlt(plt);
-  //   }
 
 	const showEdit = (todo) => {
 		setOpenEdit(todo)
@@ -150,16 +125,10 @@ const Profile = () => {
 					/>
 				)}
 				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
-				{openAdd && (
-					<AddDiary hideAdd={showAdd} plant={currentPlant} />
-				)}
+				{openAdd && <AddDiary hideAdd={showAdd} plant={currentPlant} />}
 				{/*  OLD {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
 
-				<Diary
-					diary={currentPlant.diary}
-					onShowAdd={showAdd}
-					onDeleteDiary={deleteDiary}
-				/>
+				<Diary onShowAdd={showAdd} />
 			</div>
 		</section>
 	)
