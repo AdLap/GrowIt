@@ -2,7 +2,6 @@
 
   &__diary {
     width: 75%;
-    //padding: 1.5rem 0 1.5rem 0;
     margin-top: 3rem;
     position: relative;
 
@@ -48,7 +47,8 @@
         position: relative;
       }
 
-      &__delete {
+      &__delete,
+      &__edit {
         position: absolute;
         top: 0;
         right: 0;
@@ -59,7 +59,10 @@
         &:hover {
           box-shadow: none;
         }
+      }
 
+      &__edit {
+        right: 30px;
       }
     }
   }
