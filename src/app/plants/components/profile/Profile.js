@@ -11,7 +11,7 @@ import { Diary } from '../diary/Diary'
 import { EditDiary } from '../diary/EditDiary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
-import { faEdit } from '@fortawesome/free-regular-svg-icons'
+import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
@@ -66,6 +66,12 @@ const Profile = () => {
 		}
 	}
 
+	const deleteImage = () => {
+		const plantDeleteImg = { ...currentPlant }
+		plantDeleteImg.image = ''
+		dispatch(editPlant(plantDeleteImg, plantDeleteImg.id))
+	}
+
 	return (
 		<section className='profile'>
 			<div className='container'>
@@ -81,6 +87,12 @@ const Profile = () => {
 						onClick={() => showEditImg()}
 					>
 						<FontAwesomeIcon icon={faExchangeAlt} />
+					</button>
+					<button
+						className='profile__img__btn__delete'
+						onClick={() => deleteImage(currentPlant.id)}
+					>
+						<FontAwesomeIcon icon={faTrashAlt} />
 					</button>
 				</div>
 				<div className='profile__data'>
