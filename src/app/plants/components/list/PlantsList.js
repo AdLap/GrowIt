@@ -1,14 +1,20 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { deletePlant } from '../../duck/operations'
+import { deletePlant, clearCurrentPlant } from '../../duck/operations'
+import { initialPlant } from '../../duck/reducers'
 
 const PlantsList = ({ openAdd }) => {
 	const dispatch = useDispatch()
 	const plantsList = useSelector((state) => state.plants.plantsList)
+
+	useEffect(() => {
+		const removeCurrentPlant = () => dispatch(clearCurrentPlant(initialPlant))
+		return () => removeCurrentPlant()
+	}, [dispatch])
 
 	return (
 		<section className='plant'>

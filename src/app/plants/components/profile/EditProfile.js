@@ -21,7 +21,7 @@ export const EditPlant = ({ plant, hideAdd }) => {
 
 	return (
 		<div className='add__form'>
-			<div className='add__close__btn' onClick={() => hideAdd(false)}>
+			<div className='add__close__btn' onClick={() => hideAdd()}>
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
@@ -61,7 +61,7 @@ export const EditPlant = ({ plant, hideAdd }) => {
 				</label>
 
 				<button className='add__form__btn' onSubmit={handleSubmit}>
-					Dodaj
+					Zmień
 				</button>
 			</form>
 		</div>

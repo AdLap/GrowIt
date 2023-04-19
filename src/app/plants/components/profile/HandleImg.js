@@ -4,8 +4,7 @@ export const HandleImg = ({
 	onUpdateImg,
 	hideAdd,
 	onProgress,
-	onResetProgress,
-	onAddImage,
+	onResetProgress
 }) => {
 	const [newImg, setNewImg] = useState(null)
 	const [err, setErr] = useState('')
@@ -29,12 +28,12 @@ export const HandleImg = ({
 	const handleConfirmButton = (e) => {
 		e.preventDefault()
 		hideAdd(false)
-		onResetProgress(0)
+		onResetProgress()
 	}
 
 	return (
 		<div className='add__form'>
-			<div className='add__close__btn' onClick={() => hideAdd(false)}>
+			<div className='add__close__btn' onClick={() => hideAdd()}>
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
