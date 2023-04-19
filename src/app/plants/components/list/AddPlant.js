@@ -50,7 +50,7 @@ const AddPlant = ({ hideAdd }) => {
 	const handleNewPlant = (e) => {
 		setNewPlant({
 			...newPlant,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value
 		})
 	}
 
