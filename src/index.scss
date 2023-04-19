@@ -1,11 +1,14 @@
 @import "scss/variables";
 @import "scss/settings";
-@import "home/home";
-@import "home/plantsList";
-@import "home/addPlant";
-@import "profile/profile";
-@import "profile/addDiary";
 @import "scss/elements";
-@import "profile/diary";
-@import "gallery/gallery";
-@import "auth/Login";
+
+@import "app/home/components/home";
+
+@import "app/plants/components/list/plantsList";
+@import "app/plants/components/list/addPlant";
+@import "app/plants/components/profile/profile";
+@import "app/plants/components/diary/diary";
+
+@import "app/gallery/components/gallery";
+
+@import "app/auth/components/Login";
