@@ -3,15 +3,7 @@ import { useDispatch } from 'react-redux'
 import { storage } from '../../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { addPlant } from '../../duck/operations'
-
-const initialPlant = {
-	name: '',
-	species: '',
-	date: '',
-	care: '',
-	image: '',
-	diary: [],
-}
+import { initialPlant } from '../../duck/reducers'
 
 const AddPlant = ({ hideAdd }) => {
 	const [img, setImg] = useState(null)
@@ -54,10 +46,6 @@ const AddPlant = ({ hideAdd }) => {
 		})
 	}
 
-	const resetNewPlant = () => {
-		setNewPlant(Object.assign(newPlant, initialPlant))
-	}
-
 	const handleAddImage = (e) => {
 		let selectedImage = e.target.files[0]
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
@@ -82,9 +70,9 @@ const AddPlant = ({ hideAdd }) => {
 			return
 		}
 
-		setNewPlant(...(newPlant.image = imgUrl))
+		imgUrl && setNewPlant(...newPlant.image = imgUrl)
 		dispatch(addPlant(newPlant))
-		resetNewPlant()
+		setNewPlant(Object.assign(newPlant, initialPlant))
 		hideAdd(false)
 		setProgress(0)
 	}

@@ -9,6 +9,10 @@ const addCurrentPlant = item => ({
   type: types.ADD_CURRENT_PLANT, item
 })
 
+const resetCurrentPlant = () => ({
+  type: types.RESET_CURRENT_PLANT
+})
+
 const deletePlant = item => ({
   type: types.DELETE_PLANT, item
 })
@@ -20,6 +24,7 @@ const editPlant = item => ({
 export default {
   add,
   addCurrentPlant,
+  resetCurrentPlant,
   deletePlant,
   editPlant
 }

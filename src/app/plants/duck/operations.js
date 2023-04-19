@@ -81,6 +81,10 @@ export const getCurrentPlant = (plantId) => async (dispatch, getState) => {
 	dispatch(actions.addCurrentPlant(plant))
 }
 
+export const clearCurrentPlant = () => async (dispatch) => {
+	dispatch(actions.resetCurrentPlant())
+}
+
 export const deletePlant = (plant, img) => async (dispatch) => {
 	try {
 		const response = await axios.delete(`${DB_URL}/plants/${plant}.json`)

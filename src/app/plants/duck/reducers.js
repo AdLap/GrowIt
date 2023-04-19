@@ -1,5 +1,15 @@
 import types from './types'
 
+export const initialPlant = {
+	name: '',
+	species: '',
+	date: '',
+	care: '',
+	image: '',
+	diary: [],
+	id: '',
+}
+
 const INITIAL_PLANTS_LIST = {
 	plantsList: [],
 	currentPlant: {},
@@ -39,6 +49,12 @@ const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
 					...state.plantsList.slice(index + 1),
 				],
 				currentPlant: { ...state.currentPlant, ...action.item },
+			}
+
+		case types.RESET_CURRENT_PLANT:
+			return {
+				...state,
+				currentPlant: { ...state.currentPlant, ...initialPlant },
 			}
 
 		default:

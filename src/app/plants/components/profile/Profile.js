@@ -4,11 +4,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { editPlant, getCurrentPlant } from '../../duck/operations'
 import { storage } from '../../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
-// import { AddDiary } from './addDiary'
+import { AddDiary } from '../diary/AddDiary'
 import { EditPlant } from './EditProfile'
 import { HandleImg } from './HandleImg'
-import { Diary } from './diary'
-//import {EditDiary} from "./diary/editDiary";
+import { Diary } from '../diary/Diary'
+// import {EditDiary} from "../diary/EditDiary";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
@@ -16,11 +16,11 @@ import { faEdit } from '@fortawesome/free-regular-svg-icons'
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
 	// const [openEditDiary, setOpenEditDiary] = useState(false);
+	// const [plt, setPlt] = useState(null)
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
 	const dispatch = useDispatch()
-
 	const { plantId } = useParams()
 	const currentPlant = useSelector((state) => state.plants.currentPlant)
 
@@ -30,18 +30,12 @@ const Profile = () => {
 		return () => getActivePlant()
 	}, [dispatch, plantId])
 
-	// const addDiary = (newDiary) => {
-	// 	updateDoc(diaryRef, {
-	// 		diary: arrayUnion(newDiary),
-	// 	})
-	// }
-
-	// const deleteDiary = (delDiary) => {
-	// 	console.log('de', delDiary)
-	// 	updateDoc(diaryRef, {
-	// 		diary: arrayRemove(delDiary),
-	// 	})
-	// }
+	const deleteDiary = (delDiary) => {
+		console.log('delete', delDiary)
+		// updateDoc(diaryRef, {
+		// 	diary: arrayRemove(delDiary),
+		// })
+	}
 
 	/*const updateDiary = (updatedDiary) => {
         db.collection('plants')
@@ -87,10 +81,10 @@ const Profile = () => {
 		setOpenAdd(todo)
 	}
 
-	/*const showEditDiary = (todo, plt) => {
-        setOpenEditDiary(todo);
-        setPlt(plt);
-    }*/
+	// const showEditDiary = (todo, plt) => {
+  //       setOpenEditDiary(todo);
+  //       setPlt(plt);
+  //   }
 
 	const showEdit = (todo) => {
 		setOpenEdit(todo)
@@ -156,15 +150,15 @@ const Profile = () => {
 					/>
 				)}
 				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
-				{/* {openAdd && (
-					<AddDiary onAddDiary={addDiary} hideAdd={showAdd} plant={plant} />
-				)} */}
+				{openAdd && (
+					<AddDiary hideAdd={showAdd} plant={currentPlant} />
+				)}
 				{/*  OLD {openEditDiary && <EditDiary diary={plt} onUpdateDiary={updateDiary}/>}*/}
 
 				<Diary
 					diary={currentPlant.diary}
 					onShowAdd={showAdd}
-					// onDeleteDiary={deleteDiary}
+					onDeleteDiary={deleteDiary}
 				/>
 			</div>
 		</section>
