@@ -1,26 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { editPlant, getCurrentPlant } from '../../duck/operations'
+import { storage } from '../../../../firebase/firebase'
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 // import { AddDiary } from './addDiary'
 import { EditPlant } from './EditProfile'
-import { HandleImg } from './handleImg'
-// import firebase from 'firebase/compat/app' // compat ??
-// import { db, storage } from '../firebase/firebase'
-// import {
-// 	// doc,
-// 	// getDoc,
-// 	// updateDoc,
-// 	// arrayUnion,
-// 	// deleteDoc,
-// 	// deleteField,
-// 	// arrayRemove,
-// } from 'firebase/firestore'
+import { HandleImg } from './HandleImg'
+import { Diary } from './diary'
+//import {EditDiary} from "./diary/editDiary";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit } from '@fortawesome/free-regular-svg-icons'
-import { Diary } from './diary'
-import { useDispatch, useSelector } from 'react-redux'
-import { getCurrentPlant } from '../../duck/operations'
-//import {EditDiary} from "./diary/editDiary";
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
@@ -28,13 +19,9 @@ const Profile = () => {
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
-	const { plantId } = useParams()
 	const dispatch = useDispatch()
 
-	// data form redux
-	// const plantRef = doc(db, 'plants', plantId)
-	// const diaryRef = doc(db, 'plants', plantId)
-
+	const { plantId } = useParams()
 	const currentPlant = useSelector((state) => state.plants.currentPlant)
 
 	useEffect(() => {
@@ -69,38 +56,32 @@ const Profile = () => {
             .catch(error => console.error('Err', error))
     }*/
 
-	// const uploadImage = (newImg) => {
-	// 	const uploadImg = storage.ref(`img/${newImg.name}`).put(newImg)
-	// 	uploadImg.on(
-	// 		'state-changed',
-	// 		(snapshot) => {
-	// 			let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-	// 			setProgress(percentage)
-	// 		},
-	// 		(error) => {
-	// 			console.log(error)
-	// 		},
-	// 		() => {
-	// 			storage
-	// 				.ref('img')
-	// 				.child(newImg.name)
-	// 				.getDownloadURL()
-	// 				.then((url) => {
-	// 					console.log(url)
-	// 					updateImg(url)
-	// 				})
-	// 		}
-	// 	)
-	// }
-
-	// const updateImg = (url) => {
-	// 	db.collection('plants')
-	// 		.doc(`${plantId}`)
-	// 		.update({
-	// 			image: url,
-	// 		})
-	// 		.catch((err) => console.log('ERR', err))
-	// }
+	const uploadImage = (newImg) => {
+		const storageRef = ref(storage, `img/${newImg.name}`)
+		try {
+			const uploadImg = uploadBytesResumable(storageRef, newImg)
+			uploadImg.on(
+				'state-changed',
+				(snapshot) => {
+					let percentage =
+						(snapshot.bytesTransferred / snapshot.totalBytes) * 100
+					setProgress(percentage)
+				},
+				(error) => {
+					console.error('uploadImage error::', error)
+				},
+				() => {
+					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) => {
+						const plantNewImg = { ...currentPlant }
+						plantNewImg.image = downloadURL
+						dispatch(editPlant(plantNewImg, plantId))
+					})
+				}
+			)
+		} catch (error) {
+			console.error('upload error::', error)
+		}
+	}
 
 	const showAdd = (todo) => {
 		setOpenAdd(todo)
@@ -168,7 +149,7 @@ const Profile = () => {
 
 				{openEditImg && (
 					<HandleImg
-						// onUpdateImg={uploadImage}
+						onUpdateImg={uploadImage}
 						hideAdd={showEditImg}
 						onProgress={progress}
 						onResetProgress={resetProgress}

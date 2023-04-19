@@ -15,14 +15,13 @@ const initialPlant = {
 
 const AddPlant = ({ hideAdd }) => {
 	const [img, setImg] = useState(null)
-	// const [imgUrl, setImgUrl] = useState(null) // GROW-7
+	const [imgUrl, setImgUrl] = useState(null)
 	const [progress, setProgress] = useState(0)
 	const [error, setError] = useState(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
 	const [newPlant, setNewPlant] = useState(initialPlant)
 	const dispatch = useDispatch()
 
-	// TODO | GROW-7
 	const addImage = (img) => {
 		const storageRef = ref(storage, `img/${img.name}`)
 		try {
@@ -35,13 +34,11 @@ const AddPlant = ({ hideAdd }) => {
 					setProgress(percentage)
 				},
 				(error) => {
-					console.log(error)
-					// setError(error);
+					console.error('uploadImage error::', error)
 				},
 				() => {
-					getDownloadURL(uploadImg.snapshot.ref).then(
-						(downloadURL) => console.log('imgURL::', downloadURL)
-						// setImgUrl(downloadURL) // GROW-7
+					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) =>
+						setImgUrl(downloadURL)
 					)
 				}
 			)
@@ -53,7 +50,7 @@ const AddPlant = ({ hideAdd }) => {
 	const handleNewPlant = (e) => {
 		setNewPlant({
 			...newPlant,
-			[e.target.name]: e.target.value,
+			[e.target.name]: e.target.value
 		})
 	}
 
@@ -61,11 +58,8 @@ const AddPlant = ({ hideAdd }) => {
 		setNewPlant(Object.assign(newPlant, initialPlant))
 	}
 
-	// TODO | GROW-7
 	const handleAddImage = (e) => {
-		//  setImg(e.target.files[0]);
 		let selectedImage = e.target.files[0]
-		//    setNewImg(selectedImage);
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
 			setImg(selectedImage)
 			setError('')
@@ -75,22 +69,20 @@ const AddPlant = ({ hideAdd }) => {
 		}
 	}
 
-	//TODO | GROW-7
 	const handleSubmitImage = (e) => {
 		e.preventDefault()
-		e.stopPropagation()
 		addImage(img)
 	}
 
 	const handleSubmit = (e) => {
 		e.preventDefault()
 		const err = validate(newPlant)
-
 		if (err) {
 			setValidErrMsg(err)
 			return
 		}
 
+		setNewPlant(...(newPlant.image = imgUrl))
 		dispatch(addPlant(newPlant))
 		resetNewPlant()
 		hideAdd(false)
