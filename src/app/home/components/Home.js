@@ -8,9 +8,7 @@ const Home = () => {
 	// const [isLoading, setIsLoading] = useState(false); // TODO
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
-	const handleOpenAdd = (todo) => {
-		setOpenAdd(todo)
-	}
+	const handleOpenAdd = () => setOpenAdd(!openAdd)
 
 	return (
 		<section className='home'>
@@ -18,7 +16,7 @@ const Home = () => {
 			{!plantsList ? (
 				<div>
 					<h2>Wczytuję dane...</h2>
-					<button onClick={() => setOpenAdd(true)} className='plant__add'>
+					<button onClick={() => setOpenAdd()} className='plant__add'>
 						Dodaj
 					</button>
 				</div>

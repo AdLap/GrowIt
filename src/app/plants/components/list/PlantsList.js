@@ -12,8 +12,7 @@ const PlantsList = ({ openAdd }) => {
 	const plantsList = useSelector((state) => state.plants.plantsList)
 
 	useEffect(() => {
-		const removeCurrentPlant = () => dispatch(clearCurrentPlant(initialPlant))
-		return () => removeCurrentPlant()
+		dispatch(clearCurrentPlant(initialPlant))
 	}, [dispatch])
 
 	return (

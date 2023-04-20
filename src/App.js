@@ -19,11 +19,7 @@ function App() {
 	const dispatch = useDispatch()
 
 	useEffect(() => {
-		const getAllPlants = () => {
-			dispatch(getPlants())
-		}
-
-		return () => getAllPlants()
+		dispatch(getPlants())
 	}, [dispatch])
 
 	return (
