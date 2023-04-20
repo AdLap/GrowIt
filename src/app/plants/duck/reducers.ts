@@ -1,6 +1,7 @@
 import types from './types'
+import type { Plant, PlantsState } from '../../../type/types'
 
-export const initialPlant = {
+export const initialPlant: Plant = {
 	name: '',
 	species: '',
 	date: '',
@@ -10,9 +11,9 @@ export const initialPlant = {
 	id: '',
 }
 
-const INITIAL_PLANTS_LIST = {
+const INITIAL_PLANTS_LIST: PlantsState = {
 	plantsList: [],
-	currentPlant: {},
+	currentPlant: {} as Plant,
 }
 
 const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
@@ -33,13 +34,13 @@ const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
 			return {
 				...state,
 				plantsList: [
-					...state.plantsList.filter((element) => element.id !== action.item),
+					...state.plantsList.filter((element: Plant) => element.id !== action.item),
 				],
 			}
 
 		case types.EDIT_PLANT:
 			const index = state.plantsList
-				.map((element) => element.id)
+				.map((element: Plant) => element.id)
 				.indexOf(action.item.id)
 			return {
 				...state,

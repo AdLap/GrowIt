@@ -12,6 +12,7 @@ import { EditDiary } from '../diary/EditDiary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
+import { RootState } from '../../../store'
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
@@ -22,7 +23,7 @@ const Profile = () => {
 	const [progress, setProgress] = useState(0)
 	const dispatch = useDispatch()
 	const { plantId } = useParams()
-	const currentPlant = useSelector((state) => state.plants.currentPlant)
+	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
 
 	useEffect(() => {
 		dispatch(getCurrentPlant(plantId))

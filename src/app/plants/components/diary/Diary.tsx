@@ -4,10 +4,11 @@ import { faExchangeAlt, faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
+import { RootState } from '../../../store'
 
 export const Diary = ({ onShowAdd, onShowEditDiary }) => {
 	const dispatch = useDispatch()
-	const currentPlant = useSelector((state) => state.plants.currentPlant)
+	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
 	const plantToEdit = { ...currentPlant }
 
 	const deleteDiary = (index) => {

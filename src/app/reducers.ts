@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux'
-import plantsReducer from './app/plants/duck'
+import plantsReducer from './plants/duck'
 
 const rootReducer = combineReducers({
   plants: plantsReducer

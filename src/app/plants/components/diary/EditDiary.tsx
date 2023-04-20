@@ -1,12 +1,13 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
+import { RootState } from '../../../store'
 
 const initialDiary = { date: '', do: '', note: '' }
 
 export const EditDiary = ({ diary, index, hideAdd }) => {
 	const [updateDiary, setUpdateDiary] = useState(diary)
-	const currentPlant = useSelector((state) => state.plants.currentPlant)
+	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
 	const dispatch = useDispatch()
 	const plantToEdit = { ...currentPlant }
 

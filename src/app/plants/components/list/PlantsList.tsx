@@ -5,14 +5,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { deletePlant, clearCurrentPlant } from '../../duck/operations'
-import { initialPlant } from '../../duck/reducers'
+import { AppDispatch, RootState } from '../../../store'
 
 const PlantsList = ({ openAdd }) => {
-	const dispatch = useDispatch()
-	const plantsList = useSelector((state) => state.plants.plantsList)
+	const dispatch: AppDispatch = useDispatch()
+	const plantsList = useSelector((state: RootState) => state.plants.plantsList)
 
 	useEffect(() => {
-		dispatch(clearCurrentPlant(initialPlant))
+		dispatch(clearCurrentPlant())
 	}, [dispatch])
 
 	return (
