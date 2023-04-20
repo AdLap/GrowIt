@@ -1,56 +1,56 @@
-// import React, { useState } from "react";
-// import { storage } from "../../../firebase/firebase";
-// import { HandleImg } from '../../plants/components/profile/HandleImg'
+import React, { useState } from "react";
+import { storage } from "../../../firebase/firebase";
+import { HandleImg } from '../../plants/components/profile/HandleImg'
 
-// export const Gallery = () => {
-//     const [images, setImages] = useState([]);
-//     const [currentImage, setCurrentImage] = useState(null);
-//     const [progress, setProgress] = useState(0);
-//     const [err, setErr] = useState('');
+export const Gallery = () => {
+    const [images, setImages] = useState([]);
+    const [currentImage, setCurrentImage] = useState(null);
+    const [progress, setProgress] = useState(0);
+    const [err, setErr] = useState('');
 
-//     console.log(images)
+    console.log(images)
 
-//     /*   useEffect(() => {
-//            const unsubscribe = storage.ref('img')
-//                .child()
-//                .getDownloadURL()
-//                .then(url => {
-//                    setImages([...images, url])
-//                })
+    /*   useEffect(() => {
+           const unsubscribe = storage.ref('img')
+               .child()
+               .getDownloadURL()
+               .then(url => {
+                   setImages([...images, url])
+               })
    
-//            return () => unsubscribe();
-//        }, [])*/
+           return () => unsubscribe();
+       }, [])*/
 
-//     const addImage = (newImage) => {
-//         const uploadImg = storage.ref(`img/${newImage.name}`).put(newImage);
-//         uploadImg.on(
-//             'state-changed',
-//             snapshot => {
-//                 let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-//                 setProgress(percentage);
-//             },
-//             error => {
-//                 console.log(error);
-//                 setErr(error);
-//             },
-//             () => {
-//                 storage
-//                     .ref('img')
-//                     .child(newImage.name)
-//                     .getDownloadURL()
-//                     .then(url => {
-//                         console.log(url);
-//                         setImages([...images, url]);
-//                     });
-//             }
-//         )
-//     }
+    const addImage = (newImage) => {
+        const uploadImg = storage.ref(`img/${newImage.name}`).put(newImage);
+        uploadImg.on(
+            'state-changed',
+            snapshot => {
+                let percentage = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                setProgress(percentage);
+            },
+            error => {
+                console.log(error);
+                setErr(error);
+            },
+            () => {
+                storage
+                    .ref('img')
+                    .child(newImage.name)
+                    .getDownloadURL()
+                    .then(url => {
+                        console.log(url);
+                        setImages([...images, url]);
+                    });
+            }
+        )
+    }
 
-//     return (
-//         <section className='gallery'>
-//             <HandleImg onAddImage={addImage} />
-//         </section>
-//     );
-// }
-// /*
-// onUpdateImg={} hideAdd={} onProgress={} onResetProgress={}*/
+    return (
+        <section className='gallery'>
+            <HandleImg onAddImage={addImage} />
+        </section>
+    );
+}
+/*
+onUpdateImg={} hideAdd={} onProgress={} onResetProgress={}*/

@@ -25,9 +25,7 @@ const Profile = () => {
 	const currentPlant = useSelector((state) => state.plants.currentPlant)
 
 	useEffect(() => {
-		const getActivePlant = () => dispatch(getCurrentPlant(plantId))
-
-		return () => getActivePlant()
+		dispatch(getCurrentPlant(plantId))
 	}, [dispatch, plantId])
 
 	const showAdd = () => setOpenAdd(!openAdd)
