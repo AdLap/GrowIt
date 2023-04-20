@@ -5,6 +5,7 @@ import Home from './app/home/components/Home'
 import Profile from './app/plants/components/profile/Profile'
 import { Gallery } from './app/gallery/components/gallery'
 import { getPlants } from './app/plants/duck/operations'
+import { AppDispatch } from './app/store'
 
 function NotFound() {
 	return (
@@ -16,7 +17,7 @@ function NotFound() {
 }
 
 function App() {
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 
 	useEffect(() => {
 		dispatch(getPlants())

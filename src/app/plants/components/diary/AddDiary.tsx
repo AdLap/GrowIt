@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
+import { RootState } from '../../../store'
 
 const initialDiary = {
 	date: new Date().toLocaleDateString(),
@@ -10,7 +11,7 @@ const initialDiary = {
 
 export const AddDiary = ({ hideAdd }) => {
 	const [newDiary, setNewDiary] = useState(initialDiary)
-	const currentPlant = useSelector((state) => state.plants.currentPlant)
+	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
 	const dispatch = useDispatch()
 
 	const handleNewDiary = (e) => {
