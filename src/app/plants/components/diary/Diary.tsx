@@ -5,13 +5,19 @@ import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
 import { RootState } from '../../../store'
+import { Plant } from '../../../../type/types'
 
-export const Diary = ({ onShowAdd, onShowEditDiary }) => {
+interface Props {
+	onShowAdd: () => void
+	onShowEditDiary: (index: number) => void
+}
+
+export const Diary = ({ onShowAdd, onShowEditDiary }: Props) => {
 	const dispatch = useDispatch()
-	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
+	const currentPlant: Plant = useSelector((state: RootState) => state.plants.currentPlant)
 	const plantToEdit = { ...currentPlant }
 
-	const deleteDiary = (index) => {
+	const deleteDiary = (index: number) => {
 		plantToEdit.diary.splice(index, 1)
 		dispatch(editPlant(plantToEdit, plantToEdit.id))
 	}

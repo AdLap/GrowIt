@@ -1,16 +1,24 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, MouseEvent, useState } from 'react'
+
+interface Props {
+	onUpdateImg: (newImg: Blob | null) => void
+	hideAdd: () => void
+	onProgress: number
+	onResetProgress: () => void
+}
 
 export const HandleImg = ({
 	onUpdateImg,
 	hideAdd,
 	onProgress,
-	onResetProgress
-}) => {
-	const [newImg, setNewImg] = useState(null)
+	onResetProgress,
+}: Props) => {
+	const [newImg, setNewImg] = useState<Blob | null>(null)
 	const [err, setErr] = useState('')
 
-	const handleUpdateImage = (e) => {
-		let selectedImage = e.target.files[0]
+	const handleUpdateImage = (event: ChangeEvent<HTMLInputElement>) => {
+		if (!event.target.files) return
+		let selectedImage = event.target.files[0]
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
 			setNewImg(selectedImage)
 			setErr('')
@@ -20,14 +28,14 @@ export const HandleImg = ({
 		}
 	}
 
-	const handleSubmitImage = (e) => {
-		e.preventDefault()
+	const handleSubmitImage = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		onUpdateImg(newImg)
 	}
 
-	const handleConfirmButton = (e) => {
-		e.preventDefault()
-		hideAdd(false)
+	const handleConfirmButton = (event: MouseEvent<HTMLButtonElement>) => {
+		event.preventDefault()
+		hideAdd()
 		onResetProgress()
 	}
 
@@ -45,9 +53,10 @@ export const HandleImg = ({
 					{newImg && <div className='add__form__selected'>{newImg.name}</div>}
 					{err && <div className='add__form__err'>{err}</div>}
 					<button
+						type='submit'
 						className='add__form__btn'
-						onClick={handleSubmitImage}
-						disabled={onProgress && true}
+						// onClick={handleSubmitImage}
+						disabled={!!onProgress}
 					>
 						Dodaj zdjęcie
 						<div

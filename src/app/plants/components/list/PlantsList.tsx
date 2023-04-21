@@ -6,10 +6,15 @@ import { faPlusCircle } from '@fortawesome/free-solid-svg-icons'
 import { faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { deletePlant, clearCurrentPlant } from '../../duck/operations'
 import { AppDispatch, RootState } from '../../../store'
+import { Plant } from '../../../../type/types'
 
-const PlantsList = ({ openAdd }) => {
+interface Props {
+	openAdd: () => void
+}
+
+const PlantsList = ({ openAdd }: Props) => {
 	const dispatch: AppDispatch = useDispatch()
-	const plantsList = useSelector((state: RootState) => state.plants.plantsList)
+	const plantsList: Plant[] = useSelector((state: RootState) => state.plants.plantsList)
 
 	useEffect(() => {
 		dispatch(clearCurrentPlant())
@@ -39,7 +44,7 @@ const PlantsList = ({ openAdd }) => {
 							</button>
 						</div>
 					))}
-				<button onClick={() => openAdd(true)} className='plant__add'>
+				<button onClick={() => openAdd()} className='plant__add'>
 					<FontAwesomeIcon icon={faPlusCircle} />
 				</button>
 			</nav>

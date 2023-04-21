@@ -5,11 +5,11 @@ export interface Plant {
 	care: string
 	image: string
 	diary: Diary[],
-	id?: string
+	id: string
 }
 
 export interface Diary {
-  data: string
+  date: string
   do: string
   note: string
 }

@@ -13,36 +13,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { RootState } from '../../../store'
+import { Plant } from '../../../../type/types'
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
 	const [openEditDiary, setOpenEditDiary] = useState(false)
-	const [editedDiaryIndex, setEditedDiaryIndex] = useState(null)
+	const [editedDiaryIndex, setEditedDiaryIndex] = useState<number | null>(null)
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
 	const dispatch = useDispatch()
 	const { plantId } = useParams()
-	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
+	const currentPlant: Plant = useSelector(
+		(state: RootState) => state.plants.currentPlant
+	)
 
 	useEffect(() => {
 		dispatch(getCurrentPlant(plantId))
 	}, [dispatch, plantId])
 
-	const showAdd = () => setOpenAdd(!openAdd)
-	const showEdit = () => setOpenEdit(!openEdit)
-	const showEditDiary = (index) => {
+	const showAdd = (): void => setOpenAdd(!openAdd)
+	const showEdit = (): void => setOpenEdit(!openEdit)
+	const showEditDiary = (index: number): void => {
 		setOpenEditDiary(!openEditDiary)
 		setEditedDiaryIndex(index)
 	}
-	const showEditImg = () => setOpenEditImg(!openEditImg)
-	const resetProgress = () => setProgress(0)
+	const showEditImg = (): void => setOpenEditImg(!openEditImg)
+	const resetProgress = (): void => setProgress(0)
 
-	const uploadImage = (newImg) => {
+	const uploadImage = (newImg: Blob | null) => {
+		if (!newImg) return
 		const storageRef = ref(storage, `img/${newImg.name}`)
 		try {
 			const uploadImg = uploadBytesResumable(storageRef, newImg)
 			uploadImg.on(
+				// @ts-expect-error firebase
 				'state-changed',
 				(snapshot) => {
 					let percentage =
@@ -65,10 +70,10 @@ const Profile = () => {
 		}
 	}
 
-	const deleteImage = () => {
+	const deleteImage = (plantId: string) => {
 		const plantDeleteImg = { ...currentPlant }
 		plantDeleteImg.image = ''
-		dispatch(editPlant(plantDeleteImg, plantDeleteImg.id))
+		dispatch(editPlant(plantDeleteImg, plantId))
 	}
 
 	return (
@@ -81,10 +86,7 @@ const Profile = () => {
 						src={currentPlant.image}
 						alt={currentPlant.species}
 					/>
-					<button
-						className='profile__img__btn'
-						onClick={() => showEditImg()}
-					>
+					<button className='profile__img__btn' onClick={() => showEditImg()}>
 						<FontAwesomeIcon icon={faExchangeAlt} />
 					</button>
 					<button
@@ -112,31 +114,28 @@ const Profile = () => {
 					<Link to='/' className='profile__buttons__home'>
 						<FontAwesomeIcon icon={faHome} />
 					</Link>
-					<button
-						className='profile__buttons__edit'
-						onClick={() => showEdit()}
-					>
+					<button className='profile__buttons__edit' onClick={() => showEdit()}>
 						<FontAwesomeIcon icon={faEdit} />
 					</button>
 				</div>
 
-				{openEditImg &&
+				{openEditImg && (
 					<HandleImg
 						onUpdateImg={uploadImage}
 						hideAdd={showEditImg}
 						onProgress={progress}
 						onResetProgress={resetProgress}
 					/>
-				}
+				)}
 				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
-				{openAdd && <AddDiary hideAdd={showAdd} plant={currentPlant} />}
-				{openEditDiary &&
+				{openAdd && <AddDiary hideAdd={showAdd} />}
+				{openEditDiary && editedDiaryIndex && (
 					<EditDiary
 						diary={currentPlant.diary[editedDiaryIndex]}
 						hideAdd={showEditDiary}
 						index={editedDiaryIndex}
 					/>
-				}
+				)}
 				<Diary onShowAdd={showAdd} onShowEditDiary={showEditDiary} />
 			</div>
 		</section>

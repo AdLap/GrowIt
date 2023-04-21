@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
 import { RootState } from '../../../store'
+import { Diary, Plant } from '../../../../type/types'
 
 const initialDiary = {
 	date: new Date().toLocaleDateString(),
@@ -9,21 +10,25 @@ const initialDiary = {
 	note: '',
 }
 
-export const AddDiary = ({ hideAdd }) => {
-	const [newDiary, setNewDiary] = useState(initialDiary)
-	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
+interface Props {
+	hideAdd: () => void
+}
+
+export const AddDiary = ({ hideAdd }: Props) => {
+	const [newDiary, setNewDiary] = useState<Diary>(initialDiary)
+	const currentPlant: Plant = useSelector((state: RootState) => state.plants.currentPlant)
 	const dispatch = useDispatch()
 
-	const handleNewDiary = (e) => {
+	const handleNewDiary = (event: ChangeEvent<HTMLInputElement>) => {
 		setNewDiary({
 			...newDiary,
-			[e.target.name]: e.target.value,
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
-		const plantWithDiary = { ...currentPlant }
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		const plantWithDiary: Plant = { ...currentPlant }
 
 		if (plantWithDiary.diary) {
 			plantWithDiary.diary.push(newDiary)
@@ -33,7 +38,7 @@ export const AddDiary = ({ hideAdd }) => {
 
 		dispatch(editPlant(plantWithDiary, currentPlant.id))
 		setNewDiary(Object.assign(newDiary, initialDiary))
-		hideAdd(false)
+		hideAdd()
 	}
 
 	return (
@@ -60,7 +65,7 @@ export const AddDiary = ({ hideAdd }) => {
 						type='textarea'
 					/>
 				</label>
-				<button className='add__form__btn' onSubmit={handleSubmit}>
+				<button className='add__form__btn' type='submit'>
 					Dodaj
 				</button>
 			</form>

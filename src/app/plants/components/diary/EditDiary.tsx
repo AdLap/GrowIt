@@ -1,34 +1,41 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
 import { RootState } from '../../../store'
+import { Diary, Plant } from '../../../../type/types'
+
+interface Props {
+	diary: Diary
+	index: number
+	hideAdd: () => void
+}
 
 const initialDiary = { date: '', do: '', note: '' }
 
-export const EditDiary = ({ diary, index, hideAdd }) => {
+export const EditDiary = ({ diary, index, hideAdd }: Props) => {
 	const [updateDiary, setUpdateDiary] = useState(diary)
-	const currentPlant = useSelector((state: RootState) => state.plants.currentPlant)
+	const currentPlant: Plant = useSelector((state: RootState) => state.plants.currentPlant)
 	const dispatch = useDispatch()
 	const plantToEdit = { ...currentPlant }
 
-	const handleUpdateDiary = (e) => {
+	const handleUpdateDiary = (event: ChangeEvent<HTMLInputElement>) => {
 		setUpdateDiary({
 			...updateDiary,
-			[e.target.name]: e.target.value,
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		plantToEdit.diary.splice(index, 1, updateDiary)
 		dispatch(editPlant(plantToEdit, plantToEdit.id))
 		setUpdateDiary(Object.assign(updateDiary, initialDiary))
-		hideAdd(null)
+		hideAdd()
 	}
 
 	return (
 		<div className='add__form'>
-			<div className='add__close__btn' onClick={() => hideAdd(null)}>
+			<div className='add__close__btn' onClick={() => hideAdd()}>
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
@@ -58,7 +65,7 @@ export const EditDiary = ({ diary, index, hideAdd }) => {
 						type='textarea'
 					/>
 				</label>
-				<button className='add__form__btn' onSubmit={handleSubmit}>
+				<button className='add__form__btn' type='submit'>
 					Zmień
 				</button>
 			</form>

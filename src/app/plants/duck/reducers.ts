@@ -16,7 +16,8 @@ const INITIAL_PLANTS_LIST: PlantsState = {
 	currentPlant: {} as Plant,
 }
 
-const plantsReducer = (state = INITIAL_PLANTS_LIST, action) => {
+// TODO action: any !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const plantsReducer = (state = INITIAL_PLANTS_LIST, action: any) => {
 	switch (action.type) {
 		case types.ADD_PLANTS:
 			return {

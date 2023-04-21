@@ -1,22 +1,28 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editPlant } from '../../duck/operations'
+import { Plant } from '../../../../type/types'
 
-export const EditPlant = ({ plant, hideAdd }) => {
+interface Props {
+	plant: Plant
+	hideAdd: () => void
+}
+
+export const EditPlant = ({ plant, hideAdd }: Props) => {
 	const [updatedPlant, setUpdatedPlant] = useState(plant)
 	const dispatch = useDispatch()
 
-	const handleUpdatedPlant = (e) => {
+	const handleUpdatedPlant = (event: ChangeEvent<HTMLInputElement>) => {
 		setUpdatedPlant({
 			...updatedPlant,
-			[e.target.name]: e.target.value,
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		dispatch(editPlant(updatedPlant, updatedPlant.id))
-		hideAdd(false)
+		hideAdd()
 	}
 
 	return (
@@ -60,7 +66,7 @@ export const EditPlant = ({ plant, hideAdd }) => {
 					/>
 				</label>
 
-				<button className='add__form__btn' onSubmit={handleSubmit}>
+				<button className='add__form__btn' type='submit'>
 					Zmień
 				</button>
 			</form>
