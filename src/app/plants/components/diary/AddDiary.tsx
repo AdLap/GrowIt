@@ -1,6 +1,8 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
+import { AppDispatch, RootState } from '../../../store'
+import { Diary, Plant } from '../../../../type/types'
 
 const initialDiary = {
 	date: new Date().toLocaleDateString(),
@@ -8,20 +10,24 @@ const initialDiary = {
 	note: '',
 }
 
-export const AddDiary = ({ hideAdd }) => {
-	const [newDiary, setNewDiary] = useState(initialDiary)
-	const currentPlant = useSelector((state) => state.plants.currentPlant)
-	const dispatch = useDispatch()
+interface Props {
+	hideAdd: () => void
+}
 
-	const handleNewDiary = (e) => {
+export const AddDiary = ({ hideAdd }: Props) => {
+	const [newDiary, setNewDiary] = useState<Diary>(initialDiary)
+	const currentPlant: Plant = useSelector((state: RootState) => state.plants.currentPlant)
+	const dispatch: AppDispatch = useDispatch()
+
+	const handleNewDiary = (event: ChangeEvent<HTMLInputElement>) => {
 		setNewDiary({
 			...newDiary,
-			[e.target.name]: e.target.value,
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
+	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
 		const plantWithDiary = { ...currentPlant }
 
 		if (plantWithDiary.diary) {
@@ -30,9 +36,9 @@ export const AddDiary = ({ hideAdd }) => {
 			plantWithDiary.diary = [newDiary]
 		}
 
-		dispatch(editPlant(plantWithDiary, currentPlant.id))
-		setNewDiary(Object.assign(newDiary, initialDiary))
-		hideAdd(false)
+		dispatch(editPlant(plantWithDiary, currentPlant.id as string))
+		setNewDiary(initialDiary)
+		hideAdd()
 	}
 
 	return (
@@ -59,7 +65,7 @@ export const AddDiary = ({ hideAdd }) => {
 						type='textarea'
 					/>
 				</label>
-				<button className='add__form__btn' onSubmit={handleSubmit}>
+				<button className='add__form__btn' type='submit'>
 					Dodaj
 				</button>
 			</form>
