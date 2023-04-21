@@ -9,7 +9,7 @@ export interface Plant {
 }
 
 export interface Diary {
-  data: string
+  date: string
   do: string
   note: string
 }

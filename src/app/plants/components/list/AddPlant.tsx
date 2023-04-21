@@ -1,24 +1,31 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, FormEvent, MouseEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { storage } from '../../../../firebase/firebase'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { addPlant } from '../../duck/operations'
 import { initialPlant } from '../../duck/reducers'
+import { Plant } from '../../../../type/types'
+import { AppDispatch } from '../../../store'
 
-const AddPlant = ({ hideAdd }) => {
-	const [img, setImg] = useState(null)
-	const [imgUrl, setImgUrl] = useState(null)
+interface Props {
+	hideAdd: () => void
+}
+
+const AddPlant = ({ hideAdd }: Props) => {
+	const [img, setImg] = useState<Blob | null>(null)
+	const [imgUrl, setImgUrl] = useState<string | null>(null)
 	const [progress, setProgress] = useState(0)
-	const [error, setError] = useState(null)
+	const [error, setError] = useState<string | null>(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
 	const [newPlant, setNewPlant] = useState(initialPlant)
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 
-	const addImage = (img) => {
+	const addImage = (img: Blob): void => {
 		const storageRef = ref(storage, `img/${img.name}`)
 		try {
 			const uploadImg = uploadBytesResumable(storageRef, img)
 			uploadImg.on(
+				// @ts-expect-error firebase
 				'state-changed',
 				(snapshot) => {
 					let percentage =
@@ -39,15 +46,16 @@ const AddPlant = ({ hideAdd }) => {
 		}
 	}
 
-	const handleNewPlant = (e) => {
+	const handleNewPlant = (event: ChangeEvent<HTMLInputElement>): void => {
 		setNewPlant({
 			...newPlant,
-			[e.target.name]: e.target.value
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleAddImage = (e) => {
-		let selectedImage = e.target.files[0]
+	const handleAddImage = (event: ChangeEvent<HTMLInputElement>): void => {
+		if (!event.target.files) return
+		let selectedImage = event.target.files[0]
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
 			setImg(selectedImage)
 			setError('')
@@ -57,27 +65,33 @@ const AddPlant = ({ hideAdd }) => {
 		}
 	}
 
-	const handleSubmitImage = (e) => {
-		e.preventDefault()
+	const handleSubmitImage = (event: MouseEvent<HTMLButtonElement>): void => {
+		event.preventDefault()
+		if (!img) return
 		addImage(img)
 	}
 
-	const handleSubmit = (e) => {
-		e.preventDefault()
+	const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
+		event.preventDefault()
 		const err = validate(newPlant)
 		if (err) {
 			setValidErrMsg(err)
 			return
 		}
 
-		imgUrl && setNewPlant(...newPlant.image = imgUrl)
+		imgUrl &&
+			setNewPlant({
+				...newPlant,
+				image: imgUrl,
+			})
+
 		dispatch(addPlant(newPlant))
-		setNewPlant(Object.assign(newPlant, initialPlant))
-		hideAdd(false)
+		setNewPlant(initialPlant)
+		hideAdd()
 		setProgress(0)
 	}
 
-	const validate = (newPlant) => {
+	const validate = (newPlant: Plant): string | null => {
 		if (newPlant.name.length < 1) {
 			return 'Nazwij mnie... :)'
 		}
@@ -92,7 +106,7 @@ const AddPlant = ({ hideAdd }) => {
 
 	return (
 		<div className='add__form'>
-			<div className='add__close__btn' onClick={() => hideAdd(false)}>
+			<div className='add__close__btn' onClick={() => hideAdd()}>
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
@@ -143,7 +157,7 @@ const AddPlant = ({ hideAdd }) => {
 					</button>
 				</label>
 
-				<button className='add__form__btn' onSubmit={handleSubmit}>
+				<button className='add__form__btn' type='submit'>
 					Utwórz profil dla {newPlant.name}
 				</button>
 				{validErrMsg && <div className='add__form__err'>{validErrMsg}</div>}
