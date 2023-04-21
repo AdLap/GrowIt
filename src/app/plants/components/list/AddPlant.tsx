@@ -13,7 +13,6 @@ interface Props {
 
 const AddPlant = ({ hideAdd }: Props) => {
 	const [img, setImg] = useState<Blob | null>(null)
-	const [imgUrl, setImgUrl] = useState<string | null>(null)
 	const [progress, setProgress] = useState(0)
 	const [error, setError] = useState<string | null>(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
@@ -37,7 +36,10 @@ const AddPlant = ({ hideAdd }: Props) => {
 				},
 				() => {
 					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) =>
-						setImgUrl(downloadURL)
+						setNewPlant({
+							...newPlant,
+							image: downloadURL
+						})
 					)
 				}
 			)
@@ -78,12 +80,6 @@ const AddPlant = ({ hideAdd }: Props) => {
 			setValidErrMsg(err)
 			return
 		}
-
-		imgUrl &&
-			setNewPlant({
-				...newPlant,
-				image: imgUrl,
-			})
 
 		dispatch(addPlant(newPlant))
 		setNewPlant(initialPlant)
