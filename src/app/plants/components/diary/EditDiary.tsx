@@ -1,7 +1,7 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { editPlant } from '../../duck/operations'
-import { RootState } from '../../../store'
+import { AppDispatch, RootState } from '../../../store'
 import { Diary, Plant } from '../../../../type/types'
 
 interface Props {
@@ -10,26 +10,26 @@ interface Props {
 	hideAdd: () => void
 }
 
-const initialDiary = { date: '', do: '', note: '' }
+const initialDiary: Diary = { date: '', do: '', note: '' }
 
 export const EditDiary = ({ diary, index, hideAdd }: Props) => {
 	const [updateDiary, setUpdateDiary] = useState(diary)
 	const currentPlant: Plant = useSelector((state: RootState) => state.plants.currentPlant)
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 	const plantToEdit = { ...currentPlant }
 
-	const handleUpdateDiary = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleUpdateDiary = (event: ChangeEvent<HTMLInputElement>): void => {
 		setUpdateDiary({
 			...updateDiary,
 			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault()
 		plantToEdit.diary.splice(index, 1, updateDiary)
-		dispatch(editPlant(plantToEdit, plantToEdit.id))
-		setUpdateDiary(Object.assign(updateDiary, initialDiary))
+		dispatch(editPlant(plantToEdit, plantToEdit.id as string))
+		setUpdateDiary(initialDiary)
 		hideAdd()
 	}
 

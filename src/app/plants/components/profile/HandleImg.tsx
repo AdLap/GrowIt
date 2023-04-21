@@ -16,7 +16,7 @@ export const HandleImg = ({
 	const [newImg, setNewImg] = useState<Blob | null>(null)
 	const [err, setErr] = useState('')
 
-	const handleUpdateImage = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleUpdateImage = (event: ChangeEvent<HTMLInputElement>): void => {
 		if (!event.target.files) return
 		let selectedImage = event.target.files[0]
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
@@ -28,12 +28,12 @@ export const HandleImg = ({
 		}
 	}
 
-	const handleSubmitImage = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmitImage = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault()
 		onUpdateImg(newImg)
 	}
 
-	const handleConfirmButton = (event: MouseEvent<HTMLButtonElement>) => {
+	const handleConfirmButton = (event: MouseEvent<HTMLButtonElement>): void => {
 		event.preventDefault()
 		hideAdd()
 		onResetProgress()

@@ -37,7 +37,7 @@ const PlantsList = ({ openAdd }: Props) => {
 								<h2 className='plant__name'>{plant.name}</h2>
 							</Link>
 							<button
-								onClick={() => dispatch(deletePlant(plant.id, plant.image))}
+								onClick={() => dispatch(deletePlant(plant.id as string, plant.image))}
 								className='plant__delete'
 							>
 								<FontAwesomeIcon icon={faTrashAlt} />

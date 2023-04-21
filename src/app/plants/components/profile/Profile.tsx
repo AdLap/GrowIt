@@ -12,7 +12,7 @@ import { EditDiary } from '../diary/EditDiary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
-import { RootState } from '../../../store'
+import { AppDispatch, RootState } from '../../../store'
 import { Plant } from '../../../../type/types'
 
 const Profile = () => {
@@ -22,13 +22,14 @@ const Profile = () => {
 	const [openEdit, setOpenEdit] = useState(false)
 	const [openEditImg, setOpenEditImg] = useState(false)
 	const [progress, setProgress] = useState(0)
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 	const { plantId } = useParams()
 	const currentPlant: Plant = useSelector(
 		(state: RootState) => state.plants.currentPlant
 	)
 
 	useEffect(() => {
+		if (!plantId) return
 		dispatch(getCurrentPlant(plantId))
 	}, [dispatch, plantId])
 
@@ -38,6 +39,7 @@ const Profile = () => {
 		setOpenEditDiary(!openEditDiary)
 		setEditedDiaryIndex(index)
 	}
+	const hideEditDiary = (): void => setOpenEditDiary(!openEditDiary)
 	const showEditImg = (): void => setOpenEditImg(!openEditImg)
 	const resetProgress = (): void => setProgress(0)
 
@@ -58,6 +60,7 @@ const Profile = () => {
 					console.error('uploadImage error::', error)
 				},
 				() => {
+					if (!plantId) return
 					getDownloadURL(uploadImg.snapshot.ref).then((downloadURL) => {
 						const plantNewImg = { ...currentPlant }
 						plantNewImg.image = downloadURL
@@ -71,6 +74,7 @@ const Profile = () => {
 	}
 
 	const deleteImage = (plantId: string) => {
+		if (!plantId) return
 		const plantDeleteImg = { ...currentPlant }
 		plantDeleteImg.image = ''
 		dispatch(editPlant(plantDeleteImg, plantId))
@@ -91,7 +95,7 @@ const Profile = () => {
 					</button>
 					<button
 						className='profile__img__btn__delete'
-						onClick={() => deleteImage(currentPlant.id)}
+						onClick={() => deleteImage(plantId as string)}
 					>
 						<FontAwesomeIcon icon={faTrashAlt} />
 					</button>
@@ -132,7 +136,7 @@ const Profile = () => {
 				{openEditDiary && editedDiaryIndex && (
 					<EditDiary
 						diary={currentPlant.diary[editedDiaryIndex]}
-						hideAdd={showEditDiary}
+						hideAdd={hideEditDiary}
 						index={editedDiaryIndex}
 					/>
 				)}

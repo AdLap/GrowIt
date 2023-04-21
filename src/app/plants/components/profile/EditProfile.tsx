@@ -2,6 +2,7 @@ import React, { ChangeEvent, FormEvent, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { editPlant } from '../../duck/operations'
 import { Plant } from '../../../../type/types'
+import { AppDispatch } from '../../../store'
 
 interface Props {
 	plant: Plant
@@ -10,18 +11,18 @@ interface Props {
 
 export const EditPlant = ({ plant, hideAdd }: Props) => {
 	const [updatedPlant, setUpdatedPlant] = useState(plant)
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 
-	const handleUpdatedPlant = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleUpdatedPlant = (event: ChangeEvent<HTMLInputElement>): void => {
 		setUpdatedPlant({
 			...updatedPlant,
 			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault()
-		dispatch(editPlant(updatedPlant, updatedPlant.id))
+		dispatch(editPlant(updatedPlant, updatedPlant.id as string))
 		hideAdd()
 	}
 

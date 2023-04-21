@@ -5,6 +5,7 @@ import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
 import { addPlant } from '../../duck/operations'
 import { initialPlant } from '../../duck/reducers'
 import { Plant } from '../../../../type/types'
+import { AppDispatch } from '../../../store'
 
 interface Props {
 	hideAdd: () => void
@@ -17,9 +18,9 @@ const AddPlant = ({ hideAdd }: Props) => {
 	const [error, setError] = useState<string | null>(null)
 	const [validErrMsg, setValidErrMsg] = useState('')
 	const [newPlant, setNewPlant] = useState(initialPlant)
-	const dispatch = useDispatch()
+	const dispatch: AppDispatch = useDispatch()
 
-	const addImage = (img: Blob) => {
+	const addImage = (img: Blob): void => {
 		const storageRef = ref(storage, `img/${img.name}`)
 		try {
 			const uploadImg = uploadBytesResumable(storageRef, img)
@@ -45,15 +46,16 @@ const AddPlant = ({ hideAdd }: Props) => {
 		}
 	}
 
-	const handleNewPlant = (event: ChangeEvent<HTMLInputElement>) => {
+	const handleNewPlant = (event: ChangeEvent<HTMLInputElement>): void => {
 		setNewPlant({
 			...newPlant,
-			[event.target.name]: event.target.value
+			[event.target.name]: event.target.value,
 		})
 	}
 
-	const handleAddImage = (e) => {
-		let selectedImage = e.target.files[0]
+	const handleAddImage = (event: ChangeEvent<HTMLInputElement>): void => {
+		if (!event.target.files) return
+		let selectedImage = event.target.files[0]
 		if (selectedImage.type.includes('image/jpeg' || 'image/png')) {
 			setImg(selectedImage)
 			setError('')
@@ -63,13 +65,13 @@ const AddPlant = ({ hideAdd }: Props) => {
 		}
 	}
 
-	const handleSubmitImage = (event: MouseEvent<HTMLButtonElement>) => {
+	const handleSubmitImage = (event: MouseEvent<HTMLButtonElement>): void => {
 		event.preventDefault()
 		if (!img) return
 		addImage(img)
 	}
 
-	const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+	const handleSubmit = (event: FormEvent<HTMLFormElement>): void => {
 		event.preventDefault()
 		const err = validate(newPlant)
 		if (err) {
@@ -77,14 +79,19 @@ const AddPlant = ({ hideAdd }: Props) => {
 			return
 		}
 
-		imgUrl && setNewPlant(...newPlant.image = imgUrl)
+		imgUrl &&
+			setNewPlant({
+				...newPlant,
+				image: imgUrl,
+			})
+
 		dispatch(addPlant(newPlant))
-		setNewPlant(Object.assign(newPlant, initialPlant))
+		setNewPlant(initialPlant)
 		hideAdd()
 		setProgress(0)
 	}
 
-	const validate = (newPlant: Plant) => {
+	const validate = (newPlant: Plant): string | null => {
 		if (newPlant.name.length < 1) {
 			return 'Nazwij mnie... :)'
 		}
