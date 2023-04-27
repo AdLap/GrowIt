@@ -14,6 +14,7 @@ export const initialPlant: Plant = {
 const INITIAL_PLANTS_LIST: PlantsState = {
 	plantsList: [],
 	currentPlant: {} as Plant,
+	modalIsOpen: false
 }
 
 // TODO action: any !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -57,6 +58,12 @@ const plantsReducer = (state = INITIAL_PLANTS_LIST, action: any) => {
 			return {
 				...state,
 				currentPlant: { ...state.currentPlant, ...initialPlant },
+			}
+
+		case types.OPEN_MODAL:
+			return {
+				...state,
+				modalIsOpen: !state.modalIsOpen
 			}
 
 		default:

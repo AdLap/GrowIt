@@ -17,6 +17,7 @@ export interface Diary {
 export interface PlantsState {
 	plantsList: Plant[]
 	currentPlant: Plant
+	modalIsOpen: boolean
 }
 
 export interface ResponseData {
