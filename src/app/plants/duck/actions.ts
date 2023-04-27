@@ -1,6 +1,6 @@
 /* eslint-disable import/no-anonymous-default-export */
 import types from './types'
-import type { Plant } from '../../../type/types'
+import { Plant } from '../../../type/types'
 
 const add = (item: Plant) => ({
   type: types.ADD_PLANTS, item
@@ -22,10 +22,15 @@ const editPlant = (item: Plant) => ({
   type: types.EDIT_PLANT, item
 })
 
+const openModal = () => ({
+  type: types.OPEN_MODAL
+})
+
 export default {
   add,
   addCurrentPlant,
   resetCurrentPlant,
   deletePlant,
-  editPlant
+  editPlant,
+  openModal
 }

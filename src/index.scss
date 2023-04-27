@@ -1,14 +1,16 @@
-@import "scss/variables";
-@import "scss/settings";
-@import "scss/elements";
+@import 'scss/variables';
+@import 'scss/settings';
+@import 'scss/elements';
+@import 'scss/breakpoints';
 
-@import "app/home/components/home";
+@import 'app/home/components/home';
 
-@import "app/plants/components/list/plantsList";
-@import "app/plants/components/list/addPlant";
-@import "app/plants/components/profile/profile";
-@import "app/plants/components/diary/diary";
+@import 'app/plants/components/list/plantsList';
+@import 'app/plants/components/list/addPlant';
+@import 'app/plants/components/profile/profile';
+@import 'app/plants/components/diary/diary';
 
-@import "app/gallery/components/gallery";
+@import 'app/gallery/components/gallery';
+@import 'app/gallery/components/modal';
 
-@import "app/auth/components/Login";
+@import 'app/auth/components/Login';

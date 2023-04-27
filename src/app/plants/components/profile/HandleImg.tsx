@@ -55,7 +55,6 @@ export const HandleImg = ({
 					<button
 						type='submit'
 						className='add__form__btn'
-						// onClick={handleSubmitImage}
 						disabled={!!onProgress}
 					>
 						Dodaj zdjęcie

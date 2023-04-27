@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Link, Routes } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import Home from './app/home/components/Home'
 import Profile from './app/plants/components/profile/Profile'
-import { Gallery } from './app/gallery/components/gallery'
+import { Gallery } from './app/gallery/components/Gallery'
 import { getPlants } from './app/plants/duck/operations'
 import { AppDispatch } from './app/store'
 
