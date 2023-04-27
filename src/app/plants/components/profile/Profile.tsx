@@ -143,7 +143,7 @@ const Profile = () => {
 					}
 					{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
 					{openAdd && <AddDiary hideAdd={showAdd} />}
-					{openEditDiary && editedDiaryIndex &&
+					{openEditDiary && editedDiaryIndex !== null &&
 						<EditDiary
 							diary={currentPlant.diary[editedDiaryIndex]}
 							hideAdd={hideEditDiary}
