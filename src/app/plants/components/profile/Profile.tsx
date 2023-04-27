@@ -14,6 +14,8 @@ import { faExchangeAlt, faHome } from '@fortawesome/free-solid-svg-icons'
 import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { AppDispatch, RootState } from '../../../store'
 import { Plant } from '../../../../type/types'
+import Modal from '../../../gallery/components/Modal'
+import actions from '../../duck/actions'
 
 const Profile = () => {
 	const [openAdd, setOpenAdd] = useState(false)
@@ -26,6 +28,9 @@ const Profile = () => {
 	const { plantId } = useParams()
 	const currentPlant: Plant = useSelector(
 		(state: RootState) => state.plants.currentPlant
+	)
+	const modalIsOpen: boolean = useSelector(
+		(state: RootState) => state.plants.modalIsOpen
 	)
 
 	useEffect(() => {
@@ -81,68 +86,75 @@ const Profile = () => {
 	}
 
 	return (
-		<section className='profile'>
-			<div className='container'>
-				<h1 className='profile__title'>{currentPlant.name}</h1>
-				<div className='profile__img'>
-					<img
-						className='profile__img__img'
-						src={currentPlant.image}
-						alt={currentPlant.species}
-					/>
-					<button className='profile__img__btn' onClick={() => showEditImg()}>
-						<FontAwesomeIcon icon={faExchangeAlt} />
-					</button>
-					<button
-						className='profile__img__btn__delete'
-						onClick={() => deleteImage(plantId as string)}
-					>
-						<FontAwesomeIcon icon={faTrashAlt} />
-					</button>
-				</div>
-				<div className='profile__data'>
-					<span className='profile__data__species'>
-						<strong>Gatunek:</strong> {currentPlant.species}
-					</span>
-					<span className='profile__data__date'>
-						<strong>Od kiedy go mam:</strong> {currentPlant.date}
-					</span>
-				</div>
-				<p className='profile__care'>
-					Pielęgnacja:
-					<br />
-					{currentPlant.care}
-				</p>
+		<>
+			<section className='profile'>
+				<div className='container'>
+					<h1 className='profile__title'>{currentPlant.name}</h1>
+					<div className='profile__img'>
+						<img
+							className='profile__img__img'
+							src={currentPlant.image}
+							alt={currentPlant.species}
+							onClick={() => dispatch(actions.openModal())}
+						/>
+						<button className='profile__img__btn' onClick={() => showEditImg()}>
+							<FontAwesomeIcon icon={faExchangeAlt} />
+						</button>
+						<button
+							className='profile__img__btn__delete'
+							onClick={() => deleteImage(plantId as string)}
+						>
+							<FontAwesomeIcon icon={faTrashAlt} />
+						</button>
+					</div>
+					<div className='profile__data'>
+						<span className='profile__data__species'>
+							<strong>Gatunek:</strong> {currentPlant.species}
+						</span>
+						<span className='profile__data__date'>
+							<strong>Od kiedy go mam:</strong> {currentPlant.date}
+						</span>
+					</div>
+					<p className='profile__care'>
+						Pielęgnacja:
+						<br />
+						{currentPlant.care}
+					</p>
 
-				<div className='profile__buttons'>
-					<Link to='/' className='profile__buttons__home'>
-						<FontAwesomeIcon icon={faHome} />
-					</Link>
-					<button className='profile__buttons__edit' onClick={() => showEdit()}>
-						<FontAwesomeIcon icon={faEdit} />
-					</button>
-				</div>
+					<div className='profile__buttons'>
+						<Link to='/' className='profile__buttons__home'>
+							<FontAwesomeIcon icon={faHome} />
+						</Link>
+						<button
+							className='profile__buttons__edit'
+							onClick={() => showEdit()}
+						>
+							<FontAwesomeIcon icon={faEdit} />
+						</button>
+					</div>
 
-				{openEditImg && (
-					<HandleImg
-						onUpdateImg={uploadImage}
-						hideAdd={showEditImg}
-						onProgress={progress}
-						onResetProgress={resetProgress}
-					/>
-				)}
-				{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
-				{openAdd && <AddDiary hideAdd={showAdd} />}
-				{openEditDiary && editedDiaryIndex && (
-					<EditDiary
-						diary={currentPlant.diary[editedDiaryIndex]}
-						hideAdd={hideEditDiary}
-						index={editedDiaryIndex}
-					/>
-				)}
-				<Diary onShowAdd={showAdd} onShowEditDiary={showEditDiary} />
-			</div>
-		</section>
+					{openEditImg &&
+						<HandleImg
+							onUpdateImg={uploadImage}
+							hideAdd={showEditImg}
+							onProgress={progress}
+							onResetProgress={resetProgress}
+						/>
+					}
+					{openEdit && <EditPlant plant={currentPlant} hideAdd={showEdit} />}
+					{openAdd && <AddDiary hideAdd={showAdd} />}
+					{openEditDiary && editedDiaryIndex &&
+						<EditDiary
+							diary={currentPlant.diary[editedDiaryIndex]}
+							hideAdd={hideEditDiary}
+							index={editedDiaryIndex}
+						/>
+					}
+					<Diary onShowAdd={showAdd} onShowEditDiary={showEditDiary} />
+				</div>
+			</section>
+			{modalIsOpen && <Modal plant={currentPlant} />}
+		</>
 	)
 }
 
