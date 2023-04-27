@@ -8,23 +8,43 @@ interface Props {
 }
 
 const Modal = ({ plant }: Props) => {
-  const [images, setImages] = useState<string[]>([])
-  const [curentImage, setCurrentImage] = useState(0)
-  const dispatch = useDispatch()
+	const [images, setImages] = useState<string[]>([])
+	const [curentImage, setCurrentImage] = useState(0)
+	const dispatch = useDispatch()
 
-  useEffect(() => {
-    setImages(prev => [...prev, plant.image])
-  },[plant.image])
+	useEffect(() => {
+		setImages((prev) => [...prev, plant.image])
+	}, [plant.image])
 
-  return (
+	const closeModal = () => {
+		dispatch(actions.openModal())
+	}
+
+	return (
 		<section className='modal'>
-			<div className='modal__close' onClick={() => dispatch(actions.openModal())}>X</div>
-      { images.length > 1 &&
-        <div className='modal__buttons'>
-				<div className='modal__buttons__prev' onClick={() => setCurrentImage(prev => prev--)}>prev</div>
-				<div className='modal__buttons__next' onClick={() => setCurrentImage(prev => prev++)}>next</div>
+			<div
+				className='modal__close add__close__btn'
+				onClick={() => closeModal()}
+			>
+				<span>{null}</span>
+				<span>{null}</span>
 			</div>
-      }
+			{images.length > 1 &&
+				<div className='modal__buttons'>
+					<div
+						className='modal__buttons__prev'
+						onClick={() => setCurrentImage((prev) => prev--)}
+					>
+						prev
+					</div>
+					<div
+						className='modal__buttons__next'
+						onClick={() => setCurrentImage((prev) => prev++)}
+					>
+						next
+					</div>
+				</div>
+			}
 			<div className='modal__image'>
 				<img src={images[curentImage]} alt={plant.species} />
 			</div>

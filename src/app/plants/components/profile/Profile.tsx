@@ -15,7 +15,6 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-regular-svg-icons'
 import { AppDispatch, RootState } from '../../../store'
 import { Plant } from '../../../../type/types'
 import Modal from '../../../gallery/components/Modal'
-import openModal from '../../duck/actions'
 import actions from '../../duck/actions'
 
 const Profile = () => {
@@ -33,7 +32,6 @@ const Profile = () => {
 	const modalIsOpen: boolean = useSelector(
 		(state: RootState) => state.plants.modalIsOpen
 	)
-	// const [modalIsOpen, setModalIsOpen] = useState(false)
 
 	useEffect(() => {
 		if (!plantId) return
@@ -135,7 +133,7 @@ const Profile = () => {
 						</button>
 					</div>
 
-					{openEditImg && 
+					{openEditImg &&
 						<HandleImg
 							onUpdateImg={uploadImage}
 							hideAdd={showEditImg}

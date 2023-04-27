@@ -1,40 +1,39 @@
 .modal {
-  background: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  left: 0;
+	background-color: $color-modal-background;
+	backdrop-filter: blur(10px);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	top: 0;
+	left: 0;
 	width: 100vw;
-  height: 100vh;
-  padding: 16px;
-  z-index: 100;
-
-	&__close {
-    position: absolute;
-    top: 0;
-    right: 0;
-		width: 30px;
-		height: 30px;
-    cursor: pointer;
-	}
+	height: 100vh;
+	padding: 16px;
+	z-index: 100;
+  overflow: hidden;
 
 	&__buttons {
-    border: 1px slid red;
 		width: 100%;
 		position: absolute;
-    display: flex;
-    justify-content: space-between;
-
-		// &__prev,
-		// &__next {
-		// 	position: absolute;
-		// }
+		display: flex;
+		justify-content: space-between;
 	}
 
 	&__image {
-		border: 1px solid red;
+		width: 100%;
+		height: 100%;
+		max-width: 1000px;
+		object-fit: cover;
+		overflow: hidden;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		@include media-up($md) {
+			width: 90%;
+			height: 90%;
+		}
 
 		img {
 			width: 100%;
