@@ -4,6 +4,7 @@ import PlantsList from '../../plants/components/list/PlantsList'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { Plant } from '../../../type/types'
+import { Login } from '../../auth/components/Login'
 
 const Home = () => {
 	const [openAdd, setOpenAdd] = useState(false)

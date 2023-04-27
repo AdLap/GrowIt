@@ -1,0 +1,10 @@
+.login__buttons {
+    &__register {
+        background: transparent;
+        box-shadow: none;
+
+        &:hover {
+            box-shadow: none;
+        }
+    }
+}
