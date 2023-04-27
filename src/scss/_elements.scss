@@ -1,6 +1,8 @@
+@import './breakpoints';
+
 .container {
-  @media (min-width: $laptop) {
-    width: $laptop;
+  @include media-up($lx) {
+    width: $container-max-lx;
     min-height: 100vh;
     margin: 0 auto;
     position: relative;
@@ -61,6 +63,7 @@ button {
       background-color: transparent;
     }
   }
+
   &__btn {
     margin-top: 2rem;
     position: relative;

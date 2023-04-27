@@ -23,3 +23,8 @@ export interface PlantsState {
 export interface ResponseData {
 	[key: string]: Plant
 }
+
+export interface User {
+	login: string
+	password: string
+}
