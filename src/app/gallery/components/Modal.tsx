@@ -16,8 +16,18 @@ const Modal = ({ plant }: Props) => {
 		setImages((prev) => [...prev, plant.image])
 	}, [plant.image])
 
-	const closeModal = () => {
+	const closeModal = (): void => {
 		dispatch(actions.openModal())
+	}
+
+	const nextImage = (): void => {
+		if (curentImage >= images.length - 1) return
+		setCurrentImage((prev) => prev + 1)
+	}
+
+	const prevImage = (): void => {
+		if (curentImage <= 0) return
+		setCurrentImage((prev) => prev - 1)
 	}
 
 	return (
@@ -29,22 +39,20 @@ const Modal = ({ plant }: Props) => {
 				<span>{null}</span>
 				<span>{null}</span>
 			</div>
-			{images.length > 1 &&
+			{images.length > 1 && (
 				<div className='modal__buttons'>
-					<div
-						className='modal__buttons__prev'
-						onClick={() => setCurrentImage((prev) => prev--)}
-					>
-						prev
-					</div>
-					<div
-						className='modal__buttons__next'
-						onClick={() => setCurrentImage((prev) => prev++)}
-					>
-						next
-					</div>
+					{ curentImage >=1 &&
+						<div className='modal__buttons__prev' onClick={() => prevImage()}>
+							Prev
+						</div>
+					}
+					{ curentImage < images.length &&
+						<div className='modal__buttons__next' onClick={() => nextImage()}>
+							Next
+						</div>
+					}
 				</div>
-			}
+			)}
 			<div className='modal__image'>
 				<img src={images[curentImage]} alt={plant.species} />
 			</div>
