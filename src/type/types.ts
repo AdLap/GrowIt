@@ -24,7 +24,11 @@ export interface ResponseData {
 	[key: string]: Plant
 }
 
-export interface User {
-	login: string
+export interface LoginUser {
+	email: string
 	password: string
+}
+
+export interface User extends LoginUser {
+	name: string
 }

@@ -1,10 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react'
-import { User } from '../../../type/types'
+import { LoginUser } from '../../../type/types'
 
-const initUser: User = { login: '', password: '' }
+const initUser: LoginUser = { email: '', password: '' }
 
 export const Login = () => {
-	const [user, setUser] = useState<User>(initUser)
+	const [user, setUser] = useState<LoginUser>(initUser)
 
 	const handleUser = (event: ChangeEvent<HTMLInputElement>): void => {
 		setUser({
@@ -29,8 +29,8 @@ export const Login = () => {
 				</div>
 				<form onSubmit={submit}>
 					<label>
-						Login:
-						<input name='login' value={user.login} onChange={handleUser} />
+						Email:
+						<input name='email' value={user.email} onChange={handleUser} />
 					</label>
 					<label>
 						Hasło:
