@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { Plant } from '../../../type/types'
 import { Login } from '../../auth/components/Login'
+import { Register } from '../../auth/components/Register'
 
 const Home = () => {
 	const [openAdd, setOpenAdd] = useState(false)
