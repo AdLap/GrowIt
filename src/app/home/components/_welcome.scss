@@ -1,0 +1,33 @@
+.welcome {
+	&__container {
+		width: 100%;
+		max-width: $container-max-lx;
+		margin: 15% auto 0;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+	}
+
+	&__description {
+		font-size: 24px;
+		color: $color-text-primary;
+	}
+
+	&__buttons {
+		width: 50%;
+		display: flex;
+		justify-content: space-evenly;
+		align-items: center;
+		margin-top: 24px;
+
+		&__register {
+			box-shadow: none;
+			background: transparent;
+
+			&:hover {
+				box-shadow: none;
+			}
+		}
+	}
+}

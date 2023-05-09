@@ -1,27 +1,19 @@
-//@import "../scss/variables";
-//@import "../scss/settings";
-
 .home {
-  min-height: 100vh;;
-  background: url("../../../assets/bg-5.jpg") no-repeat bottom/cover;
-//nr 2, 3,5!, 7!
-  &__title {
-    padding: 2rem;
-  }
+	height: 100vh;
+	background: url('../../../assets/bg-5.jpg') no-repeat bottom/cover;
 
+	&__title {
+		padding: 2rem;
+	}
 }
 
 .plant__add {
+	&:hover {
+		box-shadow: none;
+	}
 
-  &:hover {
-    box-shadow: none;
-  }
-
-  &:active {
-    transform: scale(.1);
-    box-shadow: none;
-  }
-
+	&:active {
+		transform: scale(0.1);
+		box-shadow: none;
+	}
 }
-
-
