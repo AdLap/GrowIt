@@ -3,7 +3,7 @@ import { User } from '../../../type/types'
 
 const initNewUser: User = { email: '', password: '', name: '' }
 
-export const Register = () => {
+const Register = () => {
 	const [newUser, setNewUser] = useState<User>(initNewUser)
 	const [repeatPassword, setRepeatPassword] = useState('')
 
@@ -69,3 +69,5 @@ export const Register = () => {
 		</>
 	)
 }
+
+export default Register

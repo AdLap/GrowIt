@@ -4,13 +4,16 @@ import PlantsList from '../../plants/components/list/PlantsList'
 import { useSelector } from 'react-redux'
 import { RootState } from '../../store'
 import { Plant } from '../../../type/types'
-import { Login } from '../../auth/components/Login'
-import { Register } from '../../auth/components/Register'
+import Login from '../../auth/components/Login'
+import Register from '../../auth/components/Register'
+import Welcome from './Welcome'
 
 const Home = () => {
 	const [openAdd, setOpenAdd] = useState(false)
 	// const [isLoading, setIsLoading] = useState(false); // TODO
-	const plantsList: Plant[] = useSelector((state: RootState) => state.plants.plantsList)
+	const plantsList: Plant[] = useSelector(
+		(state: RootState) => state.plants.plantsList
+	)
 
 	const handleOpenAdd = (): void => setOpenAdd(!openAdd)
 

@@ -3,7 +3,7 @@ import { LoginUser } from '../../../type/types'
 
 const initUser: LoginUser = { email: '', password: '' }
 
-export const Login = () => {
+const Login = () => {
 	const [user, setUser] = useState<LoginUser>(initUser)
 
 	const handleUser = (event: ChangeEvent<HTMLInputElement>): void => {
@@ -57,3 +57,5 @@ export const Login = () => {
 		</>
 	)
 }
+
+export default Login
